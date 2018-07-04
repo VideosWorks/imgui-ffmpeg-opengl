@@ -18,7 +18,8 @@ Deux versions sont disponibles au téléchargement. **L'une pour Windows 7 (64 b
 La version en téléchargement a besoin de Windows 7 ou plus + pour fonctionner, et vous est fournie avec un installeur. La désinstallation a aussi été testée, et supprime toute trace du logiciel. **Si vous l'installez**, notez que vous utilisez ce logiciel à vos risques et périls, et n'oubliez pas qu'il est impératif de faire des sauvegardes de vos document AVANT de l'utiliser.
 
 
-**Pour le téléchargement, cliquer ici : https://github.com/ebachard/miniDart/tree/master/testing_version**
+**Pour le téléchargement, cliquer ici : https://github.com/ebachard/miniDart/tree/master/testing_version** (/!\ projet en cours de migration sur framagit)
+
 
 Pré-requis
 
@@ -38,6 +39,9 @@ Webcam vivement conseillées et longuement testées :
 - Microsoft Lifecam C3000 : demande quelquefois de relancer une fois miniDart, (demande une bonne lumière)
 
 Système d'exploitation : testé sur Windows 7 et Win 10  64 bits (une version de test en 32 bits est disponible, mais sur demande uniquement).
+
+Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
+J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
 **Ce qui est actuellement fonctionnel** :
 
@@ -152,6 +156,9 @@ Webcam highly recommended and extensively tested:
 
 Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwin7+ is available, but on demand only).
 
+Important : just in case the application crashes at launch, without any information, it's probably because you forgot
+to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
+
 What is currently functional :
 
 - [x]    Zoom (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image // works perfectly
@@ -226,4 +233,4 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **(coming soon) **TinyXML2** ( https://github.com/leethomason/tinyxml2 ) for xml tags when analyzing and ranking a video.
 * **(in test) **SDL_kitchensink** ( https://github.com/katajakasa/SDL_kitchensink ) for sound in videos (reading AND recording) 
 
-Author of miniDart software: Eric Bachard © 2016-2018 
+Author of miniDart software: Eric Bachard © 2016-2018
