@@ -20,6 +20,8 @@ La version en téléchargement a besoin de Windows 7 ou plus + pour fonctionner,
 
 **Pour le téléchargement, cliquer ici : https://github.com/ebachard/miniDart/tree/master/testing_version** (/!\ projet en cours de migration sur framagit)
 
+
+
 Pré-requis
 
 Si la lumière ambiante est suffisante, on peut visualiser et enregistrer les images issues d'une webcam (préférer les références conseillées + bas) au rythme de 30 images par seconde en 1270 x 720 (aka 720p). L'enregistrement se fait pour l'instant au format .avi avec l'encodage en divx. Le son n'est pour l'instant pas géré. La version Linux fonctionne de façon similaire, mais en 24 images par seconde.
@@ -38,6 +40,9 @@ Webcam vivement conseillées et longuement testées :
 - Microsoft Lifecam C3000 : demande quelquefois de relancer une fois miniDart, (demande une bonne lumière)
 
 Système d'exploitation : testé sur Windows 7 et Win 10  64 bits (une version de test en 32 bits est disponible, mais sur demande uniquement).
+
+Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
+J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
 **Ce qui est actuellement fonctionnel** :
 
@@ -151,6 +156,9 @@ Webcam highly recommended and extensively tested:
 - Microsoft Lifecam C3000: sometimes asks to restart once miniDart, (asks for a good light) 
 
 Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwin7+ is available, but on demand only).
+
+Important : just in case the application crashes at launch, without any information, it's probably because you forgot
+to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
 
 What is currently functional :
 
