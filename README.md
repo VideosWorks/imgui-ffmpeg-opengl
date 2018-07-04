@@ -18,7 +18,7 @@ Deux versions sont disponibles au téléchargement. **L'une pour Windows 7 (64 b
 La version en téléchargement a besoin de Windows 7 ou plus + pour fonctionner, et vous est fournie avec un installeur. La désinstallation a aussi été testée, et supprime toute trace du logiciel. **Si vous l'installez**, notez que vous utilisez ce logiciel à vos risques et périls, et n'oubliez pas qu'il est impératif de faire des sauvegardes de vos document AVANT de l'utiliser.
 
 
-**Pour le téléchargement, cliquer ici : https://github.com/ebachard/miniDart/tree/master/testing_version** (/!\ projet en cours de migration sur framagit)
+**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/tree/master/testing_version** (/!\ projet en cours de migration sur framagit)
 
 
 Pré-requis
@@ -135,7 +135,7 @@ Two versions are available for download. One for **Windows 7 (64 bits) or later*
 
 The download version needs Windows 7 or more + to work, and comes with an installer. The uninstallation has also been tested, and removes all traces of the software. If you install it , note that you use this software at your own risk, and remember that it is imperative to make backups of your documents BEFORE using it.
 
-**For download, click here: https://github.com/ebachard/miniDart/tree/master/testing_version**
+**For download, click here: https://framagit.org/ericb/miniDart/tree/master/testing_version**
 
 Prerequisites
 
