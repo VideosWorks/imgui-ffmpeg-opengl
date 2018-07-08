@@ -2,7 +2,7 @@
 
 ericb : imgui+tabs.cpp
 
-Resync'ed the code with Deaf ImGui 1.63 WIP
+Resync'ed the code with Dear ImGui 1.63 WIP
 Replaced ImGuiDrawContext with ImGuiWindowTempData to fix the last build breakage
 
 2018 April 26th
