@@ -1,3 +1,10 @@
+2018 July 8th
+
+ericb : imgui+tabs.cpp
+
+Resync'ed the code with Deaf ImGui 1.63 WIP
+Replaced ImGuiDrawContext with ImGuiWindowTempData to fix the last build breakage
+
 2018 April 26th
 
 eric bachard : imgui_tabs.cpp + imgui_tabs.h
