@@ -138,7 +138,7 @@ void ImGui::TabBar::_drawTabBarTop(const char *label) {
     // Gather pointers and references
     ImGuiWindow* wind = ImGui::GetCurrentWindow();
     ImDrawList* dl = wind->DrawList;
-    ImGuiDrawContext& dc = wind->DC;
+    ImGuiWindowTempData& dc = wind->DC;
     ImGuiStyle& style = ImGui::GetStyle();
     std::string str = label;
 
@@ -161,7 +161,7 @@ void ImGui::TabBar::_drawTabBarTop(const char *label) {
     static constexpr const float shrink = 1.0f;
 
     // ericb ajouté 2.0, parce que pas assez d'espace
-    const float tab_height = CalcTextSize(tabTitles[0]).y + (frame_padding.y * 2) + 6.0;
+    const float tab_height = CalcTextSize(tabTitles[0]).y + (frame_padding.y * 2) + 5.0;
 
     float selected_offset = 0;
     // FIXME unused
@@ -280,7 +280,7 @@ void ImGui::TabBar::_drawTabBarBottom() {
     ImGuiWindow* wind = ImGui::GetCurrentWindow();
     ImDrawList* dl = wind->DrawList;
     ImGuiStyle& style = ImGui::GetStyle();
-    ImGuiDrawContext& dc = wind->DC;
+    ImGuiWindowTempData& dc = wind->DC;
 
     const ImVec2 padding = style.WindowPadding;
 
