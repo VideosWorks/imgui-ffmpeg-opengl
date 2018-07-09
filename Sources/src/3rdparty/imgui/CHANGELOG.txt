@@ -1,3 +1,5 @@
+Last change 2018 July 9th / 11h21
+
 dear imgui
 CHANGELOG
 
