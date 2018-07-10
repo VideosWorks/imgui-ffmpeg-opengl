@@ -1,5 +1,3 @@
-Last change 2018 July 9th / 11h21
-
 dear imgui
 CHANGELOG
 
@@ -39,11 +37,13 @@ Breaking Changes:
 
  - Removed per-window ImGuiWindowFlags_ResizeFromAnySide beta flag in favor `io.OptResizeWindowsFromEdges=true` to enable the feature globally. (#1495)
    The feature is not currently enabled by default because it is not satisfying enough.
+ - Style: Renamed ImGuiCol_ModalWindowDarkening to ImGuiCol_ModalWindowDimBg for consistency with other features. Kept redirection enum (will obsolete).
 
 Other Changes:
 
  - ArrowButton: Fixed to honor PushButtonRepeat() setting (and internals' ImGuiItemFlags_ButtonRepeat).
  - ArrowButton: Setup current line text baseline so that ArrowButton() + SameLine() + Text() are aligned properly.
+ - Nav: Added a CTRL+TAB window list and changed the highlight system accordingly. This is designed to allow CTRL+TAB between Tabs in the future.   
  - Window: Allow menu and popups windows from ignoring the style.WindowMinSize values so short menus/popups are not padded. (#1909)
  - Window: Added global io.OptResizeWindowsFromEdges option to enable resizing windows from their edges and from the lower-left corner. (#1495)
  - Drag and Drop: Fixed an incorrect assert when dropping a source that is submitted after the target (bug introduced with 1.62 changes 
@@ -60,6 +60,7 @@ Other Changes:
  - Examples: OSX: Added early raw OSX platform backend. (#1873) [@pagghiu, @itamago, @ocornut]
  - Examples: Added mac OSX & iOS + Metal example in example_apple_metal/. (#1929, #1873) [@warrenm]
  - Examples: Added mac OSX + OpenGL2 example in example_apple_opengl2/. (#1873)
+ - Examples: OpenGL3: Added error output when shaders fail to compile/link.
  - Examples: Win32, Glfw, SDL: Added support for the ImGuiMouseCursor_Hand cursor.
 
 

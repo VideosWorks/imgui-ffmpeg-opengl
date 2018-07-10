@@ -1,3 +1,10 @@
+2018 July 10th
+
+
+Resync'ed again with Dear ImGui 1.63 WIP, with improved changes in SDL + OpenGL3
+Replaced ImGuiCol_NavWindowingHighlight with ImGuiCol_NavWindowListHighlight, causing a build breakage
+
+
 2018 July 8th
 
 ericb : imgui+tabs.cpp

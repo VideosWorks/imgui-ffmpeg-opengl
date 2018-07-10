@@ -489,5 +489,5 @@ void ImGui::StyleColorsLightGreen(ImGuiStyle* dst)
 
     colors[ImGuiCol_DragDropTarget]         = ImVec4(0.26f, 0.59f, 0.98f, 0.95f);
     colors[ImGuiCol_NavHighlight]           = colors[ImGuiCol_HeaderHovered];
-    colors[ImGuiCol_NavWindowingHighlight]  = ImVec4(0.70f, 0.70f, 0.70f, 0.70f);
+    colors[ImGuiCol_NavWindowListHighlight]  = ImVec4(0.70f, 0.70f, 0.70f, 0.70f);
 }
