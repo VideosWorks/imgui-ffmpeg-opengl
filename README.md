@@ -86,9 +86,13 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 Atelier retard :
 
-- [ ] ajout d'une source vidéo de type fichier vidéo
-- [ ] ajout d'une source vidéo de type webcam IP
-- [ ] tracking en temps réel
+- [X] (fonctionnel) ajout d'une source vidéo de type fichier vidéo
+- [X] (fonctionnel) lecture seulement vidéo + son synchrone (grâce à SDL_Kitchensink)
+- [X] (fonctionnel) séquençage d'une vidéo (traitement des images seulement)
+- [X] ajout d'une source vidéo de type webcam IP
+- [ ] (en cours) conversion YUV / RGB (OpenGL + pixel shaders)
+- [X] ajout d'annotations dans la vidéo
+- [ ] (en tests) tracking en temps réel
 - [ ] repères visuels en temps réel
 
 Atelier GB :
@@ -204,10 +208,14 @@ Under development (but already partially functional):
 
 Workshop delay:
 
-- [ ]    use a video file as video source
-- [ ]    use an IP webcam as video source
-- [ ]    real-time tracking
+- [X] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)
+- [X] (fonctionnel) read only a video (frames + sound synch'ed (SDL_Kitchensink)
+- [X] (works) use an IP webcam as video source (ffmpeg + )
 - [ ]    visual cues in real time 
+- [X] (works) video sequencing (frames only, no sound yet)
+- [ ] (work in progress) YUV to RGB conversion (ffmpeg + OpenGL + pixel shaders)
+- [X] (WIP) realtime annotations in the frames
+- [ ] (WIP) realtime tracking
 
 GK Workshop:
 
