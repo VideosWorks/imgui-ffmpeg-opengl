@@ -86,15 +86,15 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 Atelier retard :
 
-- [x] (utilisable) ajout d'une source vidéo de type fichier vidéo
-- [x] (utilisable) lecture seulement vidéo + son synchrone (grâce à SDL_Kitchensink)
-- [x] (utilisable) séquençage d'une vidéo (traitement des images seulement)
+- [x] ajout d'une source vidéo de type fichier vidéo
+- [x] lecture seulement vidéo + son synchrone (grâce à SDL_Kitchensink)
+- [x] séquençage d'une vidéo (traitement des images seulement)
 - [x] ajout d'une source vidéo de type webcam IP
 - [ ] calibration de la webcam (distorsion, aberrations de sphéricité)
 - [ ] correction distorsion en temps réel (pixels shaders ou OpenCV)
 - [ ] (en cours) conversion YUV / RGB (OpenGL + pixel shaders)
 - [x] ajout d'annotations dans la vidéo
-- [ ] (en tests) tracking en temps réel
+- [ ] tracking en temps réel (en tests)
 - [ ] repères visuels en temps réel
 
 Atelier GB :
