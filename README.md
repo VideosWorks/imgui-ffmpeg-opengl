@@ -86,9 +86,9 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 Atelier retard :
 
-- [x] (fonctionnel) ajout d'une source vidéo de type fichier vidéo
-- [x] (fonctionnel) lecture seulement vidéo + son synchrone (grâce à SDL_Kitchensink)
-- [x] (fonctionnel) séquençage d'une vidéo (traitement des images seulement)
+- [x] (utilisable) ajout d'une source vidéo de type fichier vidéo
+- [x] (utilisable) lecture seulement vidéo + son synchrone (grâce à SDL_Kitchensink)
+- [x] (utilisable) séquençage d'une vidéo (traitement des images seulement)
 - [x] ajout d'une source vidéo de type webcam IP
 - [ ] calibration de la webcam (distorsion, aberrations de sphéricité)
 - [ ] correction distorsion en temps réel (pixels shaders ou OpenCV)
