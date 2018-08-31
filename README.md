@@ -92,7 +92,7 @@ Atelier retard :
 - [x] ajout d'une source vidéo de type webcam IP
 - [ ] calibration de la webcam (distorsion, aberrations de sphéricité)
 - [ ] correction distorsion en temps réel (pixels shaders ou OpenCV)
-- [ ] (en cours) conversion YUV / RGB (OpenGL + pixel shaders)
+- [ ] conversion YUV / RGB (OpenGL + pixel shaders) (en coursd'implémentation) 
 - [x] ajout d'annotations dans la vidéo
 - [ ] tracking en temps réel (en tests)
 - [ ] repères visuels en temps réel
