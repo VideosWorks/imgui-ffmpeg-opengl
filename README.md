@@ -90,6 +90,8 @@ Atelier retard :
 - [X] (fonctionnel) lecture seulement vidéo + son synchrone (grâce à SDL_Kitchensink)
 - [X] (fonctionnel) séquençage d'une vidéo (traitement des images seulement)
 - [X] ajout d'une source vidéo de type webcam IP
+- [ ] calibration de la webcam (distorsion, aberrations de sphéricité)
+- [ ] correction distorsion en temps réel (pixels shaders ou OpenCV)
 - [ ] (en cours) conversion YUV / RGB (OpenGL + pixel shaders)
 - [X] ajout d'annotations dans la vidéo
 - [ ] (en tests) tracking en temps réel
@@ -98,10 +100,11 @@ Atelier retard :
 Atelier GB :
 - [ ] annotations
 - [ ] saisie des conditions du tir
+- [ ] dessin des statistiques en temps réel
 
 À venir :
 - [ ] mode ralenti (slow-motion) // fonctionne déjà, mais demande une conversion d'OpenCV+highgui vers OpenGL
-
+- [ ] choix vitesse de défilement (% de vitesse 0 à 200% par exemple)
 - [ ] Factorisation du code, avec réécriture de nouvelles classes : Engine, Application, CaptureDev, RecorderDev, Canvas, ShootsManager
 
 
@@ -211,7 +214,9 @@ Workshop delay:
 - [X] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)
 - [X] (fonctionnel) read only a video (frames + sound synch'ed (SDL_Kitchensink)
 - [X] (works) use an IP webcam as video source (ffmpeg + )
-- [ ]    visual cues in real time 
+- [ ] webcam calibration de la webcam (distorsion, aberrations de barrel, pinshot)
+- [ ] real time distorsion correction(pixels shaders or OpenCV)
+- [ ] visual cues in real time 
 - [X] (works) video sequencing (frames only, no sound yet)
 - [ ] (work in progress) YUV to RGB conversion (ffmpeg + OpenGL + pixel shaders)
 - [X] (WIP) realtime annotations in the frames
@@ -225,6 +230,7 @@ GK Workshop:
 To come up :
 
 - [ ]    slow-motion mode // works already, but requires conversion from OpenCV + highgui to OpenGL 
+- [ ]    select the visualization speed (% speed from 0 to 200% forr example)
 
 Technical informations:
 
