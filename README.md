@@ -43,7 +43,7 @@ Système d'exploitation : testé sur Windows 7 et Win 10  64 bits (une version d
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Ce qui est actuellement fonctionnel** :
+**Ce qui est actuellement fonctionnel** (dans la version 0.9 à venir prochainement) :
 
 - [x] **Pan, Tilt et Zoom** : zoom matériel si votre webcam le permet. Les images zoomées peuvent être enregistrées directement ou retardées. Exemple : Logitech Brio permet un zoom matériel jusqu'à x 5.0 + pan et tilt matériel. Logitech C920 et C922 : zoom X 2.0 + pan et tilt
 - [x] **Loupe**: zoom logiciel ( de x1.0 à environ x 4.0 pour la version Linux) d'une partie de l'image // fonctionne parfaitement
@@ -171,7 +171,7 @@ Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwi
 Important : just in case the application crashes at launch, without any information, it's probably because you forgot
 to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
 
-What is currently functional :
+**What is currently functional** (in the 0.9 version, to come soon):
 
 - [x] **Pan, Tilt and Zoom** : hardware zoom, depending on your webcam. The zoomed images can be directly recorded, delayed or not. Example : Logitech Brio allows until x 5.0 hardware zoom + pan and tilt in the zoomed area. Logitech C920 and C922 : zoom x 2.0 only + pan and tilt
 - [x]    Lense (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image (but the zoomed area cannot be recorded)
