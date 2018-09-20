@@ -45,7 +45,8 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **Ce qui est actuellement fonctionnel** :
 
-- [x] **Zoom** ( de x1.0 à x3.0 et jusqu'à x4.0 pour la version Linux) d'une partie de l'image // fonctionne parfaitement
+- [x] **Pan, Tilt et Zoom** : zoom matériel si votre webcam le permet. Les images zoomées peuvent être enregistrées directement ou retardées. Exemple : Logitech Brio permet un zoom matériel jusqu'à x 5.0 + pan et tilt matériel. Logitech C920 et C922 : zoom X 2.0 + pan et tilt
+- [x] **Loupe**: zoom logiciel ( de x1.0 à environ x 4.0 pour la version Linux) d'une partie de l'image // fonctionne parfaitement
 - [x] affichage retardé (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
 - [x] permet le séquençage vidéo (le son n'est pas géré pour l'instant)
 - [x] enregistrement avec ou sans retard des images issues d'une ou plusieurs webcams (une seule peut être enregistrée à la fois)
@@ -62,6 +63,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
+- [x] ouverture d'une vidéo (son inclus). Arrêt et reprise de la vidéo (barre espace).
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] analyse image par image : on ouver une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement
 - [x] modification de la taille de l'image en mode slideshow
@@ -171,7 +173,8 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 
 What is currently functional :
 
-- [x]    Zoom (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image // works perfectly
+- [x] **Pan, Tilt and Zoom** : hardware zoom, depending on your webcam. The zoomed images can be directly recorded, delayed or not. Example : Logitech Brio allows until x 5.0 hardware zoom + pan and tilt in the zoomed area. Logitech C920 and C922 : zoom x 2.0 only + pan and tilt
+- [x]    Lense (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image (but the zoomed area cannot be recorded)
 - [x]    delayed display (adjustable up to 40s, but can be increased, tested OK up to 100s delay, but you need a lot of RAM in this case)
 - [x]    allows video sequencing (the sound is not managed at this time)
 - [x]    recording with or without delay images from one or more webcams (only one can be recorded at a time)
