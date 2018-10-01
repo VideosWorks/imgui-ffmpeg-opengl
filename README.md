@@ -35,7 +35,7 @@ L'installation demande ~ 35 Mo de place sur le disque + de la place pour les fic
 
 Webcam vivement conseillées et longuement testées :
 - Logitech C920 :+1: (30 images par seconde, mais demande une bonne lumière)
-- Logitech C922 :+1: (demande une bonne lumière)
+- Logitech C922 (demande une bonne lumière)
 - Logitech Brio 4K :+1: (60 ou 30 images par seconde 720p, mais demande une connexion USB 3.0 mini + une lumière suffisante)
 - Microsoft Lifecam C3000 : demande quelquefois de relancer une fois miniDart, (demande une bonne lumière)
 
@@ -164,9 +164,9 @@ The installation requires ~ 35 MB of disk space + space for the created video fi
 Webcam highly recommended and extensively tested:
 
 - Logitech C920 :+1: (30 frames per second, but requires good light)
-- Logitech C922 :+1: (ask for a good light)
+- Logitech C922 (needs a good light)
 - Logitech Brio 4K :+1: (60 or 30 frames per second 720p, but needs USB 3.0 to work (+ needs a good light))
-- Microsoft Lifecam C3000: sometimes asks to restart once miniDart, (asks for a good light) 
+- Microsoft Lifecam C3000: sometimes asks to restart once miniDart, (needs a good light) 
 
 Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwin7+ is available, but on demand only).
 
@@ -219,7 +219,7 @@ Workshop delay:
 - [x] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)
 - [x] (fonctionnel) read only a video (frames + sound synch'ed (SDL_Kitchensink)
 - [x] (works) use an IP webcam as video source (ffmpeg + )
-- [ ] webcam calibration de la webcam (distorsion, aberrations de barrel, pinshot)
+- [ ] webcam calibration (distorsion, barrel or pincushion aberrations )
 - [ ] real time distorsion correction(pixels shaders or OpenCV)
 - [ ] visual cues in real time 
 - [x] (works) video sequencing (frames only, no sound yet)
