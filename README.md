@@ -34,9 +34,9 @@ L'installation demande ~ 35 Mo de place sur le disque + de la place pour les fic
 
 
 Webcam vivement conseillées et longuement testées :
-- Logitech C920 :+1: (30 images par seconde, mais demande une bonne lumière)
-- Logitech C922 (demande une bonne lumière)
-- Logitech Brio 4K :+1: (60 ou 30 images par seconde 720p, mais demande une connexion USB 3.0 mini + une lumière suffisante)
+- **Logitech C920** meilleur rapport qualité prix :+1:  ; USB2.0 ou + , 30 images par seconde, mais demande une bonne lumière)
+- Logitech C922 USB 2.0 ou + , demande une bonne lumière
+- **Logitech Brio 4K** plus chère que la C920, mais la meilleure actuellement :+1: permet d'enregistrer à 30 ou 60 images par seconde 720p (jusqu'à 4K possibles avec ffmpeg), mais **demande une connexion USB 3.0 mini** + une lumière suffisante)
 - Microsoft Lifecam C3000 : demande quelquefois de relancer une fois miniDart, (demande une bonne lumière)
 
 Système d'exploitation : testé sur Windows 7 et Win 10  64 bits (une version de test en 32 bits est disponible, mais sur demande uniquement).
@@ -163,9 +163,9 @@ The installation requires ~ 35 MB of disk space + space for the created video fi
 
 Webcam highly recommended and extensively tested:
 
-- Logitech C920 :+1: (30 frames per second, but requires good light)
+- Logitech C920 the better quality/price ratio :+1: Needs USB 2.0 or + 30 frames per second, but requires good light)
 - Logitech C922 (needs a good light)
-- Logitech Brio 4K :+1: (60 or 30 frames per second 720p, but needs USB 3.0 to work (+ needs a good light))
+- Logitech Brio 4K more expensive than the C920 but currently the best webcam :+1: (60 or 30 frames per second 720p, but needs USB 3.0 to work (+ needs a good light))
 - Microsoft Lifecam C3000: sometimes asks to restart once miniDart, (needs a good light) 
 
 Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwin7+ is available, but on demand only).
