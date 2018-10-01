@@ -66,7 +66,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] ouverture d'un répertoire contenant une vidéo
 - [x] ouverture d'une vidéo (son inclus). Arrêt et reprise de la vidéo (barre espace).
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
-- [x] analyse image par image : on ouver une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement
+- [x] analyse image par image : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
 
 À venir : annotations + enregistrement de l'image sous forme d'une vidéo de durée donnée.
@@ -193,7 +193,7 @@ Workshop analysis :
 
 - [x]    open a directory containing a video
 - [x]    choice of default video recording directory (to be tested further)
-- [x]    image-by-image analysis: we open a video of short duration (30s maximum recommended) and we can control the scrolling 
+- [x]    image-by-image analysis: we open a video of short duration (30s maximum recommended) and we can control the scrolling using R/L keys
 
 Upcoming: annotations + recording of the image as a video of a given duration.
 
@@ -224,7 +224,7 @@ Workshop delay:
 - [ ] visual cues in real time 
 - [x] (works) video sequencing (frames only, no sound yet)
 - [ ] (work in progress) YUV to RGB conversion (ffmpeg + OpenGL + pixel shaders)
-- [X] (WIP) realtime annotations in the frames
+- [x] (WIP) realtime annotations in the frames
 - [ ] (WIP) realtime tracking
 
 GK Workshop:
