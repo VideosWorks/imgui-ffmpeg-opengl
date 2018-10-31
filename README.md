@@ -118,7 +118,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * **OpenGL** (https://www.khronos.org/opengl/) pour le rendu ;
 * **Dear ImGui** (https://github.com/ocornut/imgui) pour l'interface utilisateur et les performances graphiques (merci à **Omar Cornut** pour cette UI géniale) ;
 * **OpenCV 3.4.0** (https://opencv.org/) : gestion des webcams, traitement des frames, annotations (chronomètre, enregistrement) ;
-* **SDL_kitchensink** (https://github.com/katajakasa/SDL_kitchensink) pour le son dans les vidéos (lecture ET -bientôt- enregistrement)
+* **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg) pour le son dans les vidéos (lecture ET -bientôt- enregistrement)
 * **DirectShow** et **DirectX** ( sous Windows) , v4l2 + gstreamer (sous Linux) : acquisition vidéo ;
 * **FFMPEG (version 3.4.0 sous Windows, 3.4.1 devel sous Linux)** (http://ffmpeg.org/) ouverture, analyse, export de fichiers vidéos (divx, avi etc) ;
 * **mingw-w64** (https://mingw-w64.org/doku.php) cross-compilation de la version Windows ;
@@ -245,7 +245,7 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **OpenGL** ( https://www.khronos.org/opengl/ ) for rendering;
 * **Dear ImGui** ( https://github.com/ocornut/imgui ) for user interface and graphics performance (thanks to **Omar Cornut** for this awesome UI);
 * **OpenCV 3.4.0** ( https://opencv.org/ ): management of webcams, processing of frames, annotations (stopwatch, recording);
-* **SDL_kitchensink** ( https://github.com/katajakasa/SDL_kitchensink ) for sound in videos (reading AND -soon- recording) 
+* **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg)  for sound in videos (reading AND -soon- recording) 
 * **DirectShow** and **DirectX** (on Windows), v4l2 + gstreamer (on Linux): video acquisition;
 * **FFMPEG (version 3.4.0 on Windows, 3.4.1 devel on Linux)** ( http://ffmpeg.org/ ) opening, analysis, export of video files (divx, avi etc);
 * **mingw-w64** ( https://mingw-w64.org/doku.php ) cross-compilation of the Windows version;
