@@ -1,0 +1,12 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+
+Name: sdl2_ffmpeg
+Description: SDL2/ffmpeg video playback library
+Version: @KIT_VERSION@
+URL: https://framagit.org/ericb/sdl2_ffmpeg
+
+Libs: -L${libdir} -l@PROJECT_NAME@
+Cflags: -I${includedir}

@@ -1,0 +1,17 @@
+2018 October 30
+
+Tested the code against miniDart
+Commited the changes
+Added a new (ffmpeg frame as input ) YUV -> BGR convertion (cv::Mat as output)
+
+Version 0.9 / 2018 october 09
+
+added some comments in simple_opencv.cpp, bcause of cv:resize() too hungry (costing around 10% of power for one core @ 720p)
+adapted the pkg-config.pc file to the new repo
+modified all the path, to avoid claching with SDL_kitchensink
+
+FFMPEG + OpenCV implementation, using cv::Mat + cv::imshow a cv::namedWindow // WORKS well, but software convertion needs 32% of one core.
+FFPMEG + OpenGL texture2D implementation // currently broken
+FFMPEG + SDL2 YUV frames -> yuv2rgb conversion using glsl -> OpenCV cv::Mat  //  WIP
+
+Started 2018 August 1st  // To be continued
