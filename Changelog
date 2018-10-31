@@ -1,10 +1,176 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+
+2018 Ooctber 30th
+
+Added SDL2_ffmpeg code in miniDart
+Fixed all the cross compilations issues
+Improved the second version of simple_OpenCV using YUV -> BGR -> cv::Mat
+Ready for testing reading a video in miniDart.
+Improved the Makefile
+
+
+2018 October 29th
+
+Implemented a 5th theme, based on Windows 10 UI.
+
+Now, 5 themes are fully selectable in miniDart :
+- LightGreen
+- Dark
+- LightBlue
+- Classic
+- Windows
+
+2018 October 28th
+
+Upgraded Dear ImGui to 2018-10-28 version 1.66 WIP
+Fixed the UI for the "advanced recording parameters" dialog box :
+  - removed duplicated entry, added FLV1
+  - fixed the wrong ImGui::NewLine()
+  - tested some cases : what works what not using Logitech BRIO and Logitech C920
+
+
+2018 September 24th
+
+Tested OpengYUV : turn ffmpeg YUV frames into RGB(A) frames using pixel shaders. Fast, light and brillant somewhere.
+WIP : SDL_kitchensink -> ffmpeg YUV frames -> vertex / fragment shaders ->  RGB(A) (or BGR(A) -> cv::Mat 
+Should be as light (incompatible) accelerated YUV + SDL Renderer
+Need new classes or static functions : loadShaders and convertFrames
+
+Fixed some little useless constants in the Makefile
+Improved the PTZ ui
+
+Forked OpenCV 3.4 and proposed a full diff for all the changes in #12498 
+Link : https://github.com/opencv/opencv/issues/12498
+
+
+2018 September 20th
+
+Implemented Pan Tilt Zoom on Linux. Works very well
+TODO : verify it works on both Windows and Linux
+
+2018 September 11th
+
+Tested on Windows : works fine. Added the other parameters (not everything works though ...)
+Zoom not working with Lifecam 3000 (mybe no hardware zoom ?)
+Improved the UI on Windows.
+ebuilt OpenCV3.4.0 on Windows (64bits only)
+
+2018 September 10th
+
+Implemented hardware zoom : CV_CAP_ZOOM_ABSOLUTE.
+Tested with Logitech C920, C922 and Logitech Brio Works very well.
+TODO : test with Logitech C920 and Microsoft LifeCam300 
+FIXME : yet missing: a getter, to retrieve the min/max zoom values for the current webcam.
+Modified: OpenCV 3.4.0 sources (mainly modules/videoio/src/cap_libv4l.cpp)
+TODO : do the same thing on Windows + remove the hacky previous zoom (select an area will now be used to draw)
+
+2018 August 9th
+
+DONE : yuv2rgb sources added in the tree
+STATUS : yuv2rgb builds fine, including in Windows cross compilation
+TODO : test with SDL_Kitchensink, and use only what is needed
+
+2018 August 8th
+
+After some fight with SDL_Kitchensink, I finaly implemented a solution using SDL for the sound and OpenGL 
+for the rendering (the SDL renderer is sadly NOT an option).
+
+Current status :
+
+movie (h264 or similar compressed format)
+     |
+     |
+     |
+    FFMPEG   ---->  the sound is extracted ----> we can hear the sound
+            |
+            |
+            ----->  the video is extracted as YUV420P flow (sw_scale) ---> YUV420P to RGB(A) (broken)--> rendering
+
+IMPORTANT : sound and video are in perfect synchronization (using SDL implementation (SDL_Audio + SDL_Renderer)
+The problem is that miniDart use Dear ImGui, and the SDL renderer does NOT comply with it. Then, the modification 
+consists in create an OpenGL texture, and render it using the generic SDL_GL_SwapBuffer(window)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   Work In Progress : YUV420P to RGB(A) conversion  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Tested two very promising solution :
+
+POSSIBILITY 1) yuv2rgb 
+
+Link : https://github.com/descampsa/yuv2rgb
+Under BSD License, from Adrien Descamps : seems to work very fast.
+Includes SSE, SSE2, FFMPEG (un)aligned options
+
+Estimated rendering time (per frame) : <5ms (SSE2) or ~ 10 ms (FFMPEG)  // FIXME : verify !
+
+SOLUTION 2) H264 Decoder
+
+Link : https://gist.github.com/roxlu/9329339
+CURRENTLY NO License (author contacted) 
+Seems to be even faster, using Vertex/Fragment shaders and VAO.
+The brillant idea consists in directly render the YUV420P with shaders. The subtility is in the shaders code : sum 
+the three Y, U and V shaders with corect coefficients, et voila, no need to convert anything ...
+Started the first solution implementation, per see (everything compiles, AND windows porting works already)
+
+Estimated rendering time (per frame) : < 0.1 ms (more interesting, no CPU overload but license issue, as very often ...)
+
+
+2018 August 1st
+
+Tested the awesome Sdl_Kitchensink examples after resync.
+Less than 8% of CPU load to watch a vidéo (including sound) : this is impressively efficient.
+FIXME: include that feature inside miniDart
+(problem to be solved : avoid using the "SDL2 renderer", means extract directly the frames from ffmpeg contexts)
+
+Removed the broken getTextureInfo()
+
+2018 July 31st
+
+Renamed VideoReader VideoPlayer everywhere.
+Continued the classes/members identification in main.cpp
+
+
+2018 July 30th
+
+Using Fragment Shaders  (glsl #version 120+, likely 150 everywhere could be nice) :
+cpp-cheet/opengl+glfw (modified the example from : https://github.com/cirosantilli/cpp-cheat )
+glfw_webcam_capture + v4l2 (too bad ... bcause not portable :-/ )
+- can now capture the keyboard, and use uniform values returned in real time
+- can now duplicate the images captures, flip horizontaly at ~ 0% of CPU load (no idea for the GPU load though)
+
+TESTME : implement distorsion correction (using ImGui, should be easy !)
+
+Modified glTexPArameteri when loading a texture on the GPU : now using GL_LINEAR (was GL_NEAREST, less precise)
+Continued factorization / classes rewriting
+Replaced resetWebcam with resetCaptureDev everywhere.
+Implemented Engine.cpp / Engine.hpp
+Started gui.cpp / gui.hpp implementation coupled to application.cpp / application.hpp
+
+
+2018 July 22nd
+
+Tested several ways to display a video, including using FFMPEG (until ~ 700 fps with vsync disabled), FBO, or pixel shaders (textures, as VAO)
+Learned a lot OpenGL versions, and GPU programming.
+Fixed the "Record a video" working even when paused. Now : the choice is no longer abailable when paused.
+Fixed the selected area not correctly drawn (missing side(s)) when the view has been resized.
+Fixed : the selected rectangle can no longer go outside the image area.
+Now the user can select the thikness of the selected area outline (between 2.0 and 4.0 pixels)
+Added : LEFT_IMAGE_BORDER, RIGHT_IMAGE_BORDER, TOP_IMAGE_BORDER, BOTTOM_IMAGE_BORDER constants
+
+Started working at bezier curves (+ arrow)
+
+2018 July 16th
+
+Added -march=native -mtune=native CXX / CC flags // FIXME : choose the best options
+
+
 2018 July 10th
 
 Upgraded one more time Dear ImGui
-Started a new implementation, in 0.999 version. Now separating Engine + GUI + Applciation and so on
+Started a new implementation, in 0.999 version. Now separating Engine + GUI + Application and so on
 
 2018 July 8th
 
