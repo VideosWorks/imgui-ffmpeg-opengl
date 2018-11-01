@@ -1,6 +1,21 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 1st
+
+More code factorization : 
+- worked at Gui class (gui.cpp) : added clean_and_close, ~Gui()
+- improved gui.hpp
+- improved engine.cpp
+- improved engine.hpp
+
+Improved the Makefile :
+- added real_clean rule
+- fixed Windows and Linux cleanup separately
+
+Renamed Tools:: class FileTools:: class
+Implemented FileTools class
+
 
 2018 Ooctber 30th
 
