@@ -1,9 +1,32 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 3rd
+
+More code factorization:
+
+frame.release() is now *outside* of gui loop ( YES ! )
+
+Now implementing : frame_displayed = frame.clone(), to dissociate the capture from the view
+  => main loop and capture loop are now decoupled ! Expected : stable 60 fps in the view
+
+  main loop will use : displayed_frame
+  displayed frame is a clone of EITHER webcam_image, with or without delay (or empty image if capture fails) ;
+                                OR video frame (or empty image (if video fails).
+
+- added displayed_frame, as clone of capture or current video (default is empty_frame, just in case something goes wrong).
+
+- testing true fullscreen mode. 2 possible cases :
+  case 1 : SELECTED TABS are delay, analysis : fullscreen or windowed mode are possible ;
+  case 2 : SELECTED TABS are stats, GK follow up, help, credits : only windowed mode is possible.
+
+Started working at the new main loop : expected 60 fps (depends on the machine).
+The capture loop will depend on the fps value (defined in the GUI, 24 fps by default)
+
+
 2018 November 1st
 
-More code factorization : 
+More code factorization:
 - worked at Gui class (gui.cpp) : added clean_and_close, ~Gui()
 - improved gui.hpp
 - improved engine.cpp
