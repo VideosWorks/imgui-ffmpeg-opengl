@@ -1,11 +1,50 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 5th
+
+Replaced the videoplayer class with inline videoplayer, to see what was wrong :
+- video_init()
+- video_run()
+- video_close(à
+
+Got video opening, closing and working (using space key to play/pause, as expected)
+Fixed several craches (empty cv::mat, null pointers like src and player oince closed the video).
+
+We can record the watched video. Delay is not an option (non sense for played video)
+
+FIXME :
+
+- add more buttons (play / pause). TODO later :fast forward / fast backward / one frame forward / one frme backward)
+- videos recorded from videos are half the speed the original vidéo ??
+- NO SOUND (causing instant crashes for the moment )
+- Only .avi ca be open. Not the other vidéos, nor sound ???
+
+Possible tracks :
+- check whether the cv::Mat formats are the same with other videos ?
+- trace the sound part, who seems to be not working maybe ?
+
+TODO
+- fullscreen mode. 2 possible cases :
+  case 1 : SELECTED TABS are delay, analysis : fullscreen or windowed mode are possible ;
+  case 2 : SELECTED TABS are stats, GK follow up, help, credits : only windowed mode is possible.
+
+
+2018 November 4th
+
+Added _THEME to all color themes (BLUE_LIGHT_THEME, WINDOWS_THEME, DARK_THEME, LIGHTGREEN_THEME, CLASSIC_THEME)
+Now using WINDOWS_THEME as default
+
+Fixed the source issue : 3 choice are possibles, only one works well for the moment.
+
+
+
 2018 November 3rd
 
 More code factorization:
 
 frame.release() is now *outside* of gui loop ( YES ! )
+- added displayed_frame, as clone of capture or current video (default is empty_frame, just in case something goes wrong).
 
 Now implementing : frame_displayed = frame.clone(), to dissociate the capture from the view
   => main loop and capture loop are now decoupled ! Expected : stable 60 fps in the view
@@ -14,15 +53,22 @@ Now implementing : frame_displayed = frame.clone(), to dissociate the capture fr
   displayed frame is a clone of EITHER webcam_image, with or without delay (or empty image if capture fails) ;
                                 OR video frame (or empty image (if video fails).
 
-- added displayed_frame, as clone of capture or current video (default is empty_frame, just in case something goes wrong).
-
-- testing true fullscreen mode. 2 possible cases :
-  case 1 : SELECTED TABS are delay, analysis : fullscreen or windowed mode are possible ;
-  case 2 : SELECTED TABS are stats, GK follow up, help, credits : only windowed mode is possible.
 
 Started working at the new main loop : expected 60 fps (depends on the machine).
 The capture loop will depend on the fps value (defined in the GUI, 24 fps by default)
 
+Gui : fixed clean all shoots only when number of shoots > 0
+
+Localization: added new strings OPEN_A_CLIP_BUTTON, CLOSE_THE_CLIP_BUTTON. Added french and english strings.
+Changed VideoReader in ClipReader classe, more accurate.
+
+VideoReader will be reserved to read a true video, including sound.
+
+Renamed videoreader.cpp and videoreader.hpp into clipreader.cpp and clipreader.hpp
+
+Implemented VideoPlayer class, using SDL2_ffmpeg.
+
+API : LoadFile((char *) filename) becomes LoadFile((char *) filename, int video_type). video_type is VIDEO_CLIP or VIDEO_FILE
 
 2018 November 1st
 
