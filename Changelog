@@ -24,6 +24,15 @@ Possible tracks :
 - check whether the cv::Mat formats are the same with other videos ?
 - trace the sound part, who seems to be not working maybe ?
 
+More improvements :
+- the video is now automatically closed when finished.
+- fixed the crash when closing several times the video
+- image is now paused only for (broken) IP webcam use
+
+Load an entire song (~3'30" e.g.) needs around ~ 15GB or RAM, but works very well with the ClipReader.
+Remember : time in seconds * width * height * 3 * fps  is needed in GB !
+(count 64 GB of RAM, for 13min of rush for 720p@24fps)
+
 TODO
 - fullscreen mode. 2 possible cases :
   case 1 : SELECTED TABS are delay, analysis : fullscreen or windowed mode are possible ;
