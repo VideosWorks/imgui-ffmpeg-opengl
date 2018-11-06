@@ -64,7 +64,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
-- [x] ouverture d'une vidéo (son inclus). Arrêt et reprise de la vidéo (barre espace).
+- [x] ouverture d'une vidéo (le son ne fonctionne pas encore, crashs possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] analyse image par image : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
@@ -90,13 +90,13 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 Atelier retard :
 
 - [x] ajout d'une source vidéo de type fichier vidéo
-- [x] lecture seulement vidéo + son synchrone (grâce à SDL_Kitchensink)
+- [x] lecture seulement vidéo + son synchrone (grâce à SDL2_ffmpeg)
 - [x] séquençage d'une vidéo (traitement des images seulement)
-- [x] ajout d'une source vidéo de type webcam IP
-- [ ] calibration de la webcam (distorsion, aberrations de sphéricité)
-- [ ] correction distorsion en temps réel (pixels shaders ou OpenCV)
+- [x] ajout d'une source vidéo de type webcam IP (n efonctionne pas, bug dû à OpenCV)
+- [ ] calibration de la webcam (distorsion, aberrations de sphéricité) // en tests
+- [ ] correction distorsion en temps réel (pixels shaders ou OpenCV) // en tests
 - [ ] conversion YUV / RGB (OpenGL + pixel shaders) (en coursd'implémentation) 
-- [x] ajout d'annotations dans la vidéo
+- [ ] ajout d'annotations dans la vidéo
 - [ ] tracking en temps réel (en tests)
 - [ ] repères visuels en temps réel
 
@@ -217,14 +217,14 @@ Under development (but already partially functional):
 Workshop delay:
 
 - [x] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)
-- [x] (fonctionnel) read only a video (frames + sound synch'ed (SDL_Kitchensink)
-- [x] (works) use an IP webcam as video source (ffmpeg + )
-- [ ] webcam calibration (distorsion, barrel or pincushion aberrations )
-- [ ] real time distorsion correction(pixels shaders or OpenCV)
+- [x] (fonctionnel) read only a video (frames + sound synch'ed (SDL2_ffmpeg)
+- [x] (works) use an IP webcam as video source (ffmpeg + ) // be carefull : crashes possible ! // WIP 
+- [ ] webcam calibration (distorsion, barrel or pincushion aberrations ) // WIP
+- [ ] real time distorsion correction(pixels shaders or OpenCV) // WIP
 - [ ] visual cues in real time 
 - [x] (works) video sequencing (frames only, no sound yet)
 - [ ] (work in progress) YUV to RGB conversion (ffmpeg + OpenGL + pixel shaders)
-- [x] (WIP) realtime annotations in the frames
+- [x] (WIP) realtime annotations in the frames 
 - [ ] (WIP) realtime tracking
 
 GK Workshop:
