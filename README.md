@@ -2,7 +2,7 @@
 
 **VERSION EN FRANCAIS** (english version follows)
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 **AVANT TOUTE CHOSE : sous Windows, vous DEVEZ installer les pilotes de votre carte graphique.**
 
@@ -12,7 +12,7 @@
 
 Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des anciens pilotes (Win7+), mais ils fonctionnent très bien.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 # miniDart (version actuelle : 0.8.3, devel : 0.9)
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais pas seulement)
@@ -145,7 +145,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 
 **ENGLISH VERSION**
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 **FIRST OVER ALL : under Windows, you MUST install the drivers of your graphic card, more precisely you need OpenGL drivers.**
 
@@ -153,7 +153,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 
 **For example, the one provided by Intel, if your machine embeds an Intel integrated chipset, and so on ... (please adadpt to your own case)**
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 #miniDart (current version: 0.8.3, devel 0.9)
 Video analysis software for team sports coaches (handball, but not only)
