@@ -4,7 +4,9 @@
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-**AVANT TOUTE CHOSE : sous Windows, vous DEVEZ installer les pilotes de votre carte graphique (exemple : ceux fournis par Intel si votre machine possède un chipset Intel intégré, etc), en particulier les drivers OPENGL.**
+**AVANT TOUTE CHOSE : sous Windows, vous DEVEZ installer les pilotes de votre carte graphique.**
+
+**Exemple : ceux fournis par Intel si votre machine possède un chipset Intel intégré, etc. En particulier les drivers OPENGL.**
 
 **SINON, cela ne fonctionnera PAS.** (miniDart ne se lancera même pas ...)
 
@@ -144,6 +146,8 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 **FIRST OVER ALL : under Windows, you MUST install the drivers of your graphic card, more precisely you need OpenGL drivers.**
+
+**For example, the one provided by Intel, if your graphic card is an Intel integrated chipset, and so on ... (please adadpt to your own case)**
 
 **ELSE, IT WON'T WORK.** (miniDart would not even launch ...)
 
