@@ -1,6 +1,59 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 13th
+
+
+Added new properties (tested on Linux only):
+- autofocus or manual focus : Logitech C920, C922, C960 (BRIO) works. Lifecam C3000 does not.
+- exposure : works but buggy : we can change, and set from 0 to max BUT no way to retrieve AUTO EXPOSURE mode
+(searching why...)
+
+Rewrote the full algorithm for both focus and exposure.
+Windows test : Zoom works well, but not Pan / Tilt. Will check asap.
+Both focus auto or manual and exposure work on Windows (two possiblities)
+
+All the currently working (or not) webcam images properties are summarized below :
+
++----------+-----------------+-----------------+---------------+---------------|
+| Property |   range/values  |     Webcam      |     Linux     |   Windows 7+  |
+|----------+-----------------+-----------------+---------------+---------------|
+|          |   1.0 to 5.0    | Logitech Brio   |   Works well  |  works well   |
+|  Zoom    |   1.0 to 2.0    | Logitech C920   |   Works well  |  works well   |
+|          |   1.0 to 2.0    | Logitech C922   |   Works well  |  works well   |
++----------+-----------------+-----------------+---------------+---------------|
+|   Pan    | +- right / left | Brio, C922, C920|   Works well  | doesn't work  |
++----------+-----------------+-----------------+---------------+---------------|
+|   Tilt   | +-top / bottom  | Brio, C922, C920|   Works well  | doesn't work  |
++----------+-----------------+-----------------+---------------+---------------|
+| Focus    |  manual / auto  |   All logitech  |   Works well  |   untested    |
++----------+-----------------+-----------------+---------------+---------------|
+| Exposure |  Auto to Manual |  All Logitech   |   all ranges  |   untested    |
++----------+-----------------+-----------------+---------------+---------------|
+|          |  Manual to Auto |  All Logitech   | does not work |   untested    |
++----------+-----------------+-----------------+---------------+---------------|
+
+TODO LATER (maybe)
++----------+-----------------+-----------------+---------------+---------------|
+|  Gain    |   untested      |                 |               |               |
++----------+-----------------+-----------------+---------------+---------------|
+
+
+Fixed some strange issues caused static / extern variables.
+Tested a nice FFmpeg_player opening ~ all the videos I had around, including IP webcam or rtsp flow.
+Remain the SDL2 and YUV+renderer issue.
+
+
+
+2018 November 12th
+
+Testing FFmpeg_player : works well with ALL sorts of videos, including rtsp + sound. Licence LGPL.
+Counterpart: LGPL only, and needs some love for integration inside miniDart.
+ISSUE : on Windows, Tilt and Pan do no work, but Zoom does.
+Started some tries, with other steps and values.
+The (unprecise) Microsoft docuentation says "-180° to 180°", but nobody knows in fact ...
+
+
 2018 November 5th
 
 Replaced the videoplayer class with inline videoplayer, to see what was wrong :
@@ -9,13 +62,13 @@ Replaced the videoplayer class with inline videoplayer, to see what was wrong :
 - video_close(à
 
 Got video opening, closing and working (using space key to play/pause, as expected)
-Fixed several craches (empty cv::mat, null pointers like src and player once closed the video).
+Fixed several craches (empty cv::mat, null pointers like src and player oince closed the video).
 
 We can record the watched video. Delay is not an option (non sense for played video)
 
 FIXME :
 
-- add more buttons (play / pause). TODO later :fast forward / fast backward / one frame forward / one frame backward)
+- add more buttons (play / pause). TODO later :fast forward / fast backward / one frame forward / one frme backward)
 - videos recorded from videos are half the speed the original vidéo ??
 - NO SOUND (causing instant crashes for the moment )
 - Only .avi ca be open. Not the other vidéos, nor sound ???
