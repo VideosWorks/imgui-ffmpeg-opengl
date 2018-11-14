@@ -1,8 +1,8 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
-2018 November 13th
 
+2018 November 14th
 
 Added new properties (tested on Linux only):
 - autofocus or manual focus : Logitech C920, C922, C960 (BRIO) works. Lifecam C3000 does not.
@@ -28,8 +28,8 @@ All the currently working (or not) webcam images properties are summarized below
 +----------+-----------------+-----------------+---------------+---------------|
 | Focus    |  manual / auto  |   All logitech  |   Works well  |   untested    |
 +----------+-----------------+-----------------+---------------+---------------|
-| Exposure |  Auto to Manual |  All Logitech   |   all ranges  |   untested    |
-+----------+-----------------+-----------------+---------------+---------------|
+|          |  Auto to Manual |  All Logitech   |   all ranges  |   untested    |
+| Exposure |-----------------+-----------------+---------------+---------------|
 |          |  Manual to Auto |  All Logitech   | does not work |   untested    |
 +----------+-----------------+-----------------+---------------+---------------|
 
@@ -42,7 +42,6 @@ TODO LATER (maybe)
 Fixed some strange issues caused static / extern variables.
 Tested a nice FFmpeg_player opening ~ all the videos I had around, including IP webcam or rtsp flow.
 Remain the SDL2 and YUV+renderer issue.
-
 
 
 2018 November 12th
