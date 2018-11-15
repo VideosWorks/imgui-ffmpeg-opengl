@@ -1,6 +1,29 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 15th
+
+Added Image rotations, by step of 90°.(other values not needed)
+
++----------+----------------------+-----------------+---------------+---------------|
+| Property |   range/values       |     Webcam      |     Linux     |   Windows 7+  |
++----------+----------------------+-----------------+---------------+---------------|
+|          |  no rotation         |    DEFAULT      |  DEFAULT      |   DEFAULT     |
+|          |----------------------+-----------------+---------------+---------------|
+|  Image   |  90° clockwise       |   All webcams   |  works well   |   works well  |
+| Rotation |----------------------+-----------------+---------------+---------------|
+|          |  180°(V flip)        |   All webcams   |  works well   |   works well  |
+|          |----------------------+-----------------+---------------+---------------|
+|          | horizontal flip      |   All webcams   |  works well   |   works well  |
++----------+----------------------+-----------------+---------------+---------------+
+|          | 90° counterclockwise |   All webcams   |  works well   |   works well  |
++----------+----------------------+-----------------+---------------+---------------+
+
+TODO LATER (maybe)
++----------+-----------------+-----------------+---------------+---------------|
+|  Gain    |   untested      |                 |               |               |
++----------+-----------------+-----------------+---------------+---------------|
+
 
 2018 November 14th
 
