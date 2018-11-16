@@ -58,21 +58,22 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **Ce qui est actuellement fonctionnel** (dans la version 0.9 à venir prochainement) :
 
-- [x] **Pan, Tilt et Zoom** : zoom matériel si votre webcam le permet. Les images zoomées peuvent être enregistrées directement ou retardées. Exemple : Logitech Brio permet un zoom matériel jusqu'à x 5.0 + pan et tilt matériel. Logitech C920 et C922 : zoom X 2.0 + pan et tilt
-- [x] **Loupe**: zoom logiciel ( de x1.0 à environ x 4.0 pour la version Linux) d'une partie de l'image // fonctionne parfaitement
-- [x] affichage retardé (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
-- [x] permet le séquençage vidéo (le son n'est pas géré pour l'instant)
-- [x] enregistrement avec ou sans retard des images issues d'une ou plusieurs webcams (une seule peut être enregistrée à la fois)
-- [x] chronomètre : on peut ajouter le chronomètre, et incruster le temps dans les vidéos enregistrées
+- [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
+- [x] permet le **séquençage vidéo** (le son n'est pas géré pour l'instant)
+- [x] **enregistrement** avec ou sans retard des images issues d'une ou plusieurs webcams (une seule peut être enregistrée à la fois)
+- [x] **chronomètre** : on peut ajouter le chronomètre, et incruster le temps dans les vidéos enregistrées
 - [x] affichage du temps d'activité (cumul si chronomètre activé) et/ou le temps total (depuis le premier appui sur start)
 - [x] changement de webcam en live (il est toutefois conseillé de démarrer miniDart AVEC la webcam branchée)
 - [x] thème modifiable (onglet préférences)
 - [x] toute l'interface utilisateur est modifiable en cours de fonctionnement, mais n'est pas mémorisée pour le prochain démarrage)
 - [x] le mode statistiques est en cours d'implémentation, et toute suggestion d'amélioration est la bienvenue
 - [x] ouvrir un fichier de type vidéo (sera utilisé pour le mode image par image et l'analyse+séquençage avec ajout de tags)
-- [x] mode image par image (déjà disponible ici : https://github.com/ebachard/cv_slideshow fonctionne en mode "drag and drop") ;
+- [x] **mode image par image** (déjà disponible ici : https://github.com/ebachard/cv_slideshow fonctionne en mode "drag and drop") ;
 - [x] selon l'installation, il est possible de régler directement les paramètres de la webcam, comme la luminance, etc  (onglet "paramètres")
-
+- [x] **réglage du focus** : passage en mode manuel ou automatique, **réglage en mode "microscope"**
+- [x] **Exposition** : réglage manuel possible. Problème connu (Linux seulement) : on ne peut pas repasser en mode automatique sans redémarrer miniDart pour l'instant
+- [x] **Rotation des images**, visionnage et enregistrement. Par exemple si images venant d'un smartphone.Valeurs possibbles : 90° (sens horaire ou sens trigo),
+- [x] **flip horizontal** visionnage et enregistrement (pour masquer une publicité, etc) ou **flip vertical** ( 180°, certaines webcams ont un problème).
 
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
@@ -80,6 +81,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] analyse image par image : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
+- [ ] extraction et annotation d'une image (à venir, puis enregistrement sur une durée donnée (format .avi, pas de son)
 
 À venir : annotations + enregistrement de l'image sous forme d'une vidéo de durée donnée.
 
@@ -98,6 +100,9 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] icônes pour le chronomètre, les sources (webcam 1 ou 2)
 
 **En cours de développement** (mais déjà partiellement fonctionnel) :
+
+**Traduction de l'interface utilisatur en anglais : 40% réalisé à ce jour** (actually)
+
 
 Atelier retard :
 
@@ -210,6 +215,10 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 - [x]    the statistics mode is being implemented, and any suggestion of improvement is welcome
 - [x]    open a video type file (will be used for image-per-image mode and analysis + sequencing with tagging)
 - [x]    image by image mode (already available here: https://github.com/ebachard/cv_slideshow works in "drag and drop" mode); 
+- [x]    **focus** : manual mode or automatic. Possible use in "Microscope" mode.
+- [x]    **exposure** : manual mode or automatic. Known issue  (Linux only) : miniDart must restart to retrieve the automatic mode (WIP).
+- [x]    **image rotations** : displaying or recording. For example when the images come from a smartphone, with a 90° orientation (both clockwise or counter clockwise are possible)
+- [x]    **horizontal flip** (to hide publicity, or simply when needed, or **vertical flip** (180°) are possible. e.g. this can be helpfull with some buggy webcams.
 
 Workshop analysis :
 
@@ -235,6 +244,8 @@ GK follow-up workshop :
 - [x]    icons for stopwatch, sources (webcam 1 or 2) 
 
 Under development (but already partially functional):
+
+**English localization : 40% done** (actually)
 
 Workshop delay:
 
