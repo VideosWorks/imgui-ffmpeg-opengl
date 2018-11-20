@@ -1,7 +1,44 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+
+2018 November 19th
+
+Testing extern SDL_Window *, SDL_Renderer * , AVPacket ( and threads ? )
+
+More encapsulation with restartCaptureDev initialization.
+
+Fixed the rtsp flow "paused" by default
+Improved the event loop : now the video can e displayed at normal speed.
+Just something wrong when the mouse cursor is catched: slow down when hovering,
+and normal spee when outside of the window ..
+
+Testing the ffmpeg player. Lot of threads issues.
+
+WORKAROUND : currently using the renderer + window2 : this will disappear, 
+once I'll be abl to catch the frames as expected and turn them onto cv::Mat
+
+FIXME : open an RTSP flow works, but nothing appears, and playback ends (???)
+
+
+What works : 
+- open a video, play, quit
+- close the video
+- return use the webcam, record, and so on
+
+What is broken :
+- open a second video : no video, but sound works (uhh ?)
+- open rtsp flow : playback ends, means no video or audio issue at the beginning
+- do_exit is probably plain wrong : close twice cause instant crashes, but do exit works well (threads issues ?)
+
+
 2018 November 15th
+
+Fixed a const issue with SDL_Event * 
+
+Replaced Image rotation checkbox, with a modal PopupMenu.
+More encaspulation : fixed more static issues.
+
 
 Added Image rotations, by step of 90°.(other values not needed)
 
@@ -20,6 +57,8 @@ Added Image rotations, by step of 90°.(other values not needed)
 +----------+----------------------+-----------------+---------------+---------------+
 
 TODO LATER (maybe)
+
+-> resize the image when +-90° rotations (ratio + divide the window size)
 +----------+-----------------+-----------------+---------------+---------------|
 |  Gain    |   untested      |                 |               |               |
 +----------+-----------------+-----------------+---------------+---------------|
