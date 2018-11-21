@@ -1,6 +1,21 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 21st
+
+Fixed : s/buf_flux_reseau/flux_reseau/ to provide correct filename to LoadFile() when using IP_WEBCAM
+Fixed : can now watch rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
+TODO : test other IP flow cases.
+
+Dreaming : would be great to catch a movie frome some smartphone !
+
+
+2018 November 20th
+
+More code cleanup :
+- removed useless includes
+- improved the layout
+- immproved the UI
 
 2018 November 19th
 
