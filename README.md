@@ -107,9 +107,9 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 Atelier retard :
 
 - [x] ajout d'une source vidéo de type fichier vidéo
-- [x] lecture seulement vidéo + son synchrone (grâce à SDL2_ffmpeg)
+- [x] lecture seulement vidéo + son synchrone (quelques problèmes à résoudre encore)
 - [x] séquençage d'une vidéo (traitement des images seulement)
-- [x] ajout d'une source vidéo de type webcam IP (n efonctionne pas, bug dû à OpenCV)
+- [x] ajout d'une source réseau, type webcam IP (utilise ffmpeg)
 - [ ] calibration de la webcam (distorsion, aberrations de sphéricité) // en tests
 - [ ] correction distorsion en temps réel (pixels shaders ou OpenCV) // en tests
 - [ ] conversion YUV / RGB (OpenGL + pixel shaders) (en coursd'implémentation) 
@@ -250,8 +250,8 @@ Under development (but already partially functional):
 Workshop delay:
 
 - [x] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)
-- [x] (fonctionnel) read only a video (frames + sound synch'ed (SDL2_ffmpeg)
-- [x] (works) use an IP webcam as video source (ffmpeg + ) // be carefull : crashes possible ! // WIP 
+- [x] (works) read only a video (frames + sound synch'ed (SDL2_ffmpeg)
+- [x] (works) use an IP webcam as video source (ffmpeg) // be carefull : crashes possible ! // WIP 
 - [ ] webcam calibration (distorsion, barrel or pincushion aberrations ) // WIP
 - [ ] real time distorsion correction(pixels shaders or OpenCV) // WIP
 - [ ] visual cues in real time 
