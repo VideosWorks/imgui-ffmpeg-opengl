@@ -1,4 +1,4 @@
-La version actuellement en test est la **0.8.3**
+La version actuellement en test est la **0.8.4**
 
 N.B. : merci de me contacter directement en cas de problème avec les instructions.
 
@@ -7,7 +7,7 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 
 **INSTALLATION SOUS WINDOWS 7** ou plus récent :
 
-* télécharger l'archive miniDart_0.7.0_test.exe
+* télécharger l'archive miniDart_0.8.4_test.exe
 * placer cette archive dans un endroit facile d'accès, par exemple sur le bureau ;
 * double-cliquer dessus pour lancer l'installeur ;
 * suivre les instructions.
