@@ -107,7 +107,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 Atelier retard :
 
 - [x] ajout d'une source vidéo de type fichier vidéo
-- [x] lecture seulement vidéo + son synchrone (quelques problèmes à résoudre encore)
+- [x] lecture seulement vidéo + son synchrone (quelques problèmes à résoudre encore) (seulement sous Linux pour l'instant)
 - [x] séquençage d'une vidéo (traitement des images seulement)
 - [x] ajout d'une source réseau, type webcam IP (utilise ffmpeg)
 - [ ] calibration de la webcam (distorsion, aberrations de sphéricité) // en tests
@@ -249,7 +249,7 @@ Under development (but already partially functional):
 
 Workshop delay:
 
-- [x] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)
+- [x] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)  [Linux only]
 - [x] (works) read only a video (frames + sound synch'ed (SDL2_ffmpeg)
 - [x] (works) use an IP webcam as video source (ffmpeg) // be carefull : crashes possible ! // WIP 
 - [ ] webcam calibration (distorsion, barrel or pincushion aberrations ) // WIP
