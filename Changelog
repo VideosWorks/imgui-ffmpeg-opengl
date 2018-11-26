@@ -1,6 +1,13 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 27th
+
+Improved the UI behaviour, when changing the source (USB webcam / IP_WEBCAM or FULL_VIDEO)
+Fixed one crash when clicking on close the connexion twice
+Improved resetCaptureDev feature, simplified too.
+
+
 2018 Novembre 26th
 
 Fixed: 
