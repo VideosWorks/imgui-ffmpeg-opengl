@@ -1,6 +1,23 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 Novembre 26th
+
+Fixed: 
+- implemented avframe_to_cvMat (using nearly the same code I wrote in SDL_Kitechensink and sdl2_ffmpeg)
+- no more renderer needed: got everything in the frame
+- removed all SDL code (texture, and so on)
+- synchronisation is OK. Remains : the refresh issue
+- video, IP webcam, can be open. Images and sound work
+- they can be closed them, redo, and so on without any issue
+- more cleanup (removed 30% in ffmpeg_player code already)
+- included the new case (IP webcam case) in the loop, and it works well.
+- simplified the code (removed some recursive and useless calls
+- extracted some static values
+
+FIXME : Due to the strange video pictures queue, without event, the video is not refreshed.
+Currently studying dranger code to understand what happens, and hw to solve (or workaround) that.
+
 2018 November 21st
 
 Fixed : s/buf_flux_reseau/flux_reseau/ to provide correct filename to LoadFile() when using IP_WEBCAM
