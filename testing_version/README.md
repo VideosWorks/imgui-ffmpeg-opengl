@@ -7,7 +7,7 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 
 **INSTALLATION SOUS WINDOWS 7** ou plus récent :
 
-* télécharger l'archive miniDart_0.8.4_test.exe
+* télécharger l'archive miniDart_0.8.6_test.exe
 * placer cette archive dans un endroit facile d'accès, par exemple sur le bureau ;
 * double-cliquer dessus pour lancer l'installeur ;
 * suivre les instructions.
@@ -68,15 +68,12 @@ Eric Bachard
 
 
 ************************************************************************************************************
+
                    Somme de contrôle (sha 256)                                   Version
 
 ************************************************************************************************************
 
-     6a8fac8a39c6e3ae24cf07d8beb3e7a02b4195dacbd0a67a3b8451ea386b5f44  miniDart_0.8.4_test.exe
-
-************************************************************************************************************
-
-     178d2788eb64339ecc99f616b909ba5eed3126fe44e06bd99362f748c3810b41  miniDart_0.8.3_test.exe
+     f03f48b6d6b6d083c05e04cb58ad1625a503e937f8c4f18e96bb9ac185099d18  miniDart_0.8.6_test.exe
 
 ************************************************************************************************************
 
