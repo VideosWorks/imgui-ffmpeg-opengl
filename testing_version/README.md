@@ -55,7 +55,7 @@ ENREGISTREMENT : 1280 x 720 à 30 images par secondes est le SEUL FORMAT QUI DEV
 
 (et 24 images par seconde sous Linux)
 
-=> Je n'ai pas assez de retour pour en conseiller d'autres pour l'instant.
+=> Je n'ai pas assez de retours utilisateurs pour en conseiller d'autres pour l'instant.
 
 Le numéro des joueurs ne FONCTIONNE PAS CORRECTEMENT (le même numéro est attribué à tous les joueurs). Cela sera corrigé dans une version à venir.
 
