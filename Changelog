@@ -1,19 +1,56 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 November 28th
 
+Fixed (Windows) utf8 char16 issue on Windows. use av_strdup() did the trick.
+Fixed (Windows)close the video / close the rtsp stream
+Fixed event issue in the main loop. Replaced by b_video_running(false) followed by do_exit()
 
+WIP : figure out what exactly cause the instant crash on Windows
+
+Possible track : rebuild ffmpeg with pthread enabled
+
+LOG says (running wine64 miniDart.exe on Linux) :
+read_thread *is->filename  = rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
+b_video_running = 1 (currently in video_init) 
+[udp @ 000000000a70d280] 'circular_buffer_size' option was set but it is not supported on this build (pthread support is required)
+[udp @ 000000000ab8a4c0] 'circular_buffer_size' option was set but it is not supported on this build (pthread support is required)
+[udp @ 0000000008fb2e00] 'circular_buffer_size' option was set but it is not supported on this build (pthread support is required)
+[udp @ 000000000c2893c0] 'circular_buffer_size' option was set but it is not supported on this build (pthread support is required)
+Input #0, rtsp, from 'rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov':
+  Metadata:
+    title           : BigBuckBunny_115k.mov
+  Duration: 00:09:56.48, start: 0.000000, bitrate: N/A
+    Stream #0:0: Audio: aac (LC), 12000 Hz, stereo, fltp
+    Stream #0:1: Video: h264 (Constrained Baseline), yuv420p(progressive), 240x160, 24 fps, 24 tbr, 90k tbn, 48 tbc
+is->video->stream = 1
+is->video->st = 0x8dfc780
+is->video->avctx = 0xd322a80
+video thread
+SDL_CreateThread(video_thread, "video_thread", is) done 1
+audio open done
+packet_queue_start(&is->audioq) = 0
+packet_queue_start(&is->audioq) = 0x8df9500
+packet_queue_start(&is->audioq) = 0xd3ab8c0
+packet_queue_start(&is->audioq) done 
+SDL_PauseAudio(0) done
+
+Current status :
+- everything works very well on Linux, but no way to watch a video on Windows
+- wine64 : everything works on the video playback and on the rstp side : open / close, record a video
+- wine64 miniDart.exe works as expected with the webcam
+- filenames are now correct (avformat_open_input() works ok everywhere now)
+- we can open an .avi on Windows, but works only when no sound (thread issue ?)
 
 2018 November 27th
-
-Release time : 0.8.6
 
 Improved the UI behaviour, when changing the source (USB webcam / IP_WEBCAM or FULL_VIDEO)
 Fixed one crash when clicking on close the connexion twice
 Improved resetCaptureDev feature, simplified too.
 
 
-2018 Novembre 26th
+2018 November 26th
 
 Fixed: 
 - implemented avframe_to_cvMat (using nearly the same code I wrote in SDL_Kitechensink and sdl2_ffmpeg)
