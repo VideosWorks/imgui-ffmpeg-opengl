@@ -1,4 +1,4 @@
-La version actuellement en test est la **0.8.4**
+La version actuellement en test est la **0.8.6**
 
 N.B. : merci de me contacter directement en cas de problème avec les instructions.
 
@@ -55,9 +55,9 @@ ENREGISTREMENT : 1280 x 720 à 30 images par secondes est le SEUL FORMAT QUI DEV
 
 (et 24 images par seconde sous Linux)
 
-=> Je n'ai pas assez de retour pour en conseiller d'autres pour l'instant.
+=> Je n'ai pas assez de retours utilisateurs pour en conseiller d'autres pour l'instant.
 
-Le numéro des joueurs ne FONCTIONNE PAS CORRECTEMENT (le même numéro est attribué à tous les joueurs). Cela sera corrigé dans la version 0.7.1 à venir.
+Le numéro des joueurs ne FONCTIONNE PAS CORRECTEMENT (le même numéro est attribué à tous les joueurs). Cela sera corrigé dans une version à venir.
 
 
 Enfin, merci d'avance pour tout retour et n'oubliez pas de tester l'intégrité de l'archive téléchargée 

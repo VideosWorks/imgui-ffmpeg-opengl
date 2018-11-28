@@ -77,7 +77,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
-- [x] ouverture d'une vidéo (le son ne fonctionne pas encore, crashs possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
+- [x] ouverture d'une vidéo (le son devrait fonctionner. Crashes possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] analyse image par image : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
