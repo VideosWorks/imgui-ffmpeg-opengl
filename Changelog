@@ -3,6 +3,18 @@ Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
 2018 Novembre 29th
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+FIXME : main problem on Windows seems to be the sound :
+
+The log says : 
+
+[audio]could not open audio, error:DirectSound CreateSoundBuffer: Invalid Parameter
+audio open failed
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Back to dark theme as default
+
 Rebuilt cross compiled ffmpeg with -enable-win32threads option 
 
 Fixed (Windows) : fixed all crashes when closing any source (Video / IP webcam)
