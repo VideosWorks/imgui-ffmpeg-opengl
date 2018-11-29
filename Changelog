@@ -4,7 +4,10 @@ Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 2018 Novembre 29th
 
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Can watch BigBuckBunny on Windows, but no sound.
+
 FIXME : main problem on Windows seems to be the sound :
 
 The log says : 
