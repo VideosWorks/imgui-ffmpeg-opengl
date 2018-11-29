@@ -3,6 +3,8 @@ Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
 2018 Novembre 29th
 
+Fixed (Windows) : fixed all crashes when closing any source (Video / IP webcam)
+Fixed (Windows) : an open / re-open any source
 Fixed : can record everything (Webcam or IP webcam or from video including time)
 Fixed : can record time with rotated images
 Fixed : can now record rotated images (only 180° +- horizontal flip works)
