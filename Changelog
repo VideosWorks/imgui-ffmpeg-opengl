@@ -1,6 +1,12 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+RELEASE :  0.8.7 
+
+Video + sound work on Windows (7+) and on Linux
+can use rtsp flow as input, and save the images
+Possible crash during a little while afterthe playback stops. 2 seonds after, no more crash (probably some unfinished thread issue)
+
 2018 November 30th
 
 More SDL2 sound fixes (https://trac.ffmpeg.org/ticket/6721) but no effect

@@ -14,7 +14,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# miniDart (version actuelle au téléchargement : 0.8.6 (Windows7+ seulement) , devel : 0.9)
+# miniDart (version actuelle au téléchargement : 0.8.7 (Windows7+ seulement) , devel : 0.9)
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais pas seulement)
 
 Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas complète, et comporte probablement quelques bugs. Une partie des fonctionnalités est encore manquante, et devrait être implémentée vers fin 2018.
@@ -77,7 +77,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
-- [x] ouverture d'une vidéo (le son devrait fonctionner. Crashes possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
+- [x] ouverture d'une vidéo Windows et Linux (le son devrait fonctionner. Crashes possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] analyse image par image : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
@@ -107,7 +107,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 Atelier retard :
 
 - [x] ajout d'une source vidéo de type fichier vidéo
-- [x] lecture seulement vidéo + son synchrone (quelques problèmes à résoudre encore) (seulement sous Linux pour l'instant)
+- [x] lecture seulement vidéo + son synchrone (quelques problèmes à résoudre encore)
 - [x] séquençage d'une vidéo (traitement des images seulement)
 - [x] ajout d'une source réseau, type webcam IP (utilise ffmpeg)
 - [ ] calibration de la webcam (distorsion, aberrations de sphéricité) // en tests
@@ -160,7 +160,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-#miniDart (current version: 0.8.6 for Windows, devel 0.9)
+#miniDart (current version: 0.8.7 for Windows, devel 0.9)
 Video analysis software for team sports coaches (handball, but not only)
 
 This is a demo version of the **miniDart** software. It is not complete, and probably has some bugs. Some of the features are still missing, and should be implemented by end 2018.
@@ -249,7 +249,7 @@ Under development (but already partially functional):
 
 Workshop delay:
 
-- [x] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)  [Linux only]
+- [x] (works) use a video file as video source. Using both ffmpeg (frames+sound) or OpenCV (frames only)
 - [x] (works) read only a video (frames + sound synch'ed (SDL2_ffmpeg)
 - [x] (works) use an IP webcam as video source (ffmpeg) // be carefull : crashes possible ! // WIP 
 - [ ] webcam calibration (distorsion, barrel or pincushion aberrations ) // WIP
