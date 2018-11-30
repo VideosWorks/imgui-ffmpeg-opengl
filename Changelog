@@ -1,9 +1,24 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
-2018 Novembre 29th
+2018 November 30th
 
+More SDL2 sound fixes (https://trac.ffmpeg.org/ticket/6721) but no effect
+Remaped SDL2 AV_PIX_FMT_* to better SDL_PIXELFORMAT*. 
 
+Added :
+- SDL_PIXELFORMAT_YV12
+- SDL_PIXELFORMAT_NV12
+- SDL_PIXELFORMAT_NV21
+- default is : SDL_PIXELFORMAT_RGBA32
+
+Still searching WHAT happens on Windows (only ...)
+
+FIXME :
+- strange flip issue on Windows with recorded images. Bizarre ...
+- looks like the REC and the TIME follow the image orientations (why no problem on Linux ?)
+
+2018 November 29th
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Can watch BigBuckBunny on Windows, but no sound.
