@@ -101,7 +101,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **En cours de développement** (mais déjà partiellement fonctionnel) :
 
-**Traduction de l'interface utilisatur en anglais : 40% réalisé à ce jour** (actually)
+**Traduction de l'interface utilisateur en anglais : 40% réalisé à ce jour** (actually)
 
 
 Atelier retard :
