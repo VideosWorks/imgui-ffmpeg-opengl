@@ -110,7 +110,7 @@ Atelier retard :
 - [x] lecture seulement vidéo + son synchrone (quelques problèmes à résoudre encore)
 - [x] séquençage d'une vidéo (traitement des images seulement)
 - [x] ajout d'une source réseau, type webcam IP (utilise ffmpeg)
-- [ ] calibration de la webcam (distorsion, aberrations de sphéricité) // en tests
+- [ ] calibration de la webcam (distorsion, calcul approché des coeffficients pour les aberrations de sphéricité) // en tests
 - [ ] correction distorsion en temps réel (pixels shaders ou OpenCV) // en tests
 - [ ] conversion YUV / RGB (OpenGL + pixel shaders) (en coursd'implémentation) 
 - [ ] ajout d'annotations dans la vidéo
