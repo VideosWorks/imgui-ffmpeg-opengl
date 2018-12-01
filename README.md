@@ -60,7 +60,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
 - [x] permet le **séquençage vidéo** (le son n'est pas géré pour l'instant)
-- [x] **enregistrement** avec ou sans retard des images issues d'une ou plusieurs webcams (une seule peut être enregistrée à la fois)
+- [x] **enregistrement** avec ou sans retard des images issues d'une ou plusieurs webcams USB ou Webcam IP (une seule peut être enregistrée à la fois), ou d'une vidéo en cours de lecture
 - [x] **chronomètre** : on peut ajouter le chronomètre, et incruster le temps dans les vidéos enregistrées
 - [x] affichage du temps d'activité (cumul si chronomètre activé) et/ou le temps total (depuis le premier appui sur start)
 - [x] changement de webcam en live (il est toutefois conseillé de démarrer miniDart AVEC la webcam branchée)
@@ -206,7 +206,7 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 - [x]    Lense (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image (but the zoomed area cannot be recorded)
 - [x]    delayed display (adjustable up to 40s, but can be increased, tested OK up to 100s delay, but you need a lot of RAM in this case)
 - [x]    allows video sequencing (the sound is not managed at this time)
-- [x]    recording with or without delay images from one or more webcams (only one can be recorded at a time)
+- [x]    recording with or without delay images from one or more webcams -including IP webcam (only one can be recorded at a time), or from the currently displayed video 
 - [x]    stopwatch: you can add the stopwatch, and embed the time in recorded videos
 - [x]    display of the activity time (cumulative if stopwatch activated) and / or the total time (since the first press start)
 - [x]    live webcam change (however it is advisable to start miniDart WITH the webcam connected)
