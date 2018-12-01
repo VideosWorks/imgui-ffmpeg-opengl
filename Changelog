@@ -1,6 +1,19 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+
+2018 December 1st
+
+RELEASE :  0.8.8
+
+Improvement   :
+- we can now change image orientation for every source ( can be funny sometimes :-) )
+- we must close the current video before to load a new one (video open is active only when no video is loaded)
+- video close is only active when b_video_running == true
+Fixed (crash) : clicking close the video an exact while before the end of watching it caused crash (thread issue, probably the same as the one in SDL_ktchensink).
+Fixed (crash) : disable "open a video" when one was currently displayed.
+
+
 RELEASE :  0.8.7 
 
 Video + sound work on Windows (7+) and on Linux
