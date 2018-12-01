@@ -100,8 +100,9 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] icônes pour le chronomètre, les sources (webcam 1 ou 2)
 
 **En cours de développement** (mais déjà partiellement fonctionnel) :
-
-**Traduction de l'interface utilisateur en anglais : 40% réalisé à ce jour** (actually)
+- **multi écrans**
+- **onglets détachables activables/désactivables : on pourra "sortir" l'onglet contenant la vidéo, et l'afficher sur un autre écran**
+- **Traduction de l'interface utilisateur en anglais : 40% réalisé à ce jour** (actually)
 
 
 Atelier retard :
