@@ -2,7 +2,7 @@
 
 **VERSION EN FRANCAIS** (english version follows)
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 **AVANT TOUTE CHOSE : sous Windows, vous DEVEZ installer les pilotes 3D de votre carte graphique.**
 
@@ -12,7 +12,7 @@
 
 Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des anciens pilotes (Win7+), mais ils fonctionnent très bien.
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 # miniDart (version actuelle au téléchargement : 0.8.8 (Windows7+ seulement) , devel : 0.9)
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais pas seulement)
@@ -64,6 +64,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] **chronomètre** : on peut ajouter le chronomètre, et incruster le temps dans les vidéos enregistrées
 - [x] affichage du temps d'activité (cumul si chronomètre activé) et/ou le temps total (depuis le premier appui sur start)
 - [x] changement de webcam en live (il est toutefois conseillé de démarrer miniDart AVEC la webcam branchée)
+- [x] ouverture d'une vidéo Windows et Linux (le son devrait fonctionner. Crashes possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
 - [x] thème modifiable (onglet préférences)
 - [x] toute l'interface utilisateur est modifiable en cours de fonctionnement, mais n'est pas mémorisée pour le prochain démarrage)
 - [x] le mode statistiques est en cours d'implémentation, et toute suggestion d'amélioration est la bienvenue
@@ -72,12 +73,11 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] selon l'installation, il est possible de régler directement les paramètres de la webcam, comme la luminance, etc  (onglet "paramètres")
 - [x] **réglage du focus** : passage en mode manuel ou automatique, **réglage en mode "microscope"**
 - [x] **Exposition** : réglage manuel possible. Problème connu (Linux seulement) : on ne peut pas repasser en mode automatique sans redémarrer miniDart pour l'instant
-- [x] **Rotation des images**, visionnage et enregistrement. Par exemple si images venant d'un smartphone.Valeurs possibbles : 90° (sens horaire ou sens trigo),
+- [x] **Rotation des images**, visionnage et enregistrement. Par exemple si images venant d'un smartphone.Valeurs possibles : 90° (sens horaire ou sens trigo),
 - [x] **flip horizontal** visionnage et enregistrement (pour masquer une publicité, etc) ou **flip vertical** ( 180°, certaines webcams ont un problème).
 
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
-- [x] ouverture d'une vidéo Windows et Linux (le son devrait fonctionner. Crashes possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] analyse image par image : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
