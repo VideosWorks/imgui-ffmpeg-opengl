@@ -1,6 +1,18 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 December 3rd
+
+Lot of code cleanup
+Rewritten the acquisition engine.
+More encapsulation, cleaner and more simple
+More code factorization
+Implemented new source : cell phone
+Feature : cell phone images can be delayed, like the images coming from the webcam
+FIXME : test using Droidcam
+Fixed some bugs when recording with images rotated
+Implemented seek (fast backward # stop #  play/pause # fast forward)
+
 
 2018 December 1st
 
