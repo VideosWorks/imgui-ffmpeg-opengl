@@ -1,6 +1,11 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 December 5th
+
+Reversed the changes to the hansonLGE initial project (under LGPL v2.1)
+Fixed a stupid typo s/window2/window/ probably causing chaotic crashes or threads issues
+
 
 2018 December 4th
 
