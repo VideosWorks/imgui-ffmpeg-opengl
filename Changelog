@@ -1,6 +1,16 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+
+2018 December 4th
+
+Improved Cell Phone UI
+Improved IP Webcam UI
+Fixed two annoying crashes caused by wrong string sizes
+Limited IP webcam string size at 512 bytes
+Limited rtsp string size at 512 bytes
+FIXME : fast backward and fast forward do not work as expected
+
 2018 December 3rd
 
 Lot of code cleanup
