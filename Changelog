@@ -1,6 +1,24 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 December 6th
+
+Added bootstrap mechanism to retrieve resources  (FIXME : complete me)
+
+Now using SDL2.0.9 on both Windows and Linux.
+
+(Linux log says): 
+"We compiled against SDL version 2.0.9 ...
+And we are linking against SDL version 2.0.9.
+OpenGL version: 4.5 (Core Profile) Mesa 18.2.1
+GLSL version: 4.50
+Vendor: Intel Open Source Technology Center
+Renderer: Mesa DRI Intel(R) UHD Graphics 620 (Kabylake GT2) 
+Audio device 0: Audio interne Stéréo analogique
+Audio subsystem initialized; driver = pulseaudio.
+Zoom actuel : 1"
+
+
 2018 December 5th
 
 Reversed the changes to the hansonLGE initial project (under LGPL v2.1)
