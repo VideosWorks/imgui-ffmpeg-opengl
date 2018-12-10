@@ -51,7 +51,13 @@ Webcam vivement conseillées et longuement testées :
 - **Logitech Brio 4K** plus chère que la C920, mais la meilleure actuellement :+1: permet d'enregistrer à 30 ou 60 images par seconde 720p (jusqu'à 4K possibles avec ffmpeg), mais **demande une connexion USB 3.0 mini** + une lumière suffisante)
 - Microsoft Lifecam C3000 : demande quelquefois de relancer une fois miniDart, (demande une bonne lumière)
 
-Système d'exploitation : testé sur Windows 7 et Win 10  64 bits (une version de test en 32 bits est disponible, mais sur demande uniquement).
+N.B. : si vous n'avez pas de webcam, un téléphone portable avec l'application Droidcam (ou IP Webcam) peut servir de source d'images.
+
+(voir : [Utiliser son téléphone portable comme une webcam avec minidart](https://framagit.org/ericb/miniDart/wikis/utiliser-son-t%C3%A9l%C3%A9phone-portable-comme-une-webcam-avec-miniDart) )
+
+Pour une bonne définition, notez bien que l'application sera probablement payante.
+
+**Système d'exploitation : testé sur Windows 7 et Win 10  64 bits** (une version de test en 32 bits est disponible, mais sur demande uniquement).
 
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
@@ -75,7 +81,8 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] **Exposition** : réglage manuel possible. Problème connu (Linux seulement) : on ne peut pas repasser en mode automatique sans redémarrer miniDart pour l'instant
 - [x] **Rotation des images**, visionnage et enregistrement. Par exemple si images venant d'un smartphone.Valeurs possibles : 90° (sens horaire ou sens trigo),
 - [x] **flip horizontal** visionnage et enregistrement (pour masquer une publicité, etc) ou **flip vertical** ( 180°, certaines webcams ont un problème).
-
+- [x] **utilisation en webcam d'un smartphone fonctionnant sous Android** . Demande à installer Droidcam sur votre smartphone. Visionnage et enregistrement, avec ou sans rotation d'image de 90° possible (prise de vue en position horizontale conseillée toutefois).
+ 
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
@@ -220,6 +227,7 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 - [x]    **exposure** : manual mode or automatic. Known issue  (Linux only) : miniDart must restart to retrieve the automatic mode (WIP).
 - [x]    **image rotations** : displaying or recording. For example when the images come from a smartphone, with a 90° orientation (both clockwise or counter clockwise are possible)
 - [x]    **horizontal flip** (to hide publicity, or simply when needed, or **vertical flip** (180°) are possible. e.g. this can be helpfull with some buggy webcams.
+- [x]    **Android smartphone as a webcam** . Install droidcam or equivalent is mandatory. Display and record, with or without 90° image rotation (horizontal watching advised though).
 
 Workshop analysis :
 
