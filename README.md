@@ -55,7 +55,7 @@ N.B. : si vous n'avez pas de webcam, un téléphone portable avec l'application 
 
 (voir : [Utiliser son téléphone portable comme une webcam avec minidart](https://framagit.org/ericb/miniDart/wikis/utiliser-son-t%C3%A9l%C3%A9phone-portable-comme-une-webcam-avec-miniDart) )
 
-Pour une bonne définition, notez bien que l'application sera probablement payante.
+Pour une bonne définition, notez bien qu'il faudra probablement installer une version payante de l'application.
 
 **Système d'exploitation : testé sur Windows 7 et Win 10  64 bits** (une version de test en 32 bits est disponible, mais sur demande uniquement).
 
