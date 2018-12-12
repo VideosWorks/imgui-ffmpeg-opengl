@@ -1,6 +1,23 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 December 12th
+
+Found how to enable audio recording with SDL_Audio (SDL2)
+Will probably use alsa on Linux and DirectSound on Windows
+FIXME : continue to work at solve the issue with pts, to record both sound and video.
+
+2018 December 11th
+
+Worked with Nicolas on a new feature :
+- create a 4 or 5 s of video+sound queue, and add a button to record the video+ sound flow by 5 to 10s sequences
+(a priori no need to use that with webcam or any delayed stream)
+
+Discovered https://github.com/rambodrahmani/ffmpeg-video-player (learning ffmpeg)
+Started trainer Team follow up implementation : goal started to work. to be continued
+Added avformat_network_deinit() in do_exit()
+
+
 2018 December 6th
 
 Added bootstrap mechanism to retrieve resources  (FIXME : complete me)
