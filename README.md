@@ -145,7 +145,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * **OpenCV 3.4.0** (https://opencv.org/) : gestion des webcams, traitement des frames, annotations (chronomètre, enregistrement) ;
 * **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg) pour le son dans les vidéos (lecture ET -bientôt- enregistrement)
 * **DirectShow** et **DirectX** ( sous Windows) , v4l2 + gstreamer (sous Linux) : acquisition vidéo ;
-* **FFMPEG (version 3.4.0 sous Windows, 4.0.2 sous Linux)** (http://ffmpeg.org/) ouverture, analyse, export de fichiers vidéos (divx, avi etc) ;
+* **FFMPEG (version 4.0.2 sous Windows et Linux)** (http://ffmpeg.org/) ouverture, analyse, export de fichiers vidéos (divx, avi etc) ;
 * **mingw-w64** (https://mingw-w64.org/doku.php) cross-compilation de la version Windows ;
 * **InnoSetup** (http://www.jrsoftware.org/) pour le packaging Windows ;
 * **wine64** (https://www.winehq.org/) pour les tests de la version Windows sous Linux;
@@ -289,7 +289,7 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **OpenCV 3.4.0** ( https://opencv.org/ ): management of webcams, processing of frames, annotations (stopwatch, recording);
 * **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg)  for sound in videos (reading AND -soon- recording) 
 * **DirectShow** and **DirectX** (on Windows), v4l2 + gstreamer (on Linux): video acquisition;
-* **FFMPEG (version 3.4.0 on Windows, 4.0.2 on Linux)** ( http://ffmpeg.org/ ) opening, analysis, export of video files (divx, avi etc);
+* **FFMPEG (version 4.0.2 on both Windows and Linux)** ( http://ffmpeg.org/ ) opening, analysis, export of video files (divx, avi etc);
 * **mingw-w64** ( https://mingw-w64.org/doku.php ) cross-compilation of the Windows version;
 * **InnoSetup** ( http://www.jrsoftware.org/ ) for Windows packaging;
 * **wine64** ( https://www.winehq.org/ ) for testing the Windows version on Linux;
