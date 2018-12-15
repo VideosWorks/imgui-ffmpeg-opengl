@@ -1,6 +1,30 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+
+2018 December 15th
+
+Fixed two annoying instant crashes:
+- wrong alignment in swrescale convertion
+- looks like SDL2 2.0.9 does not work that well with alsa: back to pulse on Linux (release) and alsa (dev)
+- improved the loop time: now, got stable 60 FPS watching any source
+
+FIXME: recording is causing a 57-59 fps instead of expected 60 fps;
+There is maybe a need to improve the recording loop ?
+
+Received an answer about opengYUV source code licensing.
+See: https://github.com/43437/opengYUV/issues/1  
+
+"
+43437 commented 17 days ago
+sorry, i don't think about licenses, in this demo i use opengl,
+if opengl or something i use does have license,
+then my demo must obey,
+if that does not have license, my demo's license will be WTFPL license.
+"
+=> I will use it under LGPL first, and MIT later
+
+
 2018 December 12th
 
 Found how to enable audio recording with SDL_Audio (SDL2)
