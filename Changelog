@@ -1,6 +1,23 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 December 18th
+
+Worked at the Team follow up.
+
+Improved the layout :
+- buttons resized (all have same size now) ;
+- improved spacing (was mostly wrong layout issue) ;
+- improved text (all texts centered now)
+- testing uppercase for actions
+- added new cases : goal as 7m or not, goal against marked as 7m or not
+- added new cases : attacks entries
+Improved statistics.hpp (added some new cases)
+
+Added new menu entry, to select the images source.
+Removed the old (not very UI appealing) select source popup menu.
+Implemented Attack events. Works well
+
 
 2018 December 15th
 
