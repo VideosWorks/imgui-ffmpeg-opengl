@@ -82,13 +82,19 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] **Rotation des images**, visionnage et enregistrement. Par exemple si images venant d'un smartphone.Valeurs possibles : 90° (sens horaire ou sens trigo),
 - [x] **flip horizontal** visionnage et enregistrement (pour masquer une publicité, etc) ou **flip vertical** ( 180°, certaines webcams ont un problème).
 - [x] **utilisation en webcam d'un smartphone fonctionnant sous Android** . Demande à installer Droidcam sur votre smartphone. Visionnage et enregistrement, avec ou sans rotation d'image de 90° possible (prise de vue en position horizontale conseillée toutefois).
- 
+- [x] **spot mode** : encerclez une zone importante dans ce qui est actuellement affiché (enregistrement à venir)
+- [x] Nouvelle entrée de menu, permettant de séctionner la source des images.
+
 **Atelier analyse** :
 - [x] ouverture d'un répertoire contenant une vidéo
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] analyse image par image : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
 - [ ] extraction et annotation d'une image (à venir, puis enregistrement sur une durée donnée (format .avi, pas de son)
+
+**Atelier Suivi de l'équipe** :
+- [x] Suivi par actions : But, Attaque placée, etc
+- [x] Mesure performance de l'équipe : + - en fonction des actions pour chaque jouer, et affichés de façon globale pour 'léquipe'
 
 À venir : annotations + enregistrement de l'image sous forme d'une vidéo de durée donnée.
 
@@ -228,6 +234,8 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 - [x]    **image rotations** : displaying or recording. For example when the images come from a smartphone, with a 90° orientation (both clockwise or counter clockwise are possible)
 - [x]    **horizontal flip** (to hide publicity, or simply when needed, or **vertical flip** (180°) are possible. e.g. this can be helpfull with some buggy webcams.
 - [x]    **Android smartphone as a webcam** . Install droidcam or equivalent is mandatory. Display and record, with or without 90° image rotation (horizontal watching advised though).
+- [x]    **spot mode** : enlight the important area on the screen
+- [x]    New menu entry, to improve the user experience
 
 Workshop analysis :
 
@@ -278,6 +286,11 @@ To come up :
 
 - [ ]    slow-motion mode // works already, but requires conversion from OpenCV + highgui to OpenGL 
 - [ ]    select the visualization speed (% speed from 0 to 200% forr example)
+
+**Team follow up workshop** :
+- [x] follow up by actions : Goal, placed attacks, and so on
+- [x] Team performance measuring : + - depending on the played actions, and displayed globaly (Team result)
+
 
 Technical informations:
 
