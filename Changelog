@@ -1,6 +1,17 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+
+2018 December 19th
+
+Improved statistics + implemented all cases + testing new colors
+Created statistics.cpp
+Implemented new slow motion algorithm : works well from 5 fps to ~ 50 fps.
+IMPROVE ME : vsync is causing trouble (limited to 60 fps on Linux)
+IMPROVE ME : the layout needs some love
+Should work as expected on Windows (~ 700 fps easely on an average machine)
+
+
 2018 December 18th
 
 Worked at the Team follow up.
