@@ -14,7 +14,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# miniDart (version actuelle au téléchargement : 0.8.9a (Windows7+ seulement) , devel : 0.9)
+# miniDart (version actuelle au téléchargement : 0.9.0 (Windows7+ seulement) , devel : 0.9.1)
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais pas seulement)
 
 Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas complète, et comporte probablement quelques bugs. Une partie des fonctionnalités est encore manquante, et devrait être implémentée vers fin 2018.
@@ -62,7 +62,7 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Ce qui est actuellement fonctionnel** (dans la version 0.9 à venir prochainement) :
+**Ce qui est actuellement fonctionnel** (dans la version 0.9.1 à venir prochainement) :
 
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
 - [x] permet le **séquençage vidéo** (le son n'est pas géré pour l'instant)
@@ -175,7 +175,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-#miniDart (current version: 0.8.9a for Windows, devel 0.9)
+#miniDart (current version: 0.9.0 for Windows, devel 0.9.1)
 Video analysis software for team sports coaches (handball, but not only)
 
 This is a demo version of the **miniDart** software. It is not complete, and probably has some bugs. Some of the features are still missing, and should be implemented by end 2018.

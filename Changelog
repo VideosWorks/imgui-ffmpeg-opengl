@@ -1,6 +1,13 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 Devcember 20th
+
+Code cleanup
+Improved slow motion layout
+Fixed several issues :
+- open clip / closes clip
+- static / non static current_time / old_time
 
 2018 December 19th
 
