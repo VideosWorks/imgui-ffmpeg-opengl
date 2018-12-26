@@ -17,6 +17,9 @@ Changed resetCaptureDev() into resetImageSource() more generic
 Tested some new format records.
 Started : learning how to stream h264
 
+Removed loadPlayerIcons() and everything related // kept as code history
+
+
 
 2018 December 20th
 
