@@ -1,7 +1,24 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
-2018 Devcember 20th
+2018 December 26th
+
+More code encapsulation. Now using:
+- captureDev.cpp (continued the decouple webcam from main loop)
+- engine.cpp  (continued the classes implementation, code cleanup)
+
+Fixed most of the engine.cpp issues
+Worked at the fps. Got something, but not working well (giving random results when recording)
+Fixed SDL_GL_GetDrawable() issue with ImGui on Linux when using the new SDL engine
+Cleanup in captureDev.hpp
+Added CaptureDev::canReadFRame()
+Improved application.hpp (added lot of new class members)
+Changed resetCaptureDev() into resetImageSource() more generic
+Tested some new format records.
+Started : learning how to stream h264
+
+
+2018 December 20th
 
 Code cleanup
 Improved slow motion layout
