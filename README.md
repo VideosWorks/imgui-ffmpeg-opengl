@@ -15,7 +15,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 # miniDart (version actuelle au téléchargement : 0.9.0 (Windows7+ seulement) , devel : 0.9.1)
-Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais pas seulement)
+Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
 Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas complète, et comporte probablement quelques bugs. Une partie des fonctionnalités est encore manquante, et devrait être implémentée vers fin 2018.
 
