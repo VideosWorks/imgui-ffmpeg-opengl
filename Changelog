@@ -1,6 +1,24 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 December 28th
+
+Issue : improved the thread issue. A delay was needed between SDL_WaitThread(is->tid, NULL) sent 
+and the time starting to destroy frames and audio queues.
+FIXME : remaining case causing a dead lock is obtained when the frame do not load correctly. Investigate.
+
+Improved the UI : select a new image source is now more consistent
+Added a modal popup window to select the image source
+FIXME : maybe choose the image source in two different places is not a good idea ?
+Reordered the UI for all available cases.
+Activate the webcam is disabled by default.
+The good is,  miniDart can start with the webcam not being connected (not advised though, but users will often do that)
+Implemented :
+  CaptureDev::md_delay (int, private)
+  CaptureDev::set_delay(int)
+  CaptureDev::get_delay()
+  b_never_initialized_webcam
+
 2018 December 26th
 
 More code encapsulation. Now using:
@@ -18,7 +36,6 @@ Tested some new format records.
 Started : learning how to stream h264
 
 Removed loadPlayerIcons() and everything related // kept as code history
-
 
 
 2018 December 20th
