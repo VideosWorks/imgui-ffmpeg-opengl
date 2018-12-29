@@ -1,6 +1,14 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2018 December 29th
+
+Release time : 0.9.1
+
+Added new menu entry : the theme can now be selected directly
+Fixed the sound issue. Was a stupid typo !!
+All threads issues seem to be calm down. I'll continue to check regularly to avoid regression.
+
 2018 December 28th
 
 Issue : improved the thread issue. A delay was needed between SDL_WaitThread(is->tid, NULL) sent 
