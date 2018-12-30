@@ -1,0 +1,14 @@
+#!/bin/bash
+
+./configure  \
+             --enable-shared \
+             --enable-pic    \
+             --enable-opengl \
+             --enable-libpulse \
+             --enable-openal \
+             --enable-libmodplug \
+             --enable-libvpx \
+             --enable-libv4l2 \
+             --enable-libopenjpeg \
+             --enable-libwavpack \
+             --enable-openssl
