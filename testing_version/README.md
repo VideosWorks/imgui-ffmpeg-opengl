@@ -20,37 +20,26 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 
 **INSTALLATION SOUS LINUX INTEL**  (64 bits seulement)
 
-- télécharger l'archive miniDart_0.6.9_Linux_x86_64.tar.gz
+**Ne concerne que les développeurs** Il n'y a pas d'archive pour débutant sous Linux pour l'instant, désolé
+ 
+- PROCÉDURE et INSTRUCTIONS EN COURS D'ÉCRITURE, MERCI DE PATIENTER 
+- TÉLÉCHARGER l'archive miniDart_0.9.1_x86_64.tar.gz  dans le dossier testing version
 - une fois téléchargée, décompresser l'archive dans un répertoire dans lequel vous avez le droit d'écrire.
 - l'arborescence tient compte des dépendances, et si vous la modifiez, cela ne fonctionnera pas.
-- pour tester, il y a deux possibilités :
+- pour tester, ouvrir un terminal et se placer dans le répertoire qui contient le binaire miniDart :
 
-**Soit SANS droits administrateur** :
-- se placer dans le répertoire qui contient les binaires miniDart et miniDart_s
-- taper la commande :  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:. ./miniDart
+=> ensuite, il suffit de taper la ligne de commande :
 
-=> l'application devrait se lancer (il faut la webcam branchée sous Linux, contrairement à Windows)
+**./miniDart_0.9.1**
 
-**Soit AVEC droits administrateur**
-
-Si la méthode ci-dessus ne fonctionne pas, il faudra tester sur une machine où vous avez les droits administrateur (avec sudo):
-
-- créer un répertoire miniDart dans /usr/local/lib (il faut les droits administrateurs)
-Exemple : sudo mkdir -p /usr/local/lib/miniDart + copier toutes les bibliothèques dans ce répertoire
-- modifier le fichier /etc/ld.so.conf en ajoutant la ligne  /usr/local/lib/miniDart
-sudo nano /etc/ld.so.conf    (CTRL+O suivi de CTRL+X pour valider puis sortir)
-sudo ldconfig
-
-=> ensuite, dans le répertoire où vous avez décompressé l'archive, il suffit de taper dans un terminal, la ligne de commande :
-
-**./miniDart**
-
-N.B.: il faut que la webcam (C920 fortement suggérée) sois BRANCHÉE AVANT DE LANCER miniDart (sous Linux)
-
+N.B.: il est préférable que la webcam (C920 fortement suggérée) soit BRANCHÉE AVANT DE LANCER miniDart (sous Linux)
 
 
 **Bugs connus**
+(en cours de mise à jour, en fonction des retours)
+On peut quitter l'application dans certaines conditions, lors de la fermeture d'une vidéo en fin de lecture (résolu, sera dans la prochaine version)
 
+SPÉCIFIQUES WINDOWS
 ENREGISTREMENT : 1280 x 720 à 30 images par secondes est le SEUL FORMAT QUI DEVRAIT FONCTIONNER sous Windows.
 
 (et 24 images par seconde sous Linux)
