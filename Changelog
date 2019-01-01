@@ -49,9 +49,6 @@ More precisely, I had to add, just after window flags declaration :
         if (ImGui::Begin(APPLICATION_VERSION_STRING, &open, mD_window_flags))
         {
 
-
-    ImVec2 main_viewport_pos = ImGui::GetMainViewport()->Pos;
-    ImGui::SetNextWindowPos(ImVec2(main_viewport_pos.x,main_viewport_pos.y));
 ````
 
 THANKS AGAIN to Omar Cornut for his great instructions and documentation in the code !
