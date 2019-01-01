@@ -1,13 +1,27 @@
 Changelog of miniDart
-Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
+Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
-2018 December 29th
 
-Release time : 0.9.1
+2018 December 30th
 
-Added new menu entry : the theme can now be selected directly
-Fixed the sound issue. Was a stupid typo !!
-All threads issues seem to be calm down. I'll continue to check regularly to avoid regression.
+Removed the duplicatad entry for SDL_AudioDevice()
+More code cleanup
+
+Modified the BeginTabbar() signature, to comply with the recent ImGui one.
+
+Tests in progress: new ViewPorts + new tabs.
+WOW !! the viewports feature allows to take a tab, put it outside, including on an external screen 8-)
+
+TODO : 
+- move LightGreen and Windows Themes elsewhere (something like imgui_themes.cpp ?)
+- since the API has been modified (bool instead of void), everything is ready, 
+only remains the BeginTabbar() // EndTabbar() to be added. Will do tomorrow.
+
+Intensive tests on Windows. No more crash, but waiting for further fedback from testers.
+Some remaining crashes on Linux though, caused by (already fixed) double free.
+The crash root was SDL_ReadThread() called twice, since do_exit was called twice (FIXED).
+
+TODO : since the new TABS support PushID() / PopID(), I can comtinue the team follow up implementation.
 
 2018 December 28th
 
@@ -30,7 +44,7 @@ Implemented :
 2018 December 26th
 
 More code encapsulation. Now using:
-- captureDev.cpp (continued the decouple webcam from main loop)
+- captureDev.cpp (continued the decouple webcam from main loop job)
 - engine.cpp  (continued the classes implementation, code cleanup)
 
 Fixed most of the engine.cpp issues
