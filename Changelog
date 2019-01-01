@@ -1,20 +1,73 @@
 Changelog of miniDart
-Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
+Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
+
+2019 January 1st
+
+DEVEL branch
+
+Implemented Omar Cornut Multi Viewports : works well !!
+Link explaining everything : https://github.com/ocornut/imgui/issues/1542
+
+Most important issue was caused by missing ImGui window origin. 
+
+More precisely, I had to add, just after window flags declaration :
+
+````
+    // kept to illustrate the example
+    ImGuiWindowFlags mD_window_flags = 0;
+
+    static bool no_titlebar = true;
+    static bool no_resize = true;
+    static bool no_move = true;
+    static bool no_scrollbar = false;
+    static bool no_collapse = true;
+    static bool menu = true;
+
+    if (no_titlebar)  mD_window_flags |= ImGuiWindowFlags_NoTitleBar;
+    if (no_resize)    mD_window_flags |= ImGuiWindowFlags_NoResize;
+    if (no_move)      mD_window_flags |= ImGuiWindowFlags_NoMove;
+    if (no_scrollbar) mD_window_flags |= ImGuiWindowFlags_NoScrollbar;
+    if (no_collapse)  mD_window_flags |= ImGuiWindowFlags_NoCollapse;
+    if (menu)         mD_window_flags |= ImGuiWindowFlags_MenuBar;
+
+    // Without the two lines below, we can obtain 2 windows :
+    // -  one sort of ghost window (no move, no borders ..., located under the main one,
+    // -  one main window receiving no events ...
+
+    ImVec2 main_viewport_pos = ImGui::GetMainViewport()->Pos;
+    ImGui::SetNextWindowPos(ImVec2(main_viewport_pos.x,main_viewport_pos.y));
+````
+
+THANKS AGAIN to Omar Cornut for his great instructions and documentation in the code !
+
+Drawback : to make it work, I had to reuse the old SDL Engine, due to a guilty encapsulation,
+causing trouble with multi-viewports).
+To be continued : using the previous version helped to make it work as excepted,
+and I'm currently back to Engine class use (still remains one issue, see below).
+
+
+FIXME :
+- main menu bar not drawn (WIP, investigating)
+- changing the lense window size outside of the main SDL window, avoids to refresh the displayed frame (maybe I need a special event ?)
+- clash with some shortcuts (Navigation keyboard is very interesting in the User Experience, but asks to use other shortcuts)
+- TODO : rewrite the events engine
+- yet one issue with Engine : the outside window seems to lose its context (another visibility issue probably)
+
+Fixed (all versions) : instant crash with Delay checkbox when no USB webcam available.
+Fixed (Devel version, including multi-viewports) : missing colors for tabs (LithGreen and Windows mostly)
+Fixed (Devel version, including multi-viewports) : Dark theme is too dark !! (changed for the classic one, more funky)
 
 
 2018 December 30th
 
-Removed the duplicatad entry for SDL_AudioDevice()
-More code cleanup
-
 Modified the BeginTabbar() signature, to comply with the recent ImGui one.
-
 Tests in progress: new ViewPorts + new tabs.
+
+TODO : move LightGreen and Windows Themes elsewhere (something like imgui_themes.cpp ?)
+
 WOW !! the viewports feature allows to take a tab, put it outside, including on an external screen 8-)
 
-TODO : 
-- move LightGreen and Windows Themes elsewhere (something like imgui_themes.cpp ?)
-- since the API has been modified (bool instead of void), everything is ready, 
+Since the API has been modified (bool instead of void), everything is ready,
 only remains the BeginTabbar() // EndTabbar() to be added. Will do tomorrow.
 
 Intensive tests on Windows. No more crash, but waiting for further fedback from testers.
@@ -44,7 +97,7 @@ Implemented :
 2018 December 26th
 
 More code encapsulation. Now using:
-- captureDev.cpp (continued the decouple webcam from main loop job)
+- captureDev.cpp (continued the decouple webcam from main loop)
 - engine.cpp  (continued the classes implementation, code cleanup)
 
 Fixed most of the engine.cpp issues
