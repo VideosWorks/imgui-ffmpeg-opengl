@@ -14,25 +14,41 @@ More precisely, I had to add, just after window flags declaration :
 
 ````
     // kept to illustrate the example
-    ImGuiWindowFlags mD_window_flags = 0;
 
-    static bool no_titlebar = true;
-    static bool no_resize = true;
-    static bool no_move = true;
-    static bool no_scrollbar = false;
-    static bool no_collapse = true;
-    static bool menu = true;
+        static bool open = true;
+        ImGuiWindowFlags mD_window_flags = 0;
 
-    if (no_titlebar)  mD_window_flags |= ImGuiWindowFlags_NoTitleBar;
-    if (no_resize)    mD_window_flags |= ImGuiWindowFlags_NoResize;
-    if (no_move)      mD_window_flags |= ImGuiWindowFlags_NoMove;
-    if (no_scrollbar) mD_window_flags |= ImGuiWindowFlags_NoScrollbar;
-    if (no_collapse)  mD_window_flags |= ImGuiWindowFlags_NoCollapse;
-    if (menu)         mD_window_flags |= ImGuiWindowFlags_MenuBar;
+        // for testing purpose : will be simplified soon
+        static bool no_titlebar = true;
+        static bool no_resize = true;
+        static bool no_move = false;
+        static bool no_scrollbar = false;
+        static bool no_collapse = true;
+        static bool menu = false;
 
-    // Without the two lines below, we can obtain 2 windows :
-    // -  one sort of ghost window (no move, no borders ..., located under the main one,
-    // -  one main window receiving no events ...
+        if (no_titlebar)  mD_window_flags |= ImGuiWindowFlags_NoTitleBar;
+        if (no_resize)    mD_window_flags |= ImGuiWindowFlags_NoResize;
+        if (no_move)      mD_window_flags |= ImGuiWindowFlags_NoMove;
+        if (no_scrollbar) mD_window_flags |= ImGuiWindowFlags_NoScrollbar;
+        if (no_collapse)  mD_window_flags |= ImGuiWindowFlags_NoCollapse;
+        if (menu)         mD_window_flags |= ImGuiWindowFlags_MenuBar;
+
+        // some geometry. 24.0f seems to be the height of the main menubar
+        ImVec2 windowSize(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - 24.0f);
+        ImGui::SetNextWindowSize(windowSize);
+
+        // Without the two lines below, we can obtain 2 windows :
+        // -  one sort of ghost window (no move, no borders ..., located under the main one,
+        // -  one main window receiving no events ...
+
+        ImVec2 main_viewport_pos = ImGui::GetMainViewport()->Pos;
+        // after we reduced the window size, we translate it from the same value
+        // Last : check whether the position is really 0,24 for this window in imgui.ini
+        ImGui::SetNextWindowPos(ImVec2(main_viewport_pos.x,main_viewport_pos.y + 24.0f));
+
+        if (ImGui::Begin(APPLICATION_VERSION_STRING, &open, mD_window_flags))
+        {
+
 
     ImVec2 main_viewport_pos = ImGui::GetMainViewport()->Pos;
     ImGui::SetNextWindowPos(ImVec2(main_viewport_pos.x,main_viewport_pos.y));
@@ -47,12 +63,12 @@ and I'm currently back to Engine class use (still remains one issue, see below).
 
 
 FIXME :
-- main menu bar not drawn (WIP, investigating)
 - changing the lense window size outside of the main SDL window, avoids to refresh the displayed frame (maybe I need a special event ?)
 - clash with some shortcuts (Navigation keyboard is very interesting in the User Experience, but asks to use other shortcuts)
 - TODO : rewrite the events engine
 - yet one issue with Engine : the outside window seems to lose its context (another visibility issue probably)
 
+Fixed : main menubar now appears (some other issues appear, but I'm not far)
 Fixed (all versions) : instant crash with Delay checkbox when no USB webcam available.
 Fixed (Devel version, including multi-viewports) : missing colors for tabs (LithGreen and Windows mostly)
 Fixed (Devel version, including multi-viewports) : Dark theme is too dark !! (changed for the classic one, more funky)
