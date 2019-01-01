@@ -1,4 +1,4 @@
-La version actuellement en test est la **0.9.1**
+La version actuellement en test est la **0.9.2**
 
 N.B. : merci de me contacter directement en cas de problème avec les instructions.
 
@@ -7,7 +7,7 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 
 **INSTALLATION SOUS WINDOWS 7** ou plus récent :
 
-* télécharger l'archive miniDart_0.9.1_test.exe
+* télécharger l'archive miniDart_0.9.2_test.exe
 * placer cette archive dans un endroit facile d'accès, par exemple sur le bureau ;
 * double-cliquer dessus pour lancer l'installeur ;
 * suivre les instructions.
@@ -23,14 +23,16 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 **Ne concerne que les développeurs** Il n'y a pas d'archive pour débutant sous Linux pour l'instant, désolé
  
 - PROCÉDURE et INSTRUCTIONS EN COURS D'ÉCRITURE, MERCI DE PATIENTER 
-- TÉLÉCHARGER l'archive miniDart_0.9.1_x86_64.tar.gz  dans le dossier testing version
+- Actuellement : toutes les instructions sont données sur le wiki [ICI](https://framagit.org/ericb/miniDart/wikis/Cr%C3%A9ation-de-l'environnement-de-compilation-sous-Linux)
+- Le binaire testable avec LinuxMint s'appelle miniDart_0.9.2_LinuxMint.tar.gz (dans le dossier testing Linux)
+- à venir : la version Ubuntu 18-04
 - une fois téléchargée, décompresser l'archive dans un répertoire dans lequel vous avez le droit d'écrire.
 - l'arborescence tient compte des dépendances, et si vous la modifiez, cela ne fonctionnera pas.
 - pour tester, ouvrir un terminal et se placer dans le répertoire qui contient le binaire miniDart :
 
 => ensuite, il suffit de taper la ligne de commande :
 
-**./miniDart_0.9.1**
+**./miniDart_0.9.2_LinuxMint**
 
 N.B.: il est préférable que la webcam (C920 fortement suggérée) soit BRANCHÉE AVANT DE LANCER miniDart (sous Linux)
 
@@ -62,7 +64,7 @@ Eric Bachard
 
 ************************************************************************************************************
 
-     a8ec94d473c1547b9497c76ea4ee36b2511f9f70db3e13332c42ce4a53d23e30  miniDart_0.9.1_test.exe
+     a6d77ca29fac49d6e27c6686752e3f250c020d517387eed2b4b078675dd4be48  miniDart_0.9.2_test.exe
 
 ************************************************************************************************************
 
