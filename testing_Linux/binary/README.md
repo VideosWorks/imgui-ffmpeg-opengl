@@ -17,6 +17,11 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 
 * 1. UTILISATION du binaire
 
+Seule une partie des sources de miniDart sont en ligne pour l'instant (l'évolution dépendra des donations et contributions au projet).
+Sous Windows, cela ne pose pas de problème, car tout est lié en statique, mais sous Linux, le fonctionnement dépend de l'environnement.
+Afin de résoudre ce problème, des explications et une marche à suivre sont données ci-dessous. Elles seront complétées et améliorées au fur et à mesure
+des retours.
+
 Les dépendances principales sont :
 
 * 1.1 OpenGL  3.0 et + fonctionnel sur votre machine
@@ -31,7 +36,7 @@ Les dépendances principales sont :
 
 *  1.3 OpenCV 3.4.0
 
-  Les sources (modifiées) de la version officielle seont en ligne ( voir [mon dépot github d'opencv](https://github.com/ebachard/opencv) ), et chacun pourra vérifier les modifications apportées,
+  Les sources (modifiées) de la version officielle sont en ligne ( voir [mon dépot github d'opencv](https://github.com/ebachard/opencv) ), et chacun pourra vérifier les modifications apportées,
   par exemple en regardant les diffs. L'essentiel des modifications apportées se trouve dans le fichier cap_libv4l.cpp fourni
   dans le répertoire contenant les instructions (voir le lien + haut) => voir l'historique si vous souhaitez en savoir plus.
 
