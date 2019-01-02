@@ -31,7 +31,7 @@ Les dépendances principales sont :
 
 *  1.3 OpenCV 3.4.0
 
-  Les sources (modifiées) de la version officielle seont en ligne ( voir [mon dépot github d'opencv](https://github.com/ebachard/opencv), et chacun pourra vérifier les modifications apportées,
+  Les sources (modifiées) de la version officielle seont en ligne ( voir [mon dépot github d'opencv](https://github.com/ebachard/opencv) ), et chacun pourra vérifier les modifications apportées,
   par exemple en regardant les diffs. L'essentiel des modifications apportées se trouve dans le fichier cap_libv4l.cpp fourni
   dans le répertoire contenant les instructions (voir le lien + haut) => voir l'historique si vous souhaitez en savoir plus.
 
