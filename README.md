@@ -55,7 +55,7 @@ N.B. : si vous n'avez pas de webcam, un téléphone portable avec l'application 
 
 (voir : [Utiliser son téléphone portable comme une webcam avec minidart](https://framagit.org/ericb/miniDart/wikis/utiliser-son-t%C3%A9l%C3%A9phone-portable-comme-une-webcam-avec-miniDart) )
 
-Pour une bonne définition, notez bien qu'il faudra probablement installer une version payante de l'application.
+Pour une bonne définition, notez bien qu'il faudra probablement installer une version payante de l'application Droidcam ou IP Webcam (par exemple).
 
 **Système d'exploitation : testé sur Windows 7 et Win 10  64 bits** (une version de test en 32 bits est disponible, mais sur demande uniquement).
 
@@ -114,8 +114,8 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] icônes pour le chronomètre, les sources (webcam 1 ou 2)
 
 **En cours de développement** (mais déjà partiellement fonctionnel) :
-- **multi écrans**
-- **onglets détachables activables/désactivables : on pourra "sortir" l'onglet contenant la vidéo, et l'afficher sur un autre écran**
+- **multi écrans** ( on peut détacher l'onglet avec les images sur un second écran, tout en continuant le suivi GB et le remettre après !)
+- **onglets déplaçables/détachables activables/désactivables : on pourra "sortir" l'onglet contenant la vidéo, et l'afficher sur un autre écran**
 - **Traduction de l'interface utilisateur en anglais : 40% réalisé à ce jour** (actually)
 
 
@@ -146,11 +146,11 @@ Atelier GB :
 Informations techniques:
 
 Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windows 64 bits. Les APIs utilisées sont:
-* **SDL2** ( http://libsdl.org/) pour le fenêtrage et la remarquable portabilité Linux -> Windows ; (version 2.0.9 pour Windows, 2.0.8 Linux)
+* **SDL2 2.0.9** ( http://libsdl.org/) pour le fenêtrage et la remarquable portabilité Linux -> Windows ; (version 2.0.9 pour Windows, 2.0.8 Linux)
 * **OpenGL** (https://www.khronos.org/opengl/) pour le rendu ;
 * **Dear ImGui** (https://github.com/ocornut/imgui) pour l'interface utilisateur et les performances graphiques (merci à **Omar Cornut** pour cette UI géniale) ;
 * **OpenCV 3.4.0** (https://opencv.org/) : gestion des webcams, traitement des frames, annotations (chronomètre, enregistrement) ;
-* **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg) pour le son dans les vidéos (lecture ET -bientôt- enregistrement)
+* **mdPlayer** (https://framagit.org/ericb/mdplayer ): pour le son dans les vidéos (lecture ET -bientôt- enregistrement aussi pour le son).
 * **DirectShow** et **DirectX** ( sous Windows) , v4l2 + gstreamer (sous Linux) : acquisition vidéo ;
 * **FFMPEG (version 4.0.2 sous Windows et Linux)** (http://ffmpeg.org/) ouverture, analyse, export de fichiers vidéos (divx, avi etc) ;
 * **mingw-w64** (https://mingw-w64.org/doku.php) cross-compilation de la version Windows ;
@@ -215,7 +215,7 @@ Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwi
 Important : just in case the application crashes at launch, without any information, it's probably because you forgot
 to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
 
-**What is currently functional** (in the 0.9 version, to come soon):
+**What is currently functional** (and will be improved progressively):
 
 - [x] **Pan, Tilt and Zoom** : hardware zoom, depending on your webcam. The zoomed images can be directly recorded, delayed or not. Example : Logitech Brio allows until x 5.0 hardware zoom + pan and tilt in the zoomed area. Logitech C920 and C922 : zoom x 2.0 only + pan and tilt
 - [x]    Lense (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image (but the zoomed area cannot be recorded)
@@ -298,11 +298,12 @@ Technical informations:
 
 This software is written on Linux, and cross-compiled to run on 64-bit Windows. The APIs used are:
 
-* **SDL2** ( http://libsdl.org/ ) for windowing and remarkable portability Linux -> Windows;
+* **SDL2 2.0.9** ( http://libsdl.org/ ) for windowing and remarkable portability Linux -> Windows;
 * **OpenGL** ( https://www.khronos.org/opengl/ ) for rendering;
 * **Dear ImGui** ( https://github.com/ocornut/imgui ) for user interface and graphics performance (thanks to **Omar Cornut** for this awesome UI);
 * **OpenCV 3.4.0** ( https://opencv.org/ ): management of webcams, processing of frames, annotations (stopwatch, recording);
-* **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg)  for sound in videos (reading AND -soon- recording) 
+* **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg) 
+* **mdPlayer** (https://framagit.org/ericb/mdplayer ):for sound in videos (reading AND -soon- recording) 
 * **DirectShow** and **DirectX** (on Windows), v4l2 + gstreamer (on Linux): video acquisition;
 * **FFMPEG (version 4.0.2 on both Windows and Linux)** ( http://ffmpeg.org/ ) opening, analysis, export of video files (divx, avi etc);
 * **mingw-w64** ( https://mingw-w64.org/doku.php ) cross-compilation of the Windows version;
@@ -312,4 +313,4 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **Font AweSome** ( https://github.com/juliettef/IconFontCppHeaders ) for font-icons created by **Juliette Foucaut** .
 * **(coming soon) **TinyXML2** ( https://github.com/leethomason/tinyxml2 ) for xml tags when analyzing and ranking a video.
 
-Author of miniDart software: Eric Bachard © 2016-2018
+Author of miniDart software: Eric Bachard © 2016-2019
