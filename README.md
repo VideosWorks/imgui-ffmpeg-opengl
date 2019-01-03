@@ -17,7 +17,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 # miniDart (version actuelle au téléchargement : 0.9.2 (Windows7+ et binaire pour LinuxMint) , devel : 0.9.3 avec multi-viewports inclus)
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
-Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas complète, et comporte probablement quelques bugs. Une partie des fonctionnalités est encore manquante, et devrait être implémentée vers fin 2018.
+Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas complète, et comporte probablement quelques bugs. Une partie des fonctionnalités est encore manquante, et devrait être implémentée progressivement.
 
 **IMPORTANT : Cadre de ce projet**
 
@@ -178,7 +178,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 #miniDart (current version: 0.9.2 for Windows + binary for LinuxMint, devel 0.9.3 including multi-viewports)
 Video analysis software for team sports coaches (handball, but not only)
 
-This is a demo version of the **miniDart** software. It is not complete, and probably has some bugs. Some of the features are still missing, and should be implemented by end 2018.
+This is a demo version of the **miniDart** software. It is not complete, and probably has some bugs. Some of the features are still missing, and should be implemented progressively.
 
 **IMPORTANT: Framework for this project**
 
