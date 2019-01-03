@@ -302,7 +302,6 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **OpenGL** ( https://www.khronos.org/opengl/ ) for rendering;
 * **Dear ImGui** ( https://github.com/ocornut/imgui ) for user interface and graphics performance (thanks to **Omar Cornut** for this awesome UI);
 * **OpenCV 3.4.0** ( https://opencv.org/ ): management of webcams, processing of frames, annotations (stopwatch, recording);
-* **SDL2_ffmpeg** (https://framagit.org/ericb/sdl2_ffmpeg) 
 * **mdPlayer** (https://framagit.org/ericb/mdplayer ):for sound in videos (reading AND -soon- recording) 
 * **DirectShow** and **DirectX** (on Windows), v4l2 + gstreamer (on Linux): video acquisition;
 * **FFMPEG (version 4.0.2 on both Windows and Linux)** ( http://ffmpeg.org/ ) opening, analysis, export of video files (divx, avi etc);
