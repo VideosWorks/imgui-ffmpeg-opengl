@@ -312,4 +312,4 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **Font AweSome** ( https://github.com/juliettef/IconFontCppHeaders ) for font-icons created by **Juliette Foucaut** .
 * **(coming soon) **TinyXML2** ( https://github.com/leethomason/tinyxml2 ) for xml tags when analyzing and ranking a video.
 
-Author of miniDart software: Eric Bachard © 2016-2019
+**Author of miniDart software: Eric Bachard © 2016-2019**
