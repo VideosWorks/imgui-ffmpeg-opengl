@@ -1,5 +1,26 @@
 Changelog of miniDart
-Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
+Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
+
+2019 January 5th
+
+Fixed the do_seek bug : now we can bo backward / forward.
+FIXME:  needs a lot of improvements though
+Tested SliderThicknessScale with devel version, including colors.
+SliderThicknessScale = 0.4f + transparency = 0.3f looks nice (tested in all versions)
+Fixed bad use of ImGui::BeginGroup()/ImGui::EndGroup() in ANALYSIS_TAB. Looks ok now.
+Created slidershrink branch
+Proposed a contribution to Dear ImGui : see https://github.com/ocornut/imgui/issues/2263
+
+2019 January 3rd
+
+Fixed another instant crash and some annoying issues with video ending.
+Disabled the broken FF_QUIT_EVENT, replaced by something else. FIXME : factorize the "quit" action
+Now the video does no longer quit at end, but stops at the last image.
+Improved engine GL Context visibility issue with multi viewports (devel version only).
+ - no engine: works as expected, remains only one issue
+ - engin : yet some broken contexts, and lost adresses 
+Fixed theme selection issue.
+Implemented set_theme() (will likely become Gui::set_theme()).
 
 2019 January 1st
 
@@ -49,6 +70,9 @@ More precisely, I had to add, just after window flags declaration :
         if (ImGui::Begin(APPLICATION_VERSION_STRING, &open, mD_window_flags))
         {
 
+
+    ImVec2 main_viewport_pos = ImGui::GetMainViewport()->Pos;
+    ImGui::SetNextWindowPos(ImVec2(main_viewport_pos.x,main_viewport_pos.y));
 ````
 
 THANKS AGAIN to Omar Cornut for his great instructions and documentation in the code !

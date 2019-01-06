@@ -14,7 +14,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# miniDart (version actuelle au téléchargement : 0.9.2 (Windows7+ et binaire pour LinuxMint) , devel : 0.9.3 avec multi-viewports inclus)
+# miniDart (version actuelle au téléchargement : 0.9.3 (Windows7+ et binaire pour LinuxMint) , devel : 0.9.4 avec multi-viewports inclus)
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
 Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas complète, et comporte probablement quelques bugs. Une partie des fonctionnalités est encore manquante, et devrait être implémentée progressivement.
@@ -71,7 +71,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] affichage du temps d'activité (cumul si chronomètre activé) et/ou le temps total (depuis le premier appui sur start)
 - [x] changement de webcam en live (il est toutefois conseillé de démarrer miniDart AVEC la webcam branchée)
 - [x] ouverture d'une vidéo Windows et Linux (le son devrait fonctionner. Crashes possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
-- [x] thème modifiable (onglet préférences)
+- [x] thème modifiable (onglet préférences ou menu)
 - [x] toute l'interface utilisateur est modifiable en cours de fonctionnement, mais n'est pas mémorisée pour le prochain démarrage)
 - [x] le mode statistiques est en cours d'implémentation, et toute suggestion d'amélioration est la bienvenue
 - [x] ouvrir un fichier de type vidéo (sera utilisé pour le mode image par image et l'analyse+séquençage avec ajout de tags)
@@ -175,7 +175,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-#miniDart (current version: 0.9.2 for Windows + binary for LinuxMint, devel 0.9.3 including multi-viewports)
+#miniDart (current version: 0.9.3 for Windows + binary for LinuxMint, devel 0.9.4 including multi-viewports)
 Video analysis software for team sports coaches (handball, but not only)
 
 This is a demo version of the **miniDart** software. It is not complete, and probably has some bugs. Some of the features are still missing, and should be implemented progressively.
