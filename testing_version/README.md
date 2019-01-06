@@ -1,4 +1,6 @@
-La version actuellement en test est la **0.9.2**
+La version actuellement en test est la **0.9.3** (la 0.9.2 va être supprimée prochainement)
+
+Pour les derniers changements, voir le contenu de releases notes (en anglais)
 
 N.B. : merci de me contacter directement en cas de problème avec les instructions.
 
