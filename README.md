@@ -160,7 +160,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * **Font AweSome** (https://github.com/juliettef/IconFontCppHeaders ) pour les fontes-icones créées par **Juliette Foucaut**.
 * (prochainement) **TinyXML2** (https://github.com/leethomason/tinyxml2) pour les tags xml lors de l'analyse et le classement d'une vidéo.
 
-**Auteur du logiciel miniDart : Eric Bachard © 2016-2018**
+**Auteur du logiciel miniDart : Eric Bachard © 2016-2019**
 
 
 **ENGLISH VERSION**
