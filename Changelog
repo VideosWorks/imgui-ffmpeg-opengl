@@ -1,6 +1,26 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2019 January 21st
+
+Continued to work at the new control (box appears when the mouse curser hovers the video frame).
+The howerAction class is in a good shape, means ~ 90% done.
+Added new variable names video_duration. Now the slider wshows the current position in the video file (timeline).
+FIXME : manually change the slider grabber + add a modal dialog box to enter a given time to seek at.
+Added .webm video files
+Some improvements with seeking backward/forward. 10s seems to be more realistic.
+NEW: worked at full follow up for players. Added some new ideas in the whit paper.
+Fixed more crashes.
+Learning libopenshot. Problem though : looks very well written, but this lib (LGPL) seems to be cribbled by Qt dependencies ...  :(
+WIP : trying to rewrite the ClipReader, without fill the memory with frames.
+
+
+2019 January 10th
+
+Fixed the wrong layout with the new tabs API + Viewport on Linux
+Fixed the visibility of some static variables.
+
+
 2019 January 5th
 
 Fixed the do_seek bug : now we can bo backward / forward.
