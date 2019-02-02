@@ -71,6 +71,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] affichage du temps d'activité (cumul si chronomètre activé) et/ou le temps total (depuis le premier appui sur start)
 - [x] changement de webcam en live (il est toutefois conseillé de démarrer miniDart AVEC la webcam branchée)
 - [x] ouverture d'une vidéo Windows et Linux (le son devrait fonctionner. Crashes possibles : attention !). Arrêt et reprise de la vidéo (barre espace).
+- [x] recherche, avance rapide, retour rapide, retour au début, recherche à un temps donné avec curseur(CTRL+clic pour choisir le temps)
 - [x] thème modifiable (onglet préférences ou menu)
 - [x] toute l'interface utilisateur est modifiable en cours de fonctionnement, mais n'est pas mémorisée pour le prochain démarrage)
 - [x] le mode statistiques est en cours d'implémentation, et toute suggestion d'amélioration est la bienvenue
@@ -125,6 +126,7 @@ Atelier retard :
 - [x] lecture seulement vidéo + son synchrone (quelques problèmes à résoudre encore)
 - [x] séquençage d'une vidéo (traitement des images seulement)
 - [x] ajout d'une source réseau, type webcam IP (utilise ffmpeg)
+- [x] recherche, avance rapide, retour rapide, positionnement à un temps donné
 - [ ] calibration de la webcam (distorsion, calcul approché des coeffficients pour les aberrations de sphéricité) // en tests
 - [ ] correction distorsion en temps réel (pixels shaders ou OpenCV) // en tests
 - [ ] conversion YUV / RGB (OpenGL + pixel shaders) (en coursd'implémentation) 
@@ -229,6 +231,7 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 - [x]    the entire user interface is editable during operation, but is not memorized for the next start)
 - [x]    the statistics mode is being implemented, and any suggestion of improvement is welcome
 - [x]    open a video type file (will be used for image-per-image mode and analysis + sequencing with tagging)
+- [x]    seek, fast forward, fast backward, return at zero, seek at a gien time (CTRL+clic to select the time value)
 - [x]    image by image mode (already available here: https://github.com/ebachard/cv_slideshow works in "drag and drop" mode); 
 - [x]    **focus** : manual mode or automatic. Possible use in "Microscope" mode.
 - [x]    **exposure** : manual mode or automatic. Known issue  (Linux only) : miniDart must restart to retrieve the automatic mode (WIP).
