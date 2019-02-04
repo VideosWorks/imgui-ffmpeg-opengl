@@ -1,10 +1,30 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2019 February 4th
+
+Testing new, and based on frames only VideoSeeking class
+Improved stability (some other crashes are fixed
+Added new preferences : Ratio.
+New values are 16/9 (current 720p), 16/10 (macbook pro format), 4/3 and 4/5 width/height formats
+Added seek fast forward (+10s) / seek fast backward (-10s)
+Now using (+2s) for step forward, and -2s for step backward
+Fixed : seek fast backward, seek step backward, play / pause / stop / seek step forward, seek fast forward
+Fixed : time position can now be set manualy.
+Fixed : flickering when setting time position manualy
+Fixed : (workaround) dead lock when the video arrives at the end
+Fixed : return to zero (stop)
+
+REGRESSION (WIP, partialy fixed using origin / max_position values) :
+some .mp4, (some .MTS and flash videos) do NO LONGER return the right value from get_audio_clock( videostate)
+nor get_master_clock(videostate).
+Testing master clock
+
+
 2019 January 21st
 
 Continued to work at the new control (box appears when the mouse curser hovers the video frame).
-The howerAction class is in a good shape, means ~ 90% done.
+The howerAction class is in a good shape, means ~ 70% done.
 Added new variable names video_duration. Now the slider wshows the current position in the video file (timeline).
 FIXME : manually change the slider grabber + add a modal dialog box to enter a given time to seek at.
 Added .webm video files
