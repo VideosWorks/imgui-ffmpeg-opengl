@@ -1,6 +1,6 @@
 /*
- * Fichier d'en tête resetImageSource.cpp pour le projet miniDart
- * Auteur : Eric Bachard  / lundi 26 décembre 2018, 14:35:03 (UTC+0200)
+ * Fichier d'en tête resetWebcam.cpp pour le projet miniDart
+ * Auteur : Eric Bachard  / mercredi 26 décembre 2018, 14:20:13 (UTC+0200)
  * Ce document est sous Licence GPL v2
  * voir : http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -28,8 +28,10 @@ int resetImageSource(cv::VideoCapture * currentCaptureDev, int source , const ch
 
         case USB_WEBCAM:
 #ifdef NATIVE_BUILD
+
         currentCaptureDev->open(aDeviceNumber);
-//        currentCaptureDev->Init(aDeviceNumber);
+//  other working choice, with recent OpenCV >= 3.4.4 :
+//        currentCaptureDev->open(aDeviceNumber + cv::CAP_V4L2);
 #else
         currentCaptureDev->open(aDeviceNumber + cv::CAP_DSHOW);
 #endif
