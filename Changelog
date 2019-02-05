@@ -1,13 +1,20 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
+2019 February 5th
+
+Using reorderable tabs.
+Using viewports ! Be carefull : some remaining bugs, like image no longer
+rendered when a window overlaps the main window border, and some related issues.
+Removed useless recursive menu (mostly confusing for end users)
+Removed broken ImGui::Columns()
+Worked at the layout (currently suboptimal)
+Added new tabs (list of players) in follow up tab, with 12 players (test)
+
 2019 February 4th
 
-RELEASING 0.9.4
-
-Limited the frames number to 500 with the clipReader (more only with commercial version)
 Testing new, and based on frames only VideoSeeking class
-Improved stability (some other crashes are fixed
+Improved stability (some other crashes are fixed)
 Added new preferences : Ratio.
 New values are 16/9 (current 720p), 16/10 (macbook pro format), 4/3 and 4/5 width/height formats
 Added seek fast forward (+10s) / seek fast backward (-10s)
