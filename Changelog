@@ -3,7 +3,10 @@ Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
 
 2019 February 5th
 
-Using reorderable tabs.
+0.9.4 RELEASE IN PROGRESS (bcause more test on Windows are needed)
+
+Limited the frames number to 500 with the clipReader (more only with commercial version)
+Using reorderable tabs. Todo : make them dockable and closable asap (see docking branch)
 Using viewports ! Be carefull : some remaining bugs, like image no longer
 rendered when a window overlaps the main window border, and some related issues.
 Removed useless recursive menu (mostly confusing for end users)
