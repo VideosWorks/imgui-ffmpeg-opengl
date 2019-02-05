@@ -1,6 +1,7 @@
 /* **************************************************************************************
  *    Author: Eric Bachard
  *    eric.bachard@free.fr
+ *    2018 december 30th
  *
  *                                  MIT License
  *                                  -----------
@@ -62,4 +63,4 @@ namespace ImGui
 
 
 } // namespace ImGui
-#endif //IMGUI_TABS_HPP
+#endif //IMGUI_THEMES_H
