@@ -1,5 +1,5 @@
 /*
- * Fichier d'en tête resetWebcam.cpp pour le projet miniDart
+ * Fichier d'en tête resetImageSource.cpp pour le projet miniDart
  * Auteur : Eric Bachard  / mercredi 26 décembre 2018, 14:20:13 (UTC+0200)
  * Ce document est sous Licence GPL v2
  * voir : http://www.gnu.org/licenses/gpl-2.0.html
