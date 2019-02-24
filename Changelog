@@ -1,5 +1,46 @@
 Changelog of miniDart
-Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
+Copyright Eric Bachard 2016-2018  Software created the 1st AUGUST 2016
+
+2019 February 24th
+
+Distortion:  got a solution, but will implement it later
+See: https://github.com/ebachard/distortion + the corresponding PR (build fixes + warning free + code cleanup)
+
+Layout : found https://edu.gcfglobal.org/en/beginning-graphic-design/
+
+VSYNC : found how to disable vsync on Linux : 
+1. create  ~/.drirc file
+2. add:
+<device screen="0" driver="dri2">
+    <application name="Default">
+    <option name="vblank_mode" value="0"/>
+    </application>
+</device>
+
+3. set SCREEN_FPS to 2000 + rebuild miniDart
+
+cold launch: 980 fps / 1.0x ms/frame
+slidershow + small big buck bunny (2k@60fps), with 1368 x 960 @ fullscreen gives 120 fps
+delay, fullscren, running a 720p video gives 150 to 180 fps
+rtsp flow (320p@24fps), fullscreen gives 450 to 480 fps
+
+4. Normal use : SCREEN_FPS value is currently set to 100 fps on both Linux and Windows.
+
+
+GLSL : solved the glsl #version 130 only on Linux  (was searching since a lot of time !!!)
+See : https://github.com/ocornut/imgui/issues/1116
+Fixed the imgui-mix-sdl2 issue the same way :
+const char* env_var = "MESA_GL_VERSION_OVERRIDE=4.x";
+putenv((char*)env_var);
+=> allows glsl #version 4.x (including 4.5).
+
+Regression : cannot play the (correctly) recorded videos (bcause missing audio channel ?)
+
+
+2019 February 19th
+
+Added 1360 x 768 image format
+
 
 2019 February 5th
 
