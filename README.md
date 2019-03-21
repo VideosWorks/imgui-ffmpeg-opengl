@@ -14,7 +14,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# miniDart (version actuelle au téléchargement : 0.9.3 (Windows7+ et binaire pour LinuxMint) , devel : 0.9.4 avec multi-viewports inclus)
+# miniDart (version actuelle au téléchargement : 0.9.3 (Windows7+ et binaire pour LinuxMint) , **À VENIR PROCHAINEMENT : 0.9.4** avec multi-viewports inclus)
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
 Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas complète, et comporte probablement quelques bugs. Une partie des fonctionnalités est encore manquante, et devrait être implémentée progressivement.
@@ -62,7 +62,7 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Ce qui est actuellement fonctionnel** (dans la version 0.9.2 à venir prochainement) :
+**Ce qui est actuellement fonctionnel** (dans la **version 0.9.4** à venir prochainement) :
 
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
 - [x] permet le **séquençage vidéo** (le son n'est pas géré pour l'instant)
