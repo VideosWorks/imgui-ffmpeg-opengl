@@ -1,4 +1,4 @@
-La version actuellement en test est la **0.9.3** (la 0.9.2 va être supprimée prochainement)
+La version actuellement en test est la **0.9.4** (la 0.9.3 va être supprimée prochainement)
 
 Pour les derniers changements, voir le contenu de releases notes (en anglais)
 
@@ -63,6 +63,10 @@ Eric Bachard
 ************************************************************************************************************
 
                    Somme de contrôle (sha 256)                                   Version
+
+************************************************************************************************************
+
+     53a0020c0c6e3b96cf28a5383c3e7776c958ab45067086bb7248ae1781db2117  miniDart_0.9.4_test.exe
 
 ************************************************************************************************************
 

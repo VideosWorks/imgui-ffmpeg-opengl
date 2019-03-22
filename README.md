@@ -14,7 +14,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# miniDart (version actuelle au téléchargement : 0.9.3 (Windows7+ et binaire pour LinuxMint) , **À VENIR PROCHAINEMENT : 0.9.4** avec multi-viewports inclus)
+# miniDart (version actuelle au téléchargement : 0.9.4 (Windows7+ avec multi-viewports inclus) 0.9.3 (binaire pour LinuxMint)** )
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
 **Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/tree/master/testing_version**
@@ -63,7 +63,7 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Ce qui est actuellement fonctionnel** (dans la **version 0.9.4** à venir prochainement) :
+**Ce qui est actuellement fonctionnel** (dans la **version 0.9.4**) :
 
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
 - [x] permet le **séquençage vidéo** (le son n'est pas géré pour l'instant)
@@ -178,7 +178,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-#miniDart (current version: 0.9.3 for Windows + binary for LinuxMint, devel 0.9.4 including multi-viewports)
+#miniDart (current version: 0.9.4 (Windows7+ including multi-viewports) and 0.9.3 (binary for LinuxMint)** )
 Video analysis software for team sports coaches (handball, but not only)
 
 This is a demo version of the **miniDart** software. It is not complete, and probably has some bugs. Some of the features are still missing, and should be implemented progressively.
@@ -218,7 +218,7 @@ Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwi
 Important : just in case the application crashes at launch, without any information, it's probably because you forgot
 to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
 
-**What is currently functional** (and will be improved progressively):
+**What is currently functional in the 0.9.4** (and will be improved progressively):
 
 - [x] **Pan, Tilt and Zoom** : hardware zoom, depending on your webcam. The zoomed images can be directly recorded, delayed or not. Example : Logitech Brio allows until x 5.0 hardware zoom + pan and tilt in the zoomed area. Logitech C920 and C922 : zoom x 2.0 only + pan and tilt
 - [x]    Lense (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image (but the zoomed area cannot be recorded)
