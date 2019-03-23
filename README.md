@@ -94,7 +94,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] choix du répertoire d'enregistrement par défaut des vidéos (à tester de façon plus approfondie)
 - [x] **analyse image par image** : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
-- [x] **ralenti possible, et ajustable en images par seconde**. Fonctionne de 5 images par seconde (vrai ralenti)  à ~40 images par seconde (accéléré). Le réglage à 60 images/s n'est pas précis du tout.
+- [x] **ralenti (nouvel algorithme) ajustable en images par seconde**. Fonctionne de 5 images par seconde à ~60 images par seconde (accéléré si fps réel < 60)
 - [ ] extraction et annotation d'une image (à venir, puis enregistrement sur une durée donnée (format .avi, pas de son)
 
 **Atelier Suivi de l'équipe** :
