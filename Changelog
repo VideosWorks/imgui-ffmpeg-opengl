@@ -1,6 +1,38 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 April 26th
+
+(Linux only)
+Upgraded Mesa to 19.1.0-devel version (git-e8bf4efceb)
+Upgraded GStreamer to 1.17.0
+Upgraded ffmpeg to 4.1.0
+Testing Vulkan 1.1.106
+Rebuilt OpenCV 3.4.0 
+
+Created AudioDevice and AudioDevicesVector classes. Will use SDL2. added the header in the miniDart repo
+
+
+Compiles directly (Windows Linux)
+Fixed several issues with clock and end of playback
+
+
+2019 April 21st
+
+Added cv::CAP_GSTREAMER in improve me list (capturedev.cpp)
+
+Implement me : add a chronometer + buttons linked to time.
+Rule : a player is on the playground (means button enlighted) => increment activity time,
+       not present (means button not enlighted)) : activity time is stalled
+Pro : it's easy to see all the 7 players present. 
+
+Second idea : add a timeline to see all the players rotations during the full match ? (shouldn't be too complicated)
+
+
+2019 March 1st
+
+s/1440x1080/1440x900/ in the proposed images formats
+
 2019 February 24th
 
 Distortion:  got a solution, but will implement it later
@@ -20,7 +52,7 @@ VSYNC : found how to disable vsync on Linux :
 3. set SCREEN_FPS to 2000 + rebuild miniDart
 
 cold launch: 980 fps / 1.0x ms/frame
-slidershow + small big buck bunny (2k@60fps), with 1368 x 960 @ fullscreen gives 120 fps
+slidershow + small big buck bunny (2k@60fps), with 1360 x 768 @ fullscreen gives 120 fps
 delay, fullscren, running a 720p video gives 150 to 180 fps
 rtsp flow (320p@24fps), fullscreen gives 450 to 480 fps
 
