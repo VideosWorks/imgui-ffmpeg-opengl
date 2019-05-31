@@ -164,7 +164,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * **Native File Dialog** (https://github.com/mlabbe/nativefiledialog), ouverture d'un fichier, sauvegarde, écrit par **Michael Labbe**.
 * **Font AweSome** (https://github.com/juliettef/IconFontCppHeaders ) pour les fontes-icones créées par **Juliette Foucaut**.
 * (prochainement) **TinyXML2** (https://github.com/leethomason/tinyxml2) pour les tags xml lors de l'analyse et le classement d'une vidéo.
-* (prochainement) **delay** (https://github.com/rom1v/delay), écrit par **Romain Vimont**, qui permet le retard son et image **synchronisé**. 
+* (prochainement) **delay** (https://github.com/rom1v/delay), écrit par **Romain Vimont**, qui permet de retarder son + image d'une durée ajustable, mais toujours **synchronisés**. 
 
 **Auteur du logiciel miniDart : Eric Bachard © 2016-2019**
 
@@ -318,6 +318,6 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **Native File Dialog** ( https://github.com/mlabbe/nativefiledialog ), open file, save, written by **Michael Labbe** .
 * **Font AweSome** ( https://github.com/juliettef/IconFontCppHeaders ) for font-icons created by **Juliette Foucaut** .
 * **(coming soon) **TinyXML2** ( https://github.com/leethomason/tinyxml2 ) for xml tags when analyzing and ranking a video.
-* (work in progress) **delay** (https://github.com/rom1v/delay), written **Romain Vimont**, allowing to synchronize frames and sound easely.. 
+* (work in progress) **delay** (https://github.com/rom1v/delay), written **Romain Vimont**, allowing to delay AND keep frames+sound in sync **easely**.. 
 
 **Author of miniDart software: Eric Bachard © 2016-2019**
