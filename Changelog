@@ -1,6 +1,67 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 June 28th
+
+
+Annotations :
+
+After discussions with Julien Antoine (SAHB), I'll try to annnotate one delayed video _alive_ (task #1) or add comments in an image, and write a
+static video for a given time (e.g. 5 to 10 s), and include it later in the final vidéo, at mount time (task #2).
+
+Implemented solution 1 : Implemented addText( cv::Mat img), using cv::freetype::FreeType2 Class Reference.
+Link : https://docs.opencv.org/3.4.2/d9/dfa/classcv_1_1freetype_1_1FreeType2.html 
+The goal is to include text annotations in the current displayed image (wherever it comes : Video, USB ...)
+
+Implemented solution 2: tested image_ostream hack, from OpenCV issue #313
+Link : https://github.com/opencv/opencv/pull/313/commits/a546d1ffcbd69902cc99b04ad94bc24065e2b184
+
+Tested :
+Cross compiled a new version of OpenCV (Windows AND Linux). Works as expected. Solution 1 is more promising, since we can
+use whatever .ttf file (tested using Verdana.ttf, Comic_Sans_MS.ttf, DroidSans.ttf, DejaVuSans.ttf, Arial.ttf and some other).
+
+
+REMAINING ISSUES TO BE SOLVED :
+- how to detect \n in a given string ? 
+- how to write several lines (like ImGui::MultilineText() does (very well btw)
+
+WIP : created the associated documentation (french). Will commit the file once I'll have decided what do at the end.
+
+2019 June 11th
+
+Idea : integrate the webcamimage (resized), inside a video.
+
+2019 May 31st
+
+After a request (by email), Romain Vimont gracefully modified delay license for MIT. WOW ! 
+It means delay can directly be integrated inside miniDart. This could be extremely helpfull !
+TODO : implement sequencing feature : recording 5s before the clic + 5s after (frames + sound should be possible)
+
+Mix ImGui OpenGL contexts and SDL_Renderer definitely don't work (obvious on Windows) => removed
+
+
+
+2019 May 8th
+
+More code cleanup
+Removed yet other ugly hacks with seek function : removed the SDL_Delay(50) when using the seek grabber, and some useless unref()
+Simplified the player : removed uggly hacks based on SDL_Delay(n), causing randm crashes when using separated threads
+Fixed some crashes with the seeking function.
+Removed useless av_packet_unref() causing segmentation fault at the end of the video.
+Worked at speed measure: looks like we can display the ball speed (approximativaly) ! (WIP : use grey + background syubstraction)
+Tested v4l2loopback (will probably become something close to /dev/video10)
+
+
+2019 May 1st
+
+SDL2 renderer + OpenGL 3+ + ImGui work ! (tested on Linux only, using 0.5.0 version of miniDart)
+
+If confirmed, this is an enormous improvement, because it will divide the load with videos by 2 or 3, and will help a lot for annotations.
+
+DONE : reimplemented the SDL_renderer // testing vsync / not vsync.
+The code compiles and works on Linux. No break on Windows, but needs a lot of tests.
+
+
 2019 April 26th
 
 (Linux only)
