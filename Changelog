@@ -1,8 +1,55 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
-2019 June 28th
+2019 June 30th
 
+Implemented wrap_text_in_lines( char * text) : one original line (text entered without take care), is split into lines of a given size.
+Max allowed is two lines x ~ 60 characters.
+
+What works correcly :
+
+In miniDart, one can check uncheck "insert a text in the video".
+
+When checked, we can select what to be drawn : 
+- select the fontsize
+- decide to fill the frame using a given color
+- select "add a colored frame"
+- select "add an outline"
+
+Enter the text (right clic to write a new content
+Insert the text (definitely) in the video, for a given while
+Reset the text (empty the string)
+
+When clicking on the advanced parmaters button, a contextual menu appears.
+
+The following parameters are modifiable :
+- choose how long the text will appear in the video
+- select the fontsize
+- select all the colors : font, frame, outline
+- reset to default values
+
+To be added : move x / y position of the box origin (here, the top left point)
+
+In the proof of concept (openCV + freetype) only
+
+using a fixed string, a given max line size, after some tests, it appear to work.
+
+Two cases :
+- when the string is less than 58 characters one line only is drawn on top of the OpenCV window.
+  - we can move the incrusted text rectangle position, with sliders (OpenCV highgui)
+  - the accented chars and most o the current UTF-8 chars are ok
+- when the string is more than 58 characters : 2 lines are calculated.
+
+TODO : draw both lines
+
+Issues : some little glitches with UTF-8. When the first word of the secnd line contains accented chars, the result is not always what is expected.
+
+TODO : check what happens on Windows too (accented chars give strange results sometimes). Probably a wchar implementation will be needed.
+
+
+
+
+2019 June 28th
 
 Annotations :
 
