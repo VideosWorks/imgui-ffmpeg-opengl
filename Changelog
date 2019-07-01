@@ -1,6 +1,18 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 July 1st
+
+Full implementation and Tests in progress (recording will be added later)
+Implemented Text_Canvas class
+Implemented TEXT_Object structure
+Testing std::vector of md::TEXT_Object use
+Added stopStringIncrustation() and clearString() methods
+
+Shortcut modification :  close a video
+Dues to text incrustation in videos, changed  " q" for "prefered modifier" + "q"  (default prefered modifier is ALT key). TODO : improve
+
+
 2019 June 30th
 
 Implemented wrap_text_in_lines( char * text) : one original line (text entered without take care), is split into lines of a given size.
@@ -42,7 +54,7 @@ Two cases :
 
 TODO : draw both lines
 
-Issues : some little glitches with UTF-8. When the first word of the secnd line contains accented chars, the result is not always what is expected.
+Issues : some little glitches with UTF-8. When the first word of the second line contains accented chars, the result is not always what is expected.
 
 TODO : check what happens on Windows too (accented chars give strange results sometimes). Probably a wchar implementation will be needed.
 
