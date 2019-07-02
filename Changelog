@@ -1,6 +1,24 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 July 2nd
+
+
+CanvasText class completed. Tests in progress
+Linux:  everything builds and works fine since the beginning.
+
+Windows cross-compilation (one more time) : after everal hours of fight with (the order is essential) freetype6, harfbuzz
+and OpenCV, I finaly was able to end complete the windows build. 
+The problem *were* :
+- find a buildable version of libfreetype6 (means : cross compilation works as expected, what is not true)
+- build harfbuzz. Difficult, scripts never work. Is it expected to avoid the devs cross-compiling it ?
+- cross compile BOTH freetype6 AND harfbuzz (broken build, nothing works well, I had to hack a lot) 
+- last, but not least:  1. detect both libfreetype6 AND harfbuzz when cross-compiling OpenCV 3.4.0 //(the CMakefile.txt is completely wrong and broken)
+                        2. compile miniDart  // subtile issue at the end, but I understood what happened, and it is now fixed.
+
+Result : it seems to work on Windows (ufff !!)
+
+
 2019 July 1st
 
 Full implementation and Tests in progress (recording will be added later)
