@@ -1,8 +1,46 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 July 4th
+
+TODO : 
+
+TASK A:
+- try to replace the current recorder (actually OpenCV + ffmpeg) using directly ffmpeg, to create .mp4
+- selet the sound channel // recordable sound
+- mux both sound AND images into some .mp4 or .avi container.
+
+TASK B:
+- create an "incrustation factory"
+- animate the text (simple OrigText(t) should do a lot 
++ add blurr effect to the font (probably making lineStyle (t)
++ add colored text effects
+
+=> howto generate complex incrusted objects (like pannel in a match ?)
+
+The proof of concept works !!!
+
+- init works well
+- redo is possible (add one, add another incrustation)
+- stop incrustation manyally works
+
+FIXME :
+- problem with long strings, and wrap_text_in_lines, who is very hacky, and needs some love  (WIP)
+
+- the size of the rectangle depends on the image size, and  "normal font appearance"
+  occur when the following fontsizes :
+
+  ~ size = 36 with 1920 x 1080 images (aka 2k)     // 1920/36 = 53.33 pixels per character
+  ~ size = 24 with 1280 x  720 images (aka 720p)   // 1280/24 = 53.33 pixels per character
+  ~ size =  6 for  320 x  240 images( rtsp video)  //  320/6 = 53.33 pixels per character too !
+
+Means it could be intersting to keep the ratio  (witdh/fontsize) = constant = 53.33 
+Current (simple) choice: allow to select the fontsize between 6 and 80, to allow a max of cases.
+
+
 2019 July 2nd
 
+Linux: matroska (aka .mkv) format is now in the list when opening a video. ffmpeg is fantastic ! 8-)
 
 CanvasText class completed. Tests in progress
 Linux:  everything builds and works fine since the beginning.
