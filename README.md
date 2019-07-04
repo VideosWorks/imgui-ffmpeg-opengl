@@ -65,7 +65,7 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Ajouts dans la 0.9.5 (à venir, Windows)
+**Ajouts dans la 0.9.5 (à venir, Windows)**
 
 **Atelier analyse** :
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). La couleur du texte, du fond du cadre, la taille de la police de caractère (.ttf) sont modifiables.
