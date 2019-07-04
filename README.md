@@ -65,6 +65,13 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
+**Ajouts dans la 0.9.5 (à venir, Windows)
+
+**Atelier analyse** :
+- [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). La couleur du texte, du fond du cadre, la taille de la police de caractère (.ttf) sont modifiables.
+- [x] Nombreuses correction de bugs
+- [x] Lecture de vidéos au format .mkv
+
 **Ce qui est actuellement fonctionnel** (dans la **version 0.9.4**) :
 
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
@@ -220,6 +227,15 @@ Operating system: tested on Windows 7 and Win 10 64-bit (a 32 bits version forwi
 
 Important : just in case the application crashes at launch, without any information, it's probably because you forgot
 to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
+
+
+**Recent changes in the 0.9.5 version (to come soon, Windows only)
+
+**Analysis workshop** :
+- [x] **Video Incrustation** : one can insert video incrustation containing a simple text (fully customizable) in the current image (reading or recording). The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
+- [x] Various bugfixes.
+- [x] mkv can now be open (Linux and Windows).
+
 
 **What is currently functional in the 0.9.4** (and will be improved progressively):
 
