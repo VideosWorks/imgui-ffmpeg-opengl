@@ -229,7 +229,7 @@ Important : just in case the application crashes at launch, without any informat
 to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
 
 
-**Recent changes in the 0.9.5 version (to come soon, Windows only)
+**Recent changes in the 0.9.5 version (to come soon, Windows only)**
 
 **Analysis workshop** :
 - [x] **Video Incrustation** : one can insert video incrustation containing a simple text (fully customizable) in the current image (reading or recording). The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
