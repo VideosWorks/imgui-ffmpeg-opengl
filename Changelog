@@ -4,6 +4,9 @@ Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
 2019 July 7th
 
+Reversed 2vin code at : https://framagit.org/ericb/direct_cv_encode 
++ filed the matching issue at : https://github.com/2vin/opencv-ffmpeg/issues/1
+
 Important : everything below concerns 0.9.5. to come soon.
 Last step before releasing 0.9.5 : verify the windows port works (no windows at home, this will take some time, since not much feedback)
 
