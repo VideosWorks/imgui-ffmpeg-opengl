@@ -1,6 +1,48 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+
+2019 July 7th
+
+Important : everything below concerns 0.9.5. to come soon.
+Last step before releasing 0.9.5 : verify the windows port works (no windows at home, this will take some time, since not much feedback)
+
+Encode video : tested (works very well) direct ".mp4" encoding using C++ ffmpeg API. Adapted from : https://github.com/2vin/opencv-ffmpeg
+Note:  I'll reverse my changes under MIT license asap.
+
+Video sequencing : This will not replace the OpenCV implementation (seems hungry in terms of cpu time), but this will allow to record 
+as 10 s vidéos started 5s before the "clic", and finishing 5s after ( 5s as example, but could be adjusted until -8s/+8s)
+
+TODO : add audio stream, and mux them 
+The idea : create a full video (images+sound) from any video source mixed with any audio source.
+
+Added : audio multiplexer recordable audio sources can now be displayed, and selected (wait : it is not fonctionnal yet)
+Tested with 3 webcams conneted : one can select the sound origin, and (later) record this audio source
+
+Incrustation in video work on windows too. Currently : 1 line only, 120 chars max.
+Note : this is due to ImGui current limitation, with 127 chars maxi (I'll search a way to improve to 1024 chars
+
+TODO ? allow to split in two lines x LINE_LENGTH_MAX characters (using a vector of lines, more precisely std::vector<std::string> lines).
+
+"""""""""""""""""""""""""""""""""""""""""""""""
+Additional comments about text incrustation :
+
+I mostly reused the OpenCV documentation : https://docs.opencv.org/3.4.2/d9/dfa/classcv_1_1freetype_1_1FreeType2.html
+
+I have to mention, the original idea comes from Philipp Hasper (https://hasper.info), who kindly
+authorized me to reuse his code, excepted the nice idea of vetor of lines for multiplines implementation. To be more precise, I do not use
+ioxp::puttext() at all. Indeed, after some tries, I ended using my own implementation with opencv 3.4.0 + freetype (under FTL license) 
++ harfbuzz (windows cross compilation was a nightmare), not Philipp Hasper version.
+
+Anyway, I invite the reader to have a look a the complete original idea : https://hasper.info/worry-free-text-writing-into-opencv-images/
+
+Last but not least, once the code will be published, everything will become clear ;-)
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+Improved the Video incrustation UI : simplified, keep the text without delete it in the buffer, allowing to fix typos fastly.
+
+
+
 2019 July 5th
 
 First implementation of Incrustation in video is 90% implemented and quite stable.
