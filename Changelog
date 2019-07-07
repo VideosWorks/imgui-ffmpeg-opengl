@@ -11,7 +11,7 @@ Important : everything below concerns 0.9.5. to come soon.
 Last step before releasing 0.9.5 : verify the windows port works (no windows at home, this will take some time, since not much feedback)
 
 Encode video : tested (works very well) direct ".mp4" encoding using C++ ffmpeg API. Adapted from : https://github.com/2vin/opencv-ffmpeg
-Note:  I'll reverse my changes under MIT license asap.
+DONE  I'll reverse my changes under MIT license asap.
 
 Video sequencing : This will not replace the OpenCV implementation (seems hungry in terms of cpu time), but this will allow to record 
 as 10 s vidéos started 5s before the "clic", and finishing 5s after ( 5s as example, but could be adjusted until -8s/+8s)
