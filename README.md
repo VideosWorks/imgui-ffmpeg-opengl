@@ -260,7 +260,7 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 
 **Analysis workshop** :
 - [x] **Video Incrustation** : one can insert video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
-- [x]The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
+- [x] The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
 - [x] mkv can now be open (Linux and Windows).
 - [x] detection and display of all available and recordable audio sources (e.g. webcam)
 - [x] one can select the recordable audio source to associate to the frames currently displayed.
