@@ -191,6 +191,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * (prochainement) **TinyXML2** (https://github.com/leethomason/tinyxml2) pour les tags xml lors de l'analyse et le classement d'une vidéo.
 * (prochainement) **delay** (https://github.com/rom1v/delay), écrit par **Romain Vimont**, qui permet de retarder son + image d'une durée ajustable, mais toujours **synchronisés**. 
 
+
 **Auteur du logiciel miniDart : Eric Bachard © 2016-2019**
 
 
