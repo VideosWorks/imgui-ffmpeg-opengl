@@ -378,4 +378,7 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * (tests in progress) **OpenAL**  (https://www.openal.org LGPL), écrit par **kcat**. Usefull to catch an audio source audio, and make it usable by ffmpeg.
 * (work in progress, to be confirmed) **opencv-ffmpeg** (https://github.com/2vin/opencv-ffmpeg), written by **2vin** : turn OpenCV cv::Mat into mp4 (works very well !)
 * (work in progress, extremely usefull) **mediaMuxer**  (https://github.com/jerett/mediaMuxer), written by **WenJie JIANG**, extremely helpfull to mux audio and video for recording the final video.
+
 **Author of miniDart software: Eric Bachard © 2016-2019**
+
+End english version
