@@ -248,16 +248,6 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 
 **Recent changes in the 0.9.5 version (to come soon, Windows only)**
 
-**Ajouts dans la 0.9.5 (à venir, Windows surtout)**
-
-**Atelier analyse** :
-- [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
-- [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
-- [x] Lecture de vidéos au format .mkv
-- [x] détection et affichage de toutes lesr sources sonores pouvant être enregistrées
-- [x] sélection de la source audio à associer à l'image en cours de visionnage
-- [x] Nombreuses correction de bugs
-
 **Analysis workshop** :
 - [x] **Video Incrustation** : one can insert video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
 - [x] The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
