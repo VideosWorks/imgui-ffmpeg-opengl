@@ -187,11 +187,8 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * (en cours d'implémentation) **OpenAL**  (https://www.openal.org LGPL), écrit par **kcat**. Utile pour capturer le signal issu d'une source audio, et l'adapter à ffmpeg.
 * (en cours d'implémentation, pas certain de l'utiliser encore) **opencv-ffmpeg** (https://github.com/2vin/opencv-ffmpeg MIT License). Écrit par **2vin**. transforme une suite de frames de type  cv::Mat en une vidéo au format .mp4 (fonctionne super bien !)
 * (en cours d'implémentation, très intéressant, à confirmer) **mediaMuxer**  (https://github.com/jerett/mediaMuxer MIT License), written by **WenJie JIANG**, extremely helpfull to mux audio and video for recording the final video.
-
 * (prochainement) **TinyXML2** (https://github.com/leethomason/tinyxml2) pour les tags xml lors de l'analyse et le classement d'une vidéo.
 * (prochainement) **delay** (https://github.com/rom1v/delay), écrit par **Romain Vimont**, qui permet de retarder son + image d'une durée ajustable, mais toujours **synchronisés**. 
-
-
 **Auteur du logiciel miniDart : Eric Bachard © 2016-2019**
 
 
