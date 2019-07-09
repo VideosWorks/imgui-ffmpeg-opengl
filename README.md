@@ -71,20 +71,20 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
 - [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
 - [x] Lecture de vidéos au format .mkv
-- [x] détection et affichage de toutes lesr sources sonores pouvant être enregistrées
-- [x] sélection de la source audio à associer à l'image en cours de visionnage
+- [x] détection et affichage de toutes les sources sonores pouvant être enregistrées
+- [x] **sélection de la source audio** (enregistrable) à associer à l'image en cours de visionnage
 - [x] Nombreuses corrections de bugs
 
 En cours de test ou à venir :
 
-- [ ] affichage de l'incrustation vidéo sur plusieurs lignes
+- [ ] **incrustation vidéo sur plusieurs lignes**
 - [ ] affichage d'une incrustation vidéo "customisée" (image transparente par exemple)
 - [x] (fonctionne, pas encore implémenté) remplacement de OpenCV pour la création de vidéos par direct_cv_encode (création de mp4 de qualité avec ffmpeg)
-- [ ] capture audio : (fonctionnel mais pas intégré encore)
-- [ ] (à venir) création de vidéos **incluant le  son** et image avec multiplexage audio et son (ffmpeg) + openal (Linux) ou direct show (Windows)
+- [ ] **capture audio** : (fonctionnel mais pas intégré encore)
+- [ ] (à venir) création de vidéos **incluant le  son** et image avec **multiplexage audio et son** (ffmpeg) + **openal** (Linux) ou **direct show** (Windows)
 - [ ] (Windows seulement) possibilité d'affcher la boîte de dialogue pour régler tous les paramètres de la source sonore.
-- [ ] Choix de la police de caractère pour l'incrustation
-- [ ] Possibilité de créer plusieurs incrustations simultanées
+- [ ] **Choix de la police** de caractères pour l'incrustation
+- [ ] Possibilité de créer **plusieurs incrustations simultanées**
 
 **Ce qui est actuellement fonctionnel** (dans la **version 0.9.4**) :
 
