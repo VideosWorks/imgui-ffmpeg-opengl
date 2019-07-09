@@ -73,7 +73,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] Lecture de vidéos au format .mkv
 - [x] détection et affichage de toutes lesr sources sonores pouvant être enregistrées
 - [x] sélection de la source audio à associer à l'image en cours de visionnage
-- [x] Nombreuses correction de bugs
+- [x] Nombreuses corrections de bugs
 
 En cours de test ou à venir :
 
@@ -120,9 +120,9 @@ En cours de test ou à venir :
 
 **Atelier Suivi de l'équipe** :
 - [x] Suivi par actions : But, Attaque placée, etc
-- [x] Mesure performance de l'équipe : + - en fonction des actions pour chaque jouer, et affichés de façon globale pour 'léquipe'
+- [x] Mesure performance de l'équipe : + - en fonction des actions pour chaque jouer, et affichés de façon globale pour léquipe (version payante)
 
-À venir : annotations + enregistrement de l'image sous forme d'une vidéo de durée donnée.
+À venir : incrustations + annotations + enregistrement de l'image sous forme d'une vidéo de durée donnée
 
 **Atelier suivi GB** :
 - [x] saisie de tous les types de tirs (y compris 7m)
@@ -249,7 +249,7 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 **Recent changes in the 0.9.5 version (to come soon, Windows only)**
 
 **Analysis workshop** :
-- [x] **Video Incrustation** : one can insert video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
+- [x] **Video Incrustation** : one can insert a video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
 - [x] The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
 - [x] mkv can now be open (Linux and Windows).
 - [x] detection and display of all available and recordable audio sources (e.g. webcam)
