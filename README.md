@@ -2,7 +2,7 @@
 
 **VERSION EN FRANCAIS** (english version follows)
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 **AVANT TOUTE CHOSE : sous Windows, vous DEVEZ installer les pilotes 3D de votre carte graphique.**
 
@@ -12,7 +12,7 @@
 
 Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des anciens pilotes (Win7+), mais ils fonctionnent très bien.
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 # miniDart (version actuelle au téléchargement : 0.9.4 (Windows7+ avec multi-viewports inclus) 0.9.3 (binaire pour LinuxMint)** )
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
@@ -258,7 +258,7 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 
 Currently in test or work in progress :
 
-- [ ] display the incrustation using several lines (i.e. a vector of). Currente status : one line only
+- [ ] display the incrustation using several lines (i.e. a vector of). Current status : one line only
 - [ ] display a customized video incrustation (e.g. complex box + transparent background)
 - [x] (works, not yet implemented) replace OpenCV using direct_cv_encode (fork of opencv-ffmpeg), with creation of a high quality video using fmpeg.
 - [ ] capture audio : (fonctionnel mais pas intégré encore)
