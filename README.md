@@ -65,12 +65,26 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Ajouts dans la 0.9.5 (à venir, Windows)**
+**Ajouts dans la 0.9.5 (à venir, Windows surtout)**
 
 **Atelier analyse** :
-- [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). La couleur du texte, du fond du cadre, la taille de la police de caractère (.ttf) sont modifiables.
-- [x] Nombreuses correction de bugs
+- [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
+- [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
 - [x] Lecture de vidéos au format .mkv
+- [x] détection et affichage de toutes lesr sources sonores pouvant être enregistrées
+- [x] sélection de la source audio à associer à l'image en cours de visionnage
+- [x] Nombreuses correction de bugs
+
+En cours de test ou à venir :
+
+- [ ] affichage de l'incrustation vidéo sur plusieurs lignes
+- [ ] affichage d'une incrustation vidéo "customisée" (image transparente par exemple)
+- [x] (fonctionne, pas encore implémenté) remplacement de OpenCV pour la création de vidéos par direct_cv_encode (création de mp4 de qualité avec ffmpeg)
+- [ ] capture audio : (fonctionnel mais pas intégré encore)
+- [ ] (à venir) création de vidéos **incluant le  son** et image avec multiplexage audio et son (ffmpeg) + openal (Linux) ou direct show (Windows)
+- [ ] (Windows seulement) possibilité d'affcher la boîte de dialogue pour régler tous les paramètres de la source sonore.
+- [ ] Choix de la police de caractère pour l'incrustation
+- [ ] Possibilité de créer plusieurs incrustations simultanées
 
 **Ce qui est actuellement fonctionnel** (dans la **version 0.9.4**) :
 
@@ -170,6 +184,10 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * **wine64** (https://www.winehq.org/) pour les tests de la version Windows sous Linux;
 * **Native File Dialog** (https://github.com/mlabbe/nativefiledialog), ouverture d'un fichier, sauvegarde, écrit par **Michael Labbe**.
 * **Font AweSome** (https://github.com/juliettef/IconFontCppHeaders ) pour les fontes-icones créées par **Juliette Foucaut**.
+* (en cours d'implémentation) **OpenAL**  (https://www.openal.org LGPL), écrit par **kcat**. Utile pour capturer le signal issu d'une source audio, et l'adapter à ffmpeg.
+* (en cours d'implémentation, pas certain de l'utiliser encore) **opencv-ffmpeg** (https://github.com/2vin/opencv-ffmpeg MIT License). Écrit par **2vin**. transforme une suite de frames de type  cv::Mat en une vidéo au format .mp4 (fonctionne super bien !)
+* (en cours d'implémentation, très intéressant, à confirmer) **mediaMuxer**  (https://github.com/jerett/mediaMuxer MIT License), written by **WenJie JIANG**, extremely helpfull to mux audio and video for recording the final video.
+
 * (prochainement) **TinyXML2** (https://github.com/leethomason/tinyxml2) pour les tags xml lors de l'analyse et le classement d'une vidéo.
 * (prochainement) **delay** (https://github.com/rom1v/delay), écrit par **Romain Vimont**, qui permet de retarder son + image d'une durée ajustable, mais toujours **synchronisés**. 
 
@@ -231,10 +249,34 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 
 **Recent changes in the 0.9.5 version (to come soon, Windows only)**
 
+**Ajouts dans la 0.9.5 (à venir, Windows surtout)**
+
+**Atelier analyse** :
+- [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
+- [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
+- [x] Lecture de vidéos au format .mkv
+- [x] détection et affichage de toutes lesr sources sonores pouvant être enregistrées
+- [x] sélection de la source audio à associer à l'image en cours de visionnage
+- [x] Nombreuses correction de bugs
+
 **Analysis workshop** :
-- [x] **Video Incrustation** : one can insert video incrustation containing a simple text (fully customizable) in the current image (reading or recording). The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
-- [x] Various bugfixes.
+- [x] **Video Incrustation** : one can insert video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
+- [x]The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
 - [x] mkv can now be open (Linux and Windows).
+- [x] detection and display of all available and recordable audio sources (e.g. webcam)
+- [x] one can select the recordable audio source to associate to the frames currently displayed.
+- [x] Various bugfixes.
+
+Currently in test or work in progress :
+
+- [ ] display the incrustation using several lines (i.e. a vector of). Currente status : one line only
+- [ ] display a customized video incrustation (e.g. complex box + transparent background)
+- [x] (works, not yet implemented) replace OpenCV using direct_cv_encode (fork of opencv-ffmpeg), with creation of a high quality video using fmpeg.
+- [ ] capture audio : (fonctionnel mais pas intégré encore)
+- [ ] (to come) create videso including **audio**(à venir) + multiplexed with the currently displayed frames (media Muxer + ffmpeg) + openal (Linux) or direct show (Windows)
+- [ ] (Windows seulement) possibilité d'affcher la boîte de dialogue pour régler tous les paramètres de la source sonore.
+- [ ] Choose the font
+- [ ] Create several (a vector of) incrustations simulaneously
 
 
 **What is currently functional in the 0.9.4** (and will be improved progressively):
@@ -334,6 +376,8 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * **Native File Dialog** ( https://github.com/mlabbe/nativefiledialog ), open file, save, written by **Michael Labbe** .
 * **Font AweSome** ( https://github.com/juliettef/IconFontCppHeaders ) for font-icons created by **Juliette Foucaut** .
 * **(coming soon) **TinyXML2** ( https://github.com/leethomason/tinyxml2 ) for xml tags when analyzing and ranking a video.
-* (work in progress) **delay** (https://github.com/rom1v/delay), written **Romain Vimont**, allowing to delay AND keep frames+sound in sync **easely**.. 
-
+* (work in progress) **delay** (https://github.com/rom1v/delay MIT License), written **Romain Vimont**, allowing to delay AND keep frames+sound in sync **easely**.. 
+* (tests in progress) **OpenAL**  (https://www.openal.org LGPL), écrit par **kcat**. Usefull to catch an audio source audio, and make it usable by ffmpeg.
+* (work in progress, to be confirmed) **opencv-ffmpeg** (https://github.com/2vin/opencv-ffmpeg), written by **2vin** : turn OpenCV cv::Mat into mp4 (works very well !)
+* (work in progress, extremely usefull) **mediaMuxer**  (https://github.com/jerett/mediaMuxer), written by **WenJie JIANG**, extremely helpfull to mux audio and video for recording the final video.
 **Author of miniDart software: Eric Bachard © 2016-2019**
