@@ -44,11 +44,17 @@ TODO : be able to drag the text ; select the color for the rectangle
 
 2019 July 7th
 
+
+For the record : text incrustation took me around one week (full time) of work. The code does never fall from the sky  ;-)
+
+Reversed 2vin code at : https://framagit.org/ericb/direct_cv_encode 
++ filed the matching issue at : https://github.com/2vin/opencv-ffmpeg/issues/1
+
 Important : everything below concerns 0.9.5. to come soon.
 Last step before releasing 0.9.5 : verify the windows port works (no windows at home, this will take some time, since not much feedback)
 
 Encode video : tested (works very well) direct ".mp4" encoding using C++ ffmpeg API. Adapted from : https://github.com/2vin/opencv-ffmpeg
-Note:  I'll reverse my changes under MIT license asap.
+DONE :  I'll reverse my changes under MIT license asap.
 
 Video sequencing : This will not replace the OpenCV implementation (seems hungry in terms of cpu time), but this will allow to record 
 as 10 s vidéos started 5s before the "clic", and finishing 5s after ( 5s as example, but could be adjusted until -8s/+8s)
@@ -57,7 +63,7 @@ TODO : add audio stream, and mux them
 The idea : create a full video (images+sound) from any video source mixed with any audio source.
 
 Added : audio multiplexer recordable audio sources can now be displayed, and selected (wait : it is not fonctionnal yet)
-Tested with 3 webcams conneted : one can select the sound origin, and (later) record this audio source
+Tested with 3 webcams connected : one can select the sound origin, and (later) record this audio source
 
 Incrustation in video work on windows too. Currently : 1 line only, 120 chars max.
 Note : this is due to ImGui current limitation, with 127 chars maxi (I'll search a way to improve to 1024 chars
@@ -70,7 +76,7 @@ Additional comments about text incrustation :
 I mostly reused the OpenCV documentation : https://docs.opencv.org/3.4.2/d9/dfa/classcv_1_1freetype_1_1FreeType2.html
 
 I have to mention, the original idea comes from Philipp Hasper (https://hasper.info), who kindly
-authorized me to reuse his code, excepted the nice idea of vetor of lines for multiplines implementation. To be more precise, I do not use
+authorized me to reuse his code. In fact, I didn't use it, excepted the nice idea of vector of lines for multiplines implementation. To be more precise, I do not use
 ioxp::puttext() at all. Indeed, after some tries, I ended using my own implementation with opencv 3.4.0 + freetype (under FTL license) 
 + harfbuzz (windows cross compilation was a nightmare), not Philipp Hasper version.
 
