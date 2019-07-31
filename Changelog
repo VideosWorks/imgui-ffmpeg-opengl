@@ -1,6 +1,45 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+
+2019 July 31st
+
+FIXME : decrease the height of the video, because using the full size does no longer display the annotations features
+FIXME : once the annotation disappears, the rectangle, the outline and the baseline are not removed from the frame
+        (the fix should consist in create a vector of objects, with arrays of points (vectors))
+
+On Linux, the font list contains now :
+
+const char* font_items[] = { "DroidSans"      , "Ubuntu-Regular", "Ubuntu-Bold", "Comic Sans",
+                             "Comic Sans bold", "Arial"         , "Arial black", "Verdana"   ,
+                             "Times New Roman", "Impact"
+                           };
+
+FIXED : the outline of the rectangle containing the font is drawn correctly now (green by default, but can be modified)
+FIXED : the baseline of the text is drawn correctly (red by default, can be modified)
+FIXED : the annotation duration now works. e.g. the inserted text remains 5s exactly, and is removed automaticaly
+FIXED : included font selection in text_incrustation.cpp
+
+DONE : Improved the layout :
+- we can change the font alive (choose one in the list);
+- we can change the fontsize, its position alive too;
+
+DONE : Added annotation selection (radiobox)
+- Possible choices are : insert a rectangle, insert a circle, insert a text, insert an arrow (does nothing yet)
+- draw a text, select the font, the fontsize, the font color,
+  + select automatic, or used defined position on the screen, draw a background or not below the string
+- draw a rectangle filled / not filed  // does nothing yet
+- draw a circle filled or not
+- in all cases the user can :
+- select the outline color of the object
+- select the filled color of the object 
+
+TODO :
+- draw an arrow (bezier curve, with no background)
+- add "undo" and "clear all" drawn objects
+- add record the image as a video for a given time
+
+
 2019 July 30th
 
 Created fonts.hpp
@@ -14,7 +53,7 @@ On Windows :
 const char* font_items[] = { "Arial"           , "Arial italique" , "Arial bold"        , "Arial black",
                              "Calibri"         , "Comic Sans MS"  , "Comic Sans MS bold", "Tahoma",
                              "Tahoma_Bold"     , "Times New Roman", "Verdana"           , "Verdana bold",
-                             "Verdana italique", "Webdings"       , "Windgings" };
+                             "Verdana italique", "Webdings"       , "Wingding" };
 On Linux :
 const char* font_items[] = { "DroidSans", "Roboto-Regular", "Roboto-Bold" };
 
