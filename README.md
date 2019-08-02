@@ -73,7 +73,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
 - [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
 - [x] Annotations type texte : modification de la police, taille, couleur **en direct**.
-- [x] On peut mettre la vidéo en pause, tester l'annotation (et modifier ses paramètres en live), et continuer l'enregistrement
+- [x] **Pendant l'enregistrement**, on peut mettre la vidéo en pause, tester l'annotation (et modifier ses paramètres en live), et continuer l'enregistrement
 - [x] Durée de l'annotation intégrée dans la vidéo peut être non définie ou limitée dans le temps (réglable entre 3 et 30 s)
 - [x] Annotation type rectangle : on peut dessiner un rectangle (vide ou plein), choisir la couleur re remplissage et celle du contour
 - [x] Les annotations peuvent être enregistrées (images seulement pour l'instant, mais multipexage son en cours d'intégration)
