@@ -1,5 +1,7 @@
 ![miniDart 0.9.5 to be released soon (théme utilisé : dark)](screenshots/Annotations_01.png)
 
+Image enregistrée lors du stage Excellentia 2019, Sélestat France (je suis entraîneur de handball aussi ;-) 
+
 **VERSION EN FRANCAIS** (english version follows)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
