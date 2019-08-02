@@ -72,6 +72,11 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 **Atelier analyse** :
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
 - [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
+- [x] Annotations type texte : modification de la police, taille, couleur **en direct**.
+- [x] On peut mettre la vidéo en pause, tester l'annotation (et modifier ses paramètres en live), et continuer l'enregistrement
+- [x] Durée de l'annotation intégrée dans la vidéo peut être non définie ou limitée dans le temps (réglable entre 3 et 30 s)
+- [x] Annotation type rectangle : on peut dessiner un rectangle (vide ou plein), choisir la couleur re remplissage et celle du contour
+- [x] Les annotations peuvent être enregistrées (images seulement pour l'instant, mais multipexage son en cours d'intégration)
 - [x] Lecture de vidéos au format .mkv
 - [x] détection et affichage de toutes les sources sonores pouvant être enregistrées
 - [x] **sélection de la source audio** (enregistrable) à associer à l'image en cours de visionnage
@@ -253,6 +258,11 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 **Analysis workshop** :
 - [x] **Video Incrustation** : one can insert a video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
 - [x] The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
+- [x] Type text annotations : the fontsize, the font color can be modified **in direct live**.
+- [x] One can **pause the video while recording**, test the annotation parameters, and then unpause the video recordinge.
+- [x] Annotation duration : can be undefined, or limited in time (the user can choose a value from 3s to 30s currently)
+- [x] Rectangle : one can draw a rectangle (filled or empty), choose the filled and/or outline color(s).
+- [x] Annotations can be recorded inside the video (images only for the moment, sound multiplexing in progress)
 - [x] mkv can now be open (Linux and Windows).
 - [x] detection and display of all available and recordable audio sources (e.g. webcam)
 - [x] one can select the recordable audio source to associate to the frames currently displayed.
