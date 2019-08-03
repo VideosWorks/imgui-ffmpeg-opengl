@@ -19,7 +19,7 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 # miniDart (version actuelle au téléchargement : 0.9.5 (Windows7+ avec annotations de commentaires enregistrables dans la vidéo inclus) 0.9.3 (binaire pour LinuxMint)** )
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
-**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.5.exe**
+**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.5_test.exe**
 
 Pour télécharger une autre version : https://framagit.org/ericb/miniDart/tree/master/testing_version
 
