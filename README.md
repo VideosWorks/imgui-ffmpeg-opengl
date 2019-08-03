@@ -71,6 +71,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 **Atelier analyse** :
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
+- [x] **Choix de la police** de caractères pour l'incrustation (parmi quelques polices. À venir : sélectionner une des polices du système)
 - [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
 - [x] Annotations type texte : modification de la police, taille, couleur **en direct**.
 - [x] **Pendant l'enregistrement**, on peut mettre la vidéo en pause, tester l'annotation (et modifier ses paramètres en live), et continuer l'enregistrement
@@ -84,17 +85,16 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 
 En cours de test ou à venir :
 
-- [ ] **incrustation vidéo sur plusieurs lignes**
 - [ ] affichage d'une incrustation vidéo "customisée" (image transparente par exemple)
 - [x] (fonctionne, pas encore implémenté) remplacement de OpenCV pour la création de vidéos par direct_cv_encode (création de mp4 de qualité avec ffmpeg)
 - [ ] **capture audio** : (fonctionnel mais pas intégré encore)
 - [ ] (à venir) création de vidéos **incluant le  son** et image avec **multiplexage audio et son** (ffmpeg) + **openal** (Linux) ou **direct show** (Windows)
 - [ ] (Windows seulement) possibilité d'affcher la boîte de dialogue pour régler tous les paramètres de la source sonore.
-- [ ] **Choix de la police** de caractères pour l'incrustation
 - [ ] Possibilité de créer **plusieurs incrustations simultanées**
 
 **Ce qui est actuellement fonctionnel** (dans la **version 0.9.5**) :
 
+- [x] ajout d'annotations dans la vidéo
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
 - [x] permet le **séquençage vidéo** (le son n'est pas géré pour l'instant)
 - [x] **enregistrement** avec ou sans retard des images issues d'une ou plusieurs webcams USB ou Webcam IP (une seule peut être enregistrée à la fois), ou d'une vidéo en cours de lecture
@@ -161,7 +161,6 @@ Atelier retard :
 - [ ] calibration de la webcam (distorsion, calcul approché des coeffficients pour les aberrations de sphéricité) // en tests
 - [ ] correction distorsion en temps réel (pixels shaders ou OpenCV) // en tests
 - [ ] conversion YUV / RGB (OpenGL + pixel shaders) (en coursd'implémentation) 
-- [ ] ajout d'annotations dans la vidéo
 - [ ] tracking en temps réel (en tests)
 - [ ] repères visuels en temps réel
 
