@@ -8,7 +8,8 @@ You are using it at your own risks, and must make a backup of your data before t
 
 Last changes : 
 
-- new layout
+- testing empty rectangles and other canvas objects
+- new layout 
 - fixed Windows build (yet freetype issue :-/)
 
 
