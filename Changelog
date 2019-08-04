@@ -1,6 +1,23 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 August 4th
+
+Created new background. Simple, white and elegant.
+
+TODO : improve the graphical chart
+
+More factorization :
+- improved application.h
+- improved application::onEvent()
+- improved application::loadFont()
+- added application::initialize_recordableAudioSources()
+
+Done : en-US localisation (98% done). Compilation is OK => en-US version will be released soon !
+TODO : remains : match statistics ~ 50 strings)
+
+0.9.5 RELEASED done // NOW GPL (no help, no contribution)
+
 2019 August 3rd
 
 Release time : be carefull, 0.9.5 is experimental, provided for TESTING purpose.
