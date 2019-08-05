@@ -1,7 +1,7 @@
 /*
- * Fichier surface.cpp pour le projet miniDart
- * Auteur : Eric Bachard  / mardi 20 septembre 2016, 09:38:47 (UTC+0200)
- * Ce document est sous Licence GPL v2
+ * File surface.cpp, belongs to miniDart project
+ * Copyright Eric Bachard  / mardi 20 septembre 2016, 09:38:47 (UTC+0200)
+ * This document is under GPL v2 license
  * voir : http://www.gnu.org/licenses/gpl-2.0.html
  */
 

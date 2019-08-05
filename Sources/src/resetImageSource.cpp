@@ -1,7 +1,7 @@
 /*
- * Fichier d'en tête resetImageSource.cpp pour le projet miniDart
- * Auteur : Eric Bachard  / mercredi 26 décembre 2018, 14:20:13 (UTC+0200)
- * Ce document est sous Licence GPL v2
+ * File resetImageSource.cpp, belongs to miniDart project
+ * Copyright Eric Bachard  / mercredi 26 décembre 2018, 14:20:13 (UTC+0200)
+ * This document is under GPL v2 license
  * voir : http://www.gnu.org/licenses/gpl-2.0.html
  */
 

@@ -1,7 +1,7 @@
 /*
- * Fichier d'en tête timer.cpp pour le projet miniDart
- * Auteur : Eric Bachard  / lundi 3 octobre 2016, 14:35:03 (UTC+0200)
- * Ce document est sous Licence GPL v2
+ * File timer.cpp, belongs to miniDart project
+ * Copyright Eric Bachard  / lundi 3 octobre 2016, 14:35:03 (UTC+0200)
+ * This document is under GPL v2 license
  * voir : http://www.gnu.org/licenses/gpl-2.0.html
  */
 
