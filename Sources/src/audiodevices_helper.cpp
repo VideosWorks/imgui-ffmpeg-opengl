@@ -1,3 +1,10 @@
+/*
+ * File audiodevices_helper.cpp belongs to miniDart project
+ * Copyright : Eric Bachard  / 2019 april 26th, 14:35:03 (UTC+0200)
+ * This document is under GPL v2 license
+ * See : http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 #include "application.hpp"
 #include "audiodevices.hpp"
 #include <vector>

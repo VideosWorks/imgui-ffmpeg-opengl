@@ -1,3 +1,10 @@
+/*
+ * File capturedev.cpp belongs to miniDart project
+ * Copyright : Eric Bachard  / mercredi 26 décembre 2018, 14:35:03 (UTC+0200)
+ * This document is under GPL v2 license
+ * See : http://www.gnu.org/licenses/gpl-2.0.html
+ */
+
 #include <SDL2/SDL.h>
 #include "capturedev.hpp"
 #include "application.hpp"
