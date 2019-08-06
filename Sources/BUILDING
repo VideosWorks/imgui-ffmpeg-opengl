@@ -7,6 +7,24 @@ PLEASE file an issue or a PR if you want to help, or inform us about whatever Li
 Waiting, PLEASE have a look too, at the page : https://framagit.org/ericb/miniDart/tree/master/testing_Linux
 
 
+A) All dependencies solved
+
+cd miniDart/Sources
+
+cp -r fonts  build
+cp -r images build
+make
+
+=> if nothing wrong occurs, should provide a binary in build.
+
+cd build
+./miniDart 
+
+Enjoy !
+
+
+B) Dependencies not solved
+
 Dependencies :
 
 """""""""""""""""""""""""""""""""""""""""""""""""""
@@ -15,7 +33,8 @@ Dependencies :
 MANDATORY : miniDart won't even launch without a working OpenGL 3+ (3.2+ strongly suggested)
 
 Thus, you'll need to install mesa + DRM (means Direct Rendering Manager) including 3D features, depending on your hardware.
-=> miniDart_install_log is a good start, to install everything.
+
+=> READ miniDart_install_log : I did exactly that testing with an Ubuntu distribution. Should be a good start, to install everything.
 
 HELP needed : I'm using Intel hardware, and I didn't test miniDart with NVidia drivers. Please file an issue in case of problem.
 
