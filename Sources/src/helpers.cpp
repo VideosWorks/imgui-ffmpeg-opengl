@@ -125,7 +125,7 @@ GLuint glConvertMatToTexture(cv::Mat const &mat)
 
 /*                                                                              *
  * Worry-free text writing into OpenCV images                                   *
- * Author : Philipp Hasper                                                      *
+ * Author : Philipp Hasper, code used by courtesy of his author                 *
  * Link   :  http://www.hasper.info/worry-free-text-writing-into-opencv-images/ */
 
 namespace ioxp {
