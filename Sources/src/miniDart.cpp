@@ -105,8 +105,9 @@ static double outFPS = 24;
 static int out_image_format = DEFAULT_IMAGE_FORMAT; // IMAGE_FORMAT_720P
 static int out_old_framesize = outWidth * outHeight;
 static int out_new_framesize = out_old_framesize;
-static double out_oldFPS = outFPS;
-static double out_newFPS = out_oldFPS;
+// later use
+//static double out_oldFPS = outFPS;
+//static double out_newFPS = out_oldFPS;
 #endif
 
 static SDL_Event aDummyEvent;
