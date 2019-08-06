@@ -1,0 +1,71 @@
+#!/bin/bash
+
+#Installation normale sur Ubuntu 18-04 LTS
+
+sudo apt-get install \
+             cmake cmake-data gdal-data gir1.2-harfbuzz-0.0 \
+             googletest i965-va-driver-shaders \
+             libaacs0 libaec0 mesa-va-drivers \
+             mesa-vdpau-drivers libva-drm2 libva-x11-2 libva2 libvdpau1 \
+             libx264-152 libx265-146 va-driver-all vdpau-driver-all \
+             pkg-config gir1.2-harfbuzz-0.0:amd64 \
+             libboost1.65-dev libboost1.65-tools-dev \
+             libvdpau-va-gl1 libboost-thread1.65-dev libboost-math1.65-dev \
+             googletest libglx-mesa0 libgl1-mesa-dev mesa-utils libva-glx2 \
+             v4l-utils qv4l2 uvcdynctrl v4l-utils v4l2ucp nasm yasm \
+             libgmerlin-dev libgmerlin0 libgmerlin-avdec-dev \
+             libsmpeg-dev libsmpeg0 \
+             libsdl2-2.0-0 libsdl2-dev libsdl2-gfx-dev libsdl2-image-2.0-0 libsdl2-image-dev \
+             libsdl2-mixer-2.0-0 libsdl2-mixer-dev libsdl2-ttf-2.0-0 libsdl2-ttf-dev \
+             libmodplug-dev libmodplug1 libopenjp2-7-dev libopenjp2-7 libopenjp2-tools \
+             libv4l-dev libv4l-0 libvpx-dev libwavpack-dev libwavpack1 libopenal1 libopenal-dev \
+             openssl1.0 libssl1.0-dev libssl1.1 libvdpau-va-gl1 gstreamer1.0-vaapi libgphoto2-dev libgphoto2-6 \
+             libva-dev libva-drm2 libva-glx2 libva2 libpython3.7-dev libpython3.7 libpython2.7 libpython2.7-dev \
+             ccache libgstreamer1.0-0 libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgtkgl2.0-dev \
+             libgtkglext1 libgtkglext1-dev libgtkgl2.0-1 libgtk2.0-dev libgtk2.0-0 libgtk2.0-bin libgtk-3-dev \
+             libass-dev libass9
+#ffmpeg :   
+#compilation de ffmpeg 4.0.3 (sources téléchargées sur ffmpeg.org)
+
+#  exécuter le my_configure.txt, après l'avoir mis en mode exécutable (chmod a+x ...)
+#  make -j4
+#  installation dans /usr/local (par défaut)
+#  sudo make install && sudo ldconfig  
+#  ffmpeg -version retourne :
+# ffmpeg version 4.0.3 Copyright (c) 2000-2018 the FFmpeg developers
+# built with gcc 7 (Ubuntu 7.3.0-27ubuntu1~18.04)
+# configuration: --enable-shared --enable-pic --enable-opengl --enable-libpulse --enable-openal
+# --enable-libmodplug --enable-libvpx --enable-libv4l2 --enable-libopenjpeg --enable-libwavpack 
+# --enable-openssl
+# libavutil      56. 14.100 / 56. 14.100
+# libavcodec     58. 18.100 / 58. 18.100
+# libavformat    58. 12.100 / 58. 12.100
+# libavdevice    58.  3.100 / 58.  3.100
+# libavfilter     7. 16.100 /  7. 16.100
+# libswscale      5.  1.100 /  5.  1.100
+# libswresample   3.  1.100 /  3.  1.100
+
+# -> OK !!
+
+# Dernière partie : installer OpenCV (version 3.4.0 + mes patches)
+# on utilise cmake : 
+# décompresser l'archive
+# aller dans opencv-3.4.0
+# créer le répertoire build (mkdir build)
+# aller dans build (cd build)
+# copier le configure_opencv.txt en attachement dans build. Il contient :
+#!/bin/bash
+# cmake  -DCMAKE_INSTALL_PREFIX=/usr/local  -DBUILD_SHARED_LIBS=YES -DBUILD_EXAMPLES=OFF 
+# -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.4.0/modules/  -DBUILD_NEW_PYTHON_SUPPORT=ON  -DWITH_TBB=OFF
+# -DWITH_V4L=ON  -DWITH_QT=OFF  -DWITH_OPENGL=ON  -DHAVE_FFMPEG_RESAMPLE=YES -DHAVE_GTK3=NO ..
+# pour l'exécuter, on le rend exécutable chmod a+x configure_opencv.txt
+# puis on fait :  ./configure_opencv.txt
+# si tout se passe bien, un Makefile est créé.
+# make -j4  pour lancer la compilation
+# si tout se passe bien, on peut installer :
+# sudo make install 
+# et miniDart devrait se lancer à la fin ...
+
+
+
+
