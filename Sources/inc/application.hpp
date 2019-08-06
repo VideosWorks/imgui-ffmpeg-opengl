@@ -83,22 +83,8 @@
 
 #define DEFAULT_APPLICATION_FONT "./fonts/DroidSans.ttf"
 
-#ifdef NATIVE_BUILD // Linux
 #define DEFAULT_FRAMERATE LINUX_DEFAULT_FRAMERATE
 #define DEFAULT_APPLICATION_FONT_SIZE  19.0f
-
-#else  // Windows
-
-    #define DEFAULT_APPLICATION_FONT_SIZE  17.0f
-    #define DEFAULT_FRAMERATE WINDOWS_DEFAULT_FRAMERATE
-    // http://docs.opencv.org/trunk/d0/da7/videoio_overview.html
-    #ifndef HAVE_VIDEOINPUT
-    #define HAVE_VIDEOINPUT
-    #endif  /* videoinput */
-    #ifndef HAVE_DSHOW
-    #define HAVE_DSHOW
-    #endif  /* dshow */
-#endif  /* NATIVE_BUILD */
 
 #define IMAGE_FORMAT_640x360        0
 #define IMAGE_FORMAT_800x600        1
