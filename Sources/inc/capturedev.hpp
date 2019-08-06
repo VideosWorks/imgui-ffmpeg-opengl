@@ -16,7 +16,6 @@
 #include <list>
 #include <queue>
 
-//class CaptureDev : public Common
 class CaptureDev
 {
   public:
@@ -24,10 +23,15 @@ class CaptureDev
     virtual ~CaptureDev();
     bool                Init(int);
     cv::VideoCapture    maVideoCap;
-    bool                getIsCaptureOpened();
+    cv::Mat             USBFrame;
+    void                getFrame();
+    bool                IsCaptureOpened();
+    bool                IsCapturePaused();
     void                setCaptureFPS(int);
     void                setDevNumber(int);
     int                 getDevNumber(void);
+    void                set_delay(int);
+    int                 get_delay(void);
     double              getCaptureFPS();
     double              getWidth();
     double              getHeight();
@@ -40,17 +44,20 @@ class CaptureDev
     void                Close();
     bool                bFirstFrameSuccess(void);
     bool                bLostWebcam(void);
+    bool                canReadFrame(int, unsigned int, unsigned int);
   private:
     int                 maDevNumber;
     double              mfWidth;
     double              mfHeight;
     double              mfCaptureFPS;
     cv::Size            maFrameSize;
+    int                 md_delay;
     //short int           mdStackSize;
-    bool                mbIsCaptureOpened;
+    bool                mb_opened;
+    bool                mb_paused;
     long                mdPos_msec;
     long                mdFramePos;
-    unsigned short int        mdFourcc;
+    unsigned int        mdFourcc;
 };
 
 #endif /* __CAPTUREDEV__HPP */
