@@ -1072,7 +1072,7 @@ The capture loop will depend on the fps value (defined in the GUI, 24 fps by def
 Gui : fixed clean all shoots only when number of shoots > 0
 
 Localization: added new strings OPEN_A_CLIP_BUTTON, CLOSE_THE_CLIP_BUTTON. Added french and english strings.
-Changed VideoReader in ClipReader classe, more accurate.
+Changed VideoReader in ClipReader class, more accurate.
 
 VideoReader will be reserved to read a true video, including sound.
 
