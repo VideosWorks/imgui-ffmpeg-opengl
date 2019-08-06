@@ -29,9 +29,9 @@ Ceci est une version de démonstration du logiciel **miniDart**. Elle n'est pas 
 
 **Un projet de développement handball, est en cours. Le logiciel miniDart sera une des ressources utilisées pour son financement. Le but est de financer un tournoi international de handball pour une équipe féminine jeunes (-13)**
 
-**Ainsi, le logiciel miniDart, lorsqu'il sera complet, sera dans un premier temps vendu (dans les ~100 euros / club). Quand suffisamment d'argent aura été récupéré, les sources du logiciel seront mises sous licence LGPL.**
+**Ainsi, le logiciel miniDart, lorsqu'il sera complet, sera dans un premier temps vendu (dans les ~100 euros / club). Les sources du logiciel sont sous licence GPL (ceci ne concerne que la version Linux).**
 
-Deux versions sont disponibles au téléchargement. **L'une pour Windows 7 (64 bits)** ou plus récent, l'autre pour **Linux Intel (64 bits)**. Pour la version Linux, des instructions sont données dans le répertoire contenant les archives.
+Deux versions sont disponibles au téléchargement. **L'une pour Windows 7 (64 bits)** ou plus récent, l'autre pour **Linux Intel (64 bits)**. Pour la version Linux, étant donné que les sources sont disponibles, des instructions de compilation sont données dans le fichier BUILDING.
 
 La version en téléchargement a besoin de Windows 7 ou plus + pour fonctionner, et vous est fournie avec un installeur. La désinstallation a aussi été testée, et supprime toute trace du logiciel. **Si vous l'installez**, notez que vous utilisez ce logiciel à vos risques et périls, et n'oubliez pas qu'il est impératif de faire des sauvegardes de vos document AVANT de l'utiliser.
 
@@ -221,9 +221,9 @@ This is a demo version of the **miniDart** software. It is not complete, and pro
 
 **A handball development project is underway. The miniDart software will be one of the resources used for its financing. The goal is to fund an international handball tournament for a young women's team (-13)**
 
-**Thus, the software miniDart, when complete, will be sold first. When enough money has been recovered, the sources of the software will be licensed under the LGPL.**
+**Thus, the software miniDart, when complete, will be sold first. The sources of the software are under GPL v2 license (concerns the Linux version only)**
 
-Two versions are available for download. One for **Windows 7 (64 bits) or later**, the other for **Linux Intel (64 bits)** . For the Linux version, instructions are given in the directory containing the archives.
+Two versions are available for download. One for **Windows 7 (64 bits) or later**, the other for **Linux Intel (64 bits)** . Though, for the Linux version, compilation instructions are provided in the BUILDING file.
 
 The download version needs Windows 7 or more + to work, and comes with an installer. The uninstallation has also been tested, and removes all traces of the software. If you install it , note that you use this software at your own risk, and remember that it is imperative to make backups of your documents BEFORE using it.
 
