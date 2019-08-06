@@ -7,8 +7,8 @@
 
 MY_LOCALE = french
 
-GCC_VERSION = -7
-G++_VERSION = -7
+#GCC_VERSION = -7
+#G++_VERSION = -7
 
 BUILD_DIR = build
 SOURCES_DIR = src
