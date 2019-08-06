@@ -1,0 +1,91 @@
+This file contains important information for Linux build ONLY
+
+This is the first version, and of course we'll improve, and do the maximum to make the build easy.
+
+PLEASE file an issue or a PR if you want to help, or inform us about whatever Linux build issue.
+
+Waiting, PLEASE have a look too, at the page : https://framagit.org/ericb/miniDart/tree/master/testing_Linux
+
+
+Dependencies :
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+0. install some archives.
+
+MANDATORY : miniDart won't even launch without a working OpenGL 3+ (3.2+ strongly suggested)
+
+Thus, you'll need to install mesa + DRM (means Direct Rendering Manager) including 3D features, depending on your hardware.
+=> miniDart_install_log is a good start, to install everything.
+
+HELP needed : I'm using Intel hardware, and I didn't test miniDart with NVidia drivers. Please file an issue in case of problem.
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+1. ffmpeg 4.x
+
+FYI, with the git version (master), I'm simply using : 
+
+./configure  \
+             --enable-shared --enable-pic --enable-opengl
+             --enable-libpulse --enable-libmodplug \
+             --enable-libgme --enable-libv4l2 --enable-libopenjpeg \
+             --enable-vaapi --enable-openssl --enable-libdav1d \
+             --enable-libwavpack --enable-libdrm
+
+Mandatory switches :     --enable-shared --enable-pic --enable-opengl
+Other can perhaps be optional, up to you.
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+2. SDL2
+
+Mandatory : version 2.0.9 mini (contains important sound fixes)
+
+Using Linuxmint or Debian, the SDL2 version is prehistoric, and I'm used to replace with a recent one.
+
+My configure comes from the Debian build way, and the command line is : 
+
+./configure --prefix=/usr --libdir=/usr/lib/x86_64-linux-gnu --disable-rpath \
+            --disable-video-directfb --disable-nas --disable-esd --disable-arts \
+            --disable-alsa-shared --disable-pulseaudio-shared --disable-x11-shared
+
+Please adapt and inform us (file an issue) if something goes wrong.
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+3. Linux kernel 
+
+Simply advised : a recent Linux kernel, like 4.15 is perfect, but 4.x should work (untested with 5.x)
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+4. OpenCV  3.4.x
+
+Mandatory: OpenCV 3.4.0  (or 3.4.x, but maybe not everything will work)
+
+Important information, including build instruction is provided there :
+
+https://framagit.org/ericb/miniDart/tree/master/testing_Linux
+
+BEFORE to file an issue, PLEASE READ everything carefully.
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+5. Freetype + Harfbuzz
+
+- harfbuzz 1.4. or +
+- freetype 2.8.1 or + is prefered
+
+The best is to build a recent version, but please note that unfortunaly, freetype and harfbuzz have circular dependencies to be solved.
+
+The problem should vanish soon (it's been taken over recently), and the most simple is to trust the version provided by your distribution
+
+
+
+
+FIXME : complete with devs feedback
+
+
+"""""""""""""""""""""""""""""
+Written by : Eric Bachard 2019 August 6th
+
