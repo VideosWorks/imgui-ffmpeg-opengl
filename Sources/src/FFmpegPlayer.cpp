@@ -7,11 +7,6 @@
 
 #include <iostream>
 
-#ifdef _WIN32
-#include <windows.h>
-#include <codecvt>
-#endif
-
 using namespace std;
 
 #ifndef __STDC_CONSTANT_MACROS
@@ -67,7 +62,6 @@ extern AVPacket flush_pkt;
 extern VideoState * is;
 extern double video_duration;
 extern cv::Mat videoMat;
-// https://trac.ffmpeg.org/ticket/6721
 extern SDL_AudioDeviceID audio_dev;
 
 #define DEFAULT_VIDEO_FILENAME_SIZE 16
@@ -867,8 +861,6 @@ void stream_seek(VideoState* is, int64_t pos, int rel, int seek_by_bytes)
         is->seek_pos = pos;
         is->seek_rel = rel;
         is->seek_flags &= ~AVSEEK_FLAG_BYTE;
-//        is->seek_flags &= ~AVSEEK_FLAG_ANY;
-//        is->seek_flags |= AVSEEK_FLAG_FRAME;
 
         if (seek_by_bytes)
             is->seek_flags |= AVSEEK_FLAG_BYTE;
@@ -881,11 +873,8 @@ int main2(char * filename) {
 #if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(58, 9, 100)
     av_register_all();
 #endif
-    ////avdevice_register_all();
-    //using SDL
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
 
-    // FIXME test where put this (will be mandatory soon)
     avformat_network_init();
 
     av_init_packet(&flush_pkt);
@@ -896,7 +885,6 @@ int main2(char * filename) {
     if(!is)
         return -1;
 
-    // av_strdup() helps to make it work on Windows
     is->filename = av_strdup(filename);
 
     old_video_filename = av_strdup(default_video_filename);
@@ -1000,9 +988,6 @@ void audio_callback(void *arg, uint8_t *stream, int len){
 int audio_decode_frame(VideoState * is, uint8_t *audio_buf, int buf_size, double *pts_ptr)
 {
     AVPacket pkt1, *pkt = &pkt1;
-////    if(is->abort_request == 1)
-////        return -1;
-//////    AVPacket * pkt = av_packet_alloc();
 
     AVFrame *pFrame = av_frame_alloc();
     AVCodecContext *avctx = is->audio_avctx;
@@ -1030,7 +1015,6 @@ int audio_decode_frame(VideoState * is, uint8_t *audio_buf, int buf_size, double
     //if update, update the audio clock with pts
     if(pkt->pts != AV_NOPTS_VALUE) {
         is->audio_clock = av_q2d(is->audio_st->time_base) * pkt->pts;
-       // cout<<"[packet audio_clock]:"<<is->audio_clock<<endl;
     }
 
     //decode audio frame
