@@ -6,7 +6,7 @@
  */
 
 #include <cstdio>
-#include <opencv2/opencv.hpp>
+#include "cv_helpers.hpp"
 #include "application.hpp"
 
 //#include "cv_helpers.hpp"
@@ -122,4 +122,19 @@ bool recordAtGivenFPS(int fps, unsigned int current, unsigned int old)
     return toReturn;
 }
 
+ImVec2 CV_Point_toImGui(cv::Point * p_cvPoint)
+{
+    ImVec2 imGuiPoint(0.0f, 0.0f);
+    // TODO : convert me
+
+    return imGuiPoint;
+}
+
+cv::Point ImGui_toCV_Point (ImVec2 * p_ImPoint)
+{
+  cv::Point aCV_Point(0.0f, 0.0f);
+  // TODO : convert me
+
+  return aCV_Point;
+}
 

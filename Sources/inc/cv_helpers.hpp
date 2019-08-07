@@ -7,6 +7,12 @@
 #ifndef __CV_HELPERS_HPP
 #define __CV_HELPERS_HPP
 
+#include "imgui.h"
+#include <opencv2/opencv.hpp>
+
+cv::Point ImGui_toCV_Point(ImVec2 *);
+ImVec2 CV_Point_toImGui(cv::Point *);
+
 void message(void);
 void MOUSE_CLICK(int, int , int , int, void *);
 void addRectangle (cv::Mat, cv::Point, cv::Point, cv::Scalar);
