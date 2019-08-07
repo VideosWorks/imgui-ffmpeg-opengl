@@ -139,9 +139,7 @@ INCLUDE_DIR +=  $(INCLUDE_BASE) \
                 $(TINYXML2_INC) \
                 $(FONT_AWESOME_INC) \
                 $(YUV2RGB_INC) \
-                $(SDL2_FFMPEG_INC) \
-                $(VIDEO_SEEKER_INC) \
-                $(DELAY_INC)
+                $(SDL2_FFMPEG_INC)
 
 #                $(LIBOPENSHOT_INC)
 #                $(GFX_UI_INC)
@@ -151,9 +149,6 @@ FILES = *.cpp
 IMGUI_FILES = $(shell ls $(3RD_PARTY_BASE)/imgui/*.cpp)
 GL3W_FILES = $(shell ls $(3RD_PARTY_BASE)/imgui/gl3w/*.c)
 TINYXML2_FILES = $(shell ls $(3RD_PARTY_BASE)/tinyxml2/src/*.cpp)
-VIDEO_SEEKER_FILES = $(shell ls $(3RD_PARTY_BASE)/video_seeker/*.cpp)
-DELAY_FILES = $(shell ls $(3RD_PARTY_BASE)/delay/src/*.c)
-
 
 FILES += $(IMGUI_FILES) $(GL3W_FILES) $(TINYXML2_FILES)
 
