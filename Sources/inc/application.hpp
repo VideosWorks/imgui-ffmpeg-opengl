@@ -103,7 +103,7 @@
 
 #define LEFT_IMAGE_BORDER 1.0f
 #define TOP_IMAGE_BORDER  1.0f
-#define BOTTOM_IMAGE_BORDER (w*ratio + LEFT_IMAGE_BORDER)
+#define BOTTOM_IMAGE_BORDER (w*ratio + (2*LEFT_IMAGE_BORDER))
 #define RIGHT_IMAGE_BORDER w -26.0f
 
 // 40s should be sufficient in most cases
