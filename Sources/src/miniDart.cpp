@@ -1023,12 +1023,10 @@ int main(int argc, char * argv[])
             }
         }
 
-            // CREATE THE VIDEO RECORDER, WHEN NEEDED
-            static ImVector<ImVec2> points;
-            static ImVec2 topLeft = ImVec2( 0.0f, 0.0f);
-            static ImVec2 bottomRight = ImVec2( 0.0f, 0.0f);
-            static ImVec2 * p_topLeft = &topLeft;
-            static ImVec2 * p_bottomRight = &bottomRight;
+        static ImVec2 topLeft = ImVec2( 0.0f, 0.0f);
+        static ImVec2 bottomRight = ImVec2( 0.0f, 0.0f);
+        static ImVec2 * p_topLeft = &topLeft;
+        static ImVec2 * p_bottomRight = &bottomRight;
 
         // if (! Application::images_paused)
         if (!b_paused)
@@ -1185,6 +1183,51 @@ int main(int argc, char * argv[])
             }
 
 
+// DRAW TEXT
+            // add freetype magic // video incrustation of text
+            if ( (pTextCanvas->pTextObject->b_displayable == true) && (!displayed_frame.empty()))
+            {
+                pTextCanvas->insertString(displayed_frame, pTextCanvas->pTextObject);
+
+                if ((pTextCanvas->pTextObject->frameCount >= 0) && (!pTextCanvas->pTextObject->b_unlimited_annotation))
+                    pTextCanvas->pTextObject->frameCount--;
+#if defined( DEBUG_TEXT_CANVAS )
+                fprintf( stdout, " pTextCanvas->pTextObject->frameCount = %d \n", pTextCanvas->pTextObject->frameCount);
+#endif
+                if (pTextCanvas->pTextObject->frameCount < 0)
+                {
+                    pTextCanvas->pTextObject->b_displayable = false;
+//                    pTextCanvas->clearString();
+                    pTextCanvas->stopStringIncrustation();
+                }
+            }
+// END DRAW TEXT
+
+// DRAW RECTANGLE
+            if ((b_record_rectangle) && (!displayed_frame.empty()))
+            {
+                // we need to define a minimal area, to avoid displaying " ghost rectangles"
+                if ((abs(p_bottomRight->x - p_topLeft->x) > 10) && (abs(p_bottomRight->y - p_topLeft->y) > 10))
+                {
+                    // 0.82f, 45.0f and 28.0f are "magics" due to a crappy layout.  FIXME
+                    static int rBase   = (0.82f * currentWidth) - WEBCAM_PARAMETERS_AREA_WIDTH - 45.0f;
+                    static int rWidth  = rBase - 28.0f;
+                    static int rHeight = rBase * ratio;
+                    cv::rectangle(  displayed_frame,
+                                    cv::Point((p_topLeft->x/rWidth)*displayed_frame.cols,(p_topLeft->y/rHeight)*displayed_frame.rows ),
+                                    cv::Point((p_bottomRight->x/rWidth)*displayed_frame.cols, (p_bottomRight->y/rHeight)*displayed_frame.rows),
+                                    cv::Scalar(255, 255, 255, 255),
+                                    2,
+                                    8);
+                }
+            }
+// END DRAW RECTANGLE
+
+
+            if (b_record_chrono && b_chrono)
+                putText(displayed_frame,TIME_DISPLAY+floatToString((unsigned long int)aTimer.getActivityTime()/1000.0f)+" s",cv::Point(60,WINDOW_HEIGHT - 70), 2 /*FONT_HERSHEY_COMPLEX ou 1 */,/*1.5*/1.0,ANNOTATIONS_COLOR_YELLOW, 2);
+
+// CREATE THE NEW VIDEO
             // create a new VideoWriter + a new video name ?
             if ((b_startNewRecording == true) && (strlen(defaultPath) !=  0))
             {
@@ -1207,47 +1250,9 @@ int main(int argc, char * argv[])
                     inc++;
                 }
             }
+// VIDEO CREATED (or failed)
 
-            // add freetype magic // video incrustation of text
-            if ( (pTextCanvas->pTextObject->b_displayable == true) && (!displayed_frame.empty()) /*&& (pTextCanvas->pTextObject->frameCount > 0)*/ )
-            {
-                pTextCanvas->insertString(displayed_frame, pTextCanvas->pTextObject);
-
-                if ((pTextCanvas->pTextObject->frameCount >= 0) && (!pTextCanvas->pTextObject->b_unlimited_annotation))
-                    pTextCanvas->pTextObject->frameCount--;
-#if defined( DEBUG_TEXT_CANVAS )
-                fprintf( stdout, " pTextCanvas->pTextObject->frameCount = %d \n", pTextCanvas->pTextObject->frameCount);
-#endif
-                if (pTextCanvas->pTextObject->frameCount < 0)
-                {
-                    pTextCanvas->pTextObject->b_displayable = false;
-//                    pTextCanvas->clearString();
-                    pTextCanvas->stopStringIncrustation();
-                }
-            }
-
-            if ((b_record_rectangle) && (!displayed_frame.empty()))
-            {
-                // we need to define a minimal area, to avoid displaying " ghost rectangles"
-                if ((abs(p_bottomRight->x - p_topLeft->x) > 10) && (abs(p_bottomRight->y - p_topLeft->y) > 10))
-                {
-                    // 0.82f, 45.0f and 28.0f are "magics" due to a crappy layout.  FIXME
-                    static int rBase   = (0.82f * currentWidth) - WEBCAM_PARAMETERS_AREA_WIDTH - 45.0f;
-                    static int rWidth  = rBase - 28.0f;
-                    static int rHeight = rBase * ratio;
-                    cv::rectangle(  displayed_frame,
-                                    cv::Point((p_topLeft->x/rWidth)*displayed_frame.cols,(p_topLeft->y/rHeight)*displayed_frame.rows ),
-                                    cv::Point((p_bottomRight->x/rWidth)*displayed_frame.cols, (p_bottomRight->y/rHeight)*displayed_frame.rows),
-                                    cv::Scalar(255, 255, 255, 255),
-                                    2,
-                                    8);
-                }
-            }
-
-            if (b_record_chrono && b_chrono)
-                putText(displayed_frame,TIME_DISPLAY+floatToString((unsigned long int)aTimer.getActivityTime()/1000.0f)+" s",cv::Point(60,WINDOW_HEIGHT - 70), 2 /*FONT_HERSHEY_COMPLEX ou 1 */,/*1.5*/1.0,ANNOTATIONS_COLOR_YELLOW, 2);
-
-            // RECORD THE RIGHT FRAME : if we're in recording mode, we write to file here
+// RECORD THE RIGHT FRAME : if we're in recording mode, we write to file here
 
             static unsigned int recorded_old_time = 0;
             static unsigned int recorded_current_time = 0;
@@ -1262,6 +1267,7 @@ int main(int argc, char * argv[])
                     recorded_old_time = recorded_current_time;
                 }
             }
+// END RECORD THE RIGHT FRAME
 
             // DELAY MODIFIED ?
 
@@ -1305,6 +1311,7 @@ int main(int argc, char * argv[])
         }   /* if (!b_paused) */
 
         // AT THE END, fill OpenGL buffers
+        static ImVector<ImVec2> points;
 
         if (!displayed_frame.empty())
         {
@@ -1607,7 +1614,9 @@ int main(int argc, char * argv[])
                 if (adding_preview)
                     points.pop_back();
 
-                // TODO : LOUPE (always available)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                // MAGNIFIER TODO : always available
 
                 // zoom value
                 static     float aZoom = 1.0f;
