@@ -8,6 +8,14 @@
 #ifndef __CANVAS_OBJECTS_HPP
 #define __CANVAS_OBJECTS_HPP
 
+typedef enum DrawingWhat
+{
+    ZOOMED_AREA       = 0,
+    FREEHAND_DRAWING  = 1,
+    DRAWING_TEXT      = 2,
+    DRAWING_PRIMITIVE = 3
+} DrawingWhat;
+
 typedef enum ObjectType
 {
     TEXT_OBJECT      = 0,
