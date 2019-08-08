@@ -1,6 +1,26 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 August 9th
+
+Added (encapsulation purpose)
+- image_pos
+- image_size
+To the TextObject structure
+
+Now using delta + textOrg, allowing to "drag" the text annotation
+TODO : fix the reset (strange values remain ?)
+
+Implemented Drag the text annotation. 
+Works somewhat :
+- why the need to x2 the GetMouseDragDelta ?)
+- OpenCV to ImGui coordinate is not efficient. Will test direct draw soon (ImGui only)
+It needs more work, but the principle is ok and other nice things can be drawn this way
+
+Fixed some refresh issues (e.g.the black box not replaced)
+Fixed incrustation duration (now simplylinked to ImGui::GetIO().Framerate)
+Next step : freehand drawing (e.g. circles of a given radius, giving the thickness)
+
 2019 August 5th
 
 Fixed an issue with Play/Pause (b_audio_paused was not corectly set/reset)
