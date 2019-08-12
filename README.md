@@ -70,12 +70,14 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 **Derniers ajouts (version 0.9.5) **
 
 **Atelier analyse** :
+- [x] **Dessin : on peut écrire et dessiner sur l'image** : primitives(rectangle, rond plein ou évidé), traits, flèches, dessin à main levée
+- [x] Effacement de l'ajout précédent, ou de tout ce qui a été ajouté .
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
 - [x] **Choix de la police** de caractères pour l'incrustation (parmi quelques polices. À venir : sélectionner une des polices du système)
 - [x] Le positionnement de l'incrustation, la couleur du texte, du fond du cadre, ou encore la taille de la police de caractère (.ttf) sont modifiables.
 - [x] Annotations type texte : modification de la police, taille, couleur **en direct**.
 - [x] **Pendant l'enregistrement**, on peut mettre la vidéo en pause, tester l'annotation (et modifier ses paramètres en live), et continuer l'enregistrement
-- [x] Durée de l'annotation intégrée dans la vidéo peut être non définie ou limitée dans le temps (réglable entre 3 et 30 s)
+- [x] La durée de l'annotation intégrée dans la vidéo peut être non définie ou limitée dans le temps (réglable entre 3 et 30 s)
 - [x] Annotation type rectangle : on peut dessiner un rectangle (vide ou plein), choisir la couleur re remplissage et celle du contour
 - [x] Les annotations peuvent être enregistrées (images seulement pour l'instant, mais multipexage son en cours d'intégration)
 - [x] Lecture de vidéos au format .mkv
@@ -180,7 +182,7 @@ Informations techniques:
 Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windows 64 bits. Les APIs utilisées sont:
 * **SDL2 2.0.9** ( http://libsdl.org/) pour le fenêtrage et la remarquable portabilité Linux -> Windows ; (version 2.0.9 pour Windows, 2.0.8 Linux)
 * **OpenGL** (https://www.khronos.org/opengl/) pour le rendu ;
-* **Dear ImGui** (https://github.com/ocornut/imgui) pour l'interface utilisateur et les performances graphiques (merci à **Omar Cornut** pour cette UI géniale) ;
+* **Dear ImGui (branche docking basée sur la version 1.72b)** (https://github.com/ocornut/imgui) pour l'interface utilisateur et les performances graphiques (merci à **Omar Cornut** pour cette UI géniale) ;
 * **OpenCV 3.4.0** (https://opencv.org/) : gestion des webcams, traitement des frames, annotations (chronomètre, enregistrement) ;
 * **mdPlayer** (https://framagit.org/ericb/mdplayer ): pour le son dans les vidéos (lecture ET -bientôt- enregistrement aussi pour le son).
 * **DirectShow** et **DirectX** ( sous Windows) , v4l2 + gstreamer (sous Linux) : acquisition vidéo ;
@@ -256,6 +258,8 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 **Recent changes in the 0.9.5 version (Windows only)**
 
 **Analysis workshop** :
+- [x] **Canvas** : one can draw on top of the images : usual primitives are available (rectangle, empty of filled), lines, arrows + free hand drawing.
+- [x] To improve the user experience, "Undo or Delete all" the vector of drawns objects has been added.
 - [x] **Video Incrustation** : one can insert a video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
 - [x] The colors of the text, its background, the (.ttf) font size, the incrustation position and so on are fully customizable.
 - [x] Type text annotations : the fontsize, the font color can be modified **in direct live**.
@@ -366,7 +370,7 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 
 * **SDL2 2.0.9** ( http://libsdl.org/ ) for windowing and remarkable portability Linux -> Windows;
 * **OpenGL** ( https://www.khronos.org/opengl/ ) for rendering;
-* **Dear ImGui** ( https://github.com/ocornut/imgui ) for user interface and graphics performance (thanks to **Omar Cornut** for this awesome UI);
+* **Dear ImGui** using docking branch, based on the 1.72b version  ( https://github.com/ocornut/imgui ) for user interface and graphics performance (thanks to **Omar Cornut** for this awesome UI);
 * **OpenCV 3.4.0** ( https://opencv.org/ ): management of webcams, processing of frames, annotations (stopwatch, recording);
 * **mdPlayer** (https://framagit.org/ericb/mdplayer ):for sound in videos (reading AND -soon- recording) 
 * **DirectShow** and **DirectX** (on Windows), v4l2 + gstreamer (on Linux): video acquisition;
