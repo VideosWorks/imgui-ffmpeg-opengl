@@ -1583,8 +1583,6 @@ int main(int argc, char * argv[])
                 static bool adding_rect2 = false;
                 static bool adding_preview2 = false;
 
-                static float fthickness = 2.5;
-
                 static DrawnObject aDrawnObject;
                 p_aDrawnObject = & aDrawnObject;
 
@@ -1599,13 +1597,9 @@ int main(int argc, char * argv[])
                 else
                     aDrawnObject.anObjectType = selectedObject;
 
-                aDrawnObject.objBackgroundColor = ImColor(  0, 255, 0, 255);
-                aDrawnObject.objOutlineColor    = ImColor(255,   0, 0, 255);
-                aDrawnObject.thickness = 2.5f;
-
                 float P1P4 = 0.1f;
-                float arrowLength = 8.0;
-                float arrowWidth = 3.0;
+                float arrowLength = 4 * aDrawnObject.thickness;
+                float arrowWidth = 2*aDrawnObject.thickness;
                 ///////////////////////////////////////////////////////////////////////////////////////////////
                 //                               CATCH THE POINTS TO BE DRAWN                                //
                 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -1659,20 +1653,20 @@ int main(int argc, char * argv[])
                                 break;
 
                                 case FILLED_RECTANGLE:
-                                    ImGui::GetOverlayDrawList()->AddRectFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], ImColor(0, 0, 255,255));
+                                    ImGui::GetOverlayDrawList()->AddRectFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor);
                                 break;
 
                                 case FILLED_ELLIPSE:
                                     P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
-                                    ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], P1P4, ImColor(0, 0, 255,255), 32);
+                                    ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], P1P4, aDrawnObject.objBackgroundColor, 32);
                                 break;
 
                                 case SIMPLE_LINE:
-                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor, aDrawnObject.thickness);
                                 break;
 
                                 case SIMPLE_ARROW:
-                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor, 1.0f);
                                     //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
                                     P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
 
@@ -1689,7 +1683,7 @@ int main(int argc, char * argv[])
                                         ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
                                         ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(aDrawnObject.objectPoints[1].x + pTextCanvas->image_pos.x, aDrawnObject.objectPoints[1].y + pTextCanvas->image_pos.y));
                                         ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                        ImGui::GetOverlayDrawList()->PathStroke(ImColor(255,0,255,255), false, fthickness);
+                                        ImGui::GetOverlayDrawList()->PathStroke(aDrawnObject.objOutlineColor, false, aDrawnObject.thickness);
                                         ///draw_list->PathStroke(colors[i], false, thickness);
                                     }
                                 break;
@@ -1747,13 +1741,9 @@ int main(int argc, char * argv[])
 
                     if ((current_delayTab_drawing_task == FREEHAND_DRAWING))
                     {
-                        if ((adding_circle)/* && (can_draw)*/)
+                        if (adding_circle)
                         {
                             aDrawnObject.anObjectType = selectedObject;
-                            aDrawnObject.objBackgroundColor = ImColor(  0, 255, 0, 255);
-                            aDrawnObject.objOutlineColor    = ImColor(255,   0, 0, 255);
-                            aDrawnObject.thickness = 3.0f;
-
                             aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
 
                             // preview
@@ -1891,24 +1881,24 @@ int main(int argc, char * argv[])
 
                             case FILLED_RECTANGLE:
 
-                            draw_list->AddRectFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], ImColor(0, 0, 255,255));
+                            draw_list->AddRectFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], delayTabDrawnObjects[i].objBackgroundColor);
                             break;
 
                             case FILLED_ELLIPSE:
 
                             //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
                             P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
-                            draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], P1P4, ImColor(0, 0, 255,255), 32);
+                            draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], P1P4, delayTabDrawnObjects[i].objBackgroundColor, 32);
                             break;
 
                             case SIMPLE_LINE:
 
-                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], delayTabDrawnObjects[i].objBackgroundColor, delayTabDrawnObjects[i].thickness);
                             break;
 
                             case SIMPLE_ARROW:
 
-                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], delayTabDrawnObjects[i].objBackgroundColor, delayTabDrawnObjects[i].thickness);
                             //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
                             P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
 
@@ -1925,7 +1915,7 @@ int main(int argc, char * argv[])
                                 draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
                                 draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[1].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[1].y + pTextCanvas->image_pos.y));
                                 draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                draw_list->PathStroke(ImColor(255,0,255,255), false, fthickness);
+                                draw_list->PathStroke(delayTabDrawnObjects[i].objOutlineColor, false, delayTabDrawnObjects[i].thickness);
                                 ///draw_list->PathStroke(colors[i], false, thickness);
                             }
                             break;
@@ -1941,7 +1931,7 @@ int main(int argc, char * argv[])
                                     case RANDOM_ARROW:
                                     for (int j = 0 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
                                     {
-                                        draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[j], outline_thickness, ImColor(128, 0, 255,255), 4);
+                                        draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[j], outline_thickness, delayTabDrawnObjects[i].objBackgroundColor, 4);
                                     }
                                     break;
 
@@ -3205,8 +3195,8 @@ int main(int argc, char * argv[])
                     static bool drag_and_drop = true;
                     static bool options_menu = true;
                     static float object_thickness = 2.5f;
-                    static float bcol[4] = { 0.0f, 0.0f, 1.0f, 0.5 };
-                    static float ocol[4] = { 0.4f, 0.4f, 0.4f, 0.5 };
+                    static ImVec4 bcol = ImVec4( 0.3f, 0.4f, 1.0f, 0.5);
+                    static ImVec4 ocol = ImVec4( 0.4f, 0.4f, 0.4f, 0.5);
 
                     ImGui::Checkbox(HALF_ALPHA_PREVIEW, &alpha_half_preview); ImGui::SameLine();
                     ImGui::Checkbox(WITH_DRAG_AND_DROP, &drag_and_drop); ImGui::SameLine();
@@ -3215,16 +3205,14 @@ int main(int argc, char * argv[])
                     ImGuiColorEditFlags misc_flags = /*(hdr ? ImGuiColorEditFlags_HDR : 0) |*/ (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | ImGuiColorEditFlags_AlphaPreviewHalf | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
 
                     ImGui::PushItemWidth(150);
-                    ImGui::ColorEdit3(DRAWN_OBJECT_BACKGROUND_COLOR, bcol/*&bcol[0]*/, misc_flags); ImGui::SameLine();
-                    ImGui::ColorEdit3(DRAWN_OBJECT_OUTLINE_COLOR, ocol/*&ocol[0]*/, misc_flags); ImGui::SameLine();
+                    ImGui::ColorEdit4(DRAWN_OBJECT_BACKGROUND_COLOR, &bcol.x, misc_flags); ImGui::SameLine();
+                    ImGui::ColorEdit4(DRAWN_OBJECT_OUTLINE_COLOR, &ocol.x, misc_flags); ImGui::SameLine();
                     ImGui::SliderFloat(DRAWN_OBJECT_LINE_THICKNESS, &object_thickness, 0.5, 20, "%.1f\n" );
                     ImGui::PopItemWidth();
 
-                    p_aDrawnObject->objBackgroundColor =  IM_COL32((int)bcol[0]*255, (int)bcol[1]*255, (int)bcol[2]*255, (int)bcol[3]*255);
-                    p_aDrawnObject->objOutlineColor    = IM_COL32(ocol[0], ocol[1], ocol[2], ocol[3]);
-
+                    p_aDrawnObject->objBackgroundColor =  ImColor(bcol.x, bcol.y, bcol.z, bcol.w);
+                    p_aDrawnObject->objOutlineColor    =  ImColor(ocol.x, ocol.y, ocol.z, ocol.w);
                     p_aDrawnObject->thickness = object_thickness;
-/////////////////////////////////////////////////////////////////////////
 
                     createCanvasObjectsImagesTexIds();
 
