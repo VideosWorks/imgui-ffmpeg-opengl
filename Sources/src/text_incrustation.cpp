@@ -41,20 +41,6 @@ static bool toReturn = true;
 
 bool text_in_video_helper(md::TextCanvas * pTextCanvas)
 {
-/*
-    int iconWidth  = 32;
-    int iconHeight = 32;
-    createCanvasObjectsImagesTexIds();
-
-    for (short int i = 0 ; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
-    {
-        int frame_padding = 3;
-        ImGui::ImageButton( reinterpret_cast<void * >(canvasObjectImageTexId[i]), ImVec2(iconWidth, iconHeight),
-                            ImVec2(0,0), ImVec2(1,1), frame_padding, ImColor(0,0,0,255));
-        ImGui::SameLine();
-    }
-    ImGui::NewLine();
-*/
     static bool b_refresh = true;
     static ImGuiComboFlags combo_flags = ImGuiComboFlags_PopupAlignLeft;
     static const char* font_item_current = font_items[0];
@@ -127,6 +113,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
         if (old_comment_duration != comment_duration)
         {
             pTextCanvas->pTextObject->duration = comment_duration;
+            pTextCanvas->pTextObject->frameCount = ImGui::GetIO().Framerate * pTextCanvas->pTextObject->duration;
             old_comment_duration = comment_duration;
             b_refresh = true;
         }
@@ -155,7 +142,13 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
     }
 
     // Positionnement du commentaire dans la vidéo
+    ImGui::PushID("#automatic positioning");
     ImGui::Checkbox(AUTOMATIC_POSITIONING_OF_THE_TEXT_Q, &pTextCanvas->pTextObject->b_text_auto_positioned);
+
+    if (ImGui::IsItemClicked(0))
+        b_refresh = true;
+
+    ImGui::PopID();
 
     if (!pTextCanvas->pTextObject->b_text_auto_positioned)
     {
@@ -200,6 +193,8 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
     }
     else
     {
+        // if not, the text position will become  uncontrolable
+        pTextCanvas->pTextObject->delta = cv::Point(0.0f, 0.0f);
         // bottom centered is the default
         static const int default_hPosition = H_CENTER;
         static int               hPosition = default_hPosition;
@@ -304,7 +299,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
             // first, clean the previous incrustation, but keep its properties
             pTextCanvas->clearString();
 
-            pTextCanvas->pTextObject->frameCount = 24 * pTextCanvas->pTextObject->duration;
+            pTextCanvas->pTextObject->frameCount = ImGui::GetIO().Framerate * pTextCanvas->pTextObject->duration;
 
             // insert the text in the video, then empty the string
             // annotation::insert( comment, fontsize, and so on)
@@ -587,6 +582,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
             text_baseline_blue_comp  = text_baseline_default_blue_comp;
 
             pTextCanvas->pTextObject->baseline = DEFAULT_TEXT_INCRUSTATION_BASELINE;
+            pTextCanvas->pTextObject->delta = cv::Point(0.0f, 0.0f);
 
             b_refresh = true;
         }
