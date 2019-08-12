@@ -1,32 +1,15 @@
 /*
  * canvas_objects.hpp
  * Copyright Eric Bachard  2019 August 1st
- * This document is under GPL v2 license
- * See : http://www.gnu.org/licenses/gpl-2.0.html
+ * License MIT
+ *
  */
+
+#include <vector>
+#include "imgui.h"
 
 #ifndef __CANVAS_OBJECTS_HPP
 #define __CANVAS_OBJECTS_HPP
-
-typedef enum DrawingWhat
-{
-    ZOOMED_AREA       = 0,
-    FREEHAND_DRAWING  = 1,
-    DRAWING_TEXT      = 2,
-    DRAWING_PRIMITIVE = 3
-} DrawingWhat;
-
-typedef enum ObjectType
-{
-    TEXT_OBJECT      = 0,
-    FILLED_RECTANGLE = 1,
-    EMPTY_RECTANGLE  = 2,
-    FILLED_ELLIPSE   = 3,
-    EMPTY_ELLIPSE    = 4,
-    RANDOM_LINE      = 5,
-    SIMPLE_ARROW     = 6,
-    SIMPLE_LINE      = 7
-} ObjectType;
 
 #define    TEXT_OBJECT_IMAGE_PATH        "./images/canvas/image_text.png"
 #define    FILLED_RECTANGLE_IMAGE_PATH   "./images/canvas/image_filled_rectangle.png"
@@ -34,6 +17,7 @@ typedef enum ObjectType
 #define    FILLED_ELLIPSE_IMAGE_PATH     "./images/canvas/image_filled_ellipse.png"
 #define    EMPTY_ELLIPSE_IMAGE_PATH      "./images/canvas/image_empty_ellipse.png"
 #define    RANDOM_LINE_IMAGE_PATH        "./images/canvas/image_random_line.png"
+#define    RANDOM_ARROW_IMAGE_PATH        "./images/canvas/image_random_arrow.png"
 #define    SIMPLE_ARROW_IMAGE_PATH       "./images/canvas/image_simple_arrow.png"
 #define    SIMPLE_LINE_IMAGE_PATH        "./images/canvas/image_simple_line.png"
 
@@ -43,9 +27,46 @@ typedef enum ObjectType
 #define    FILLED_ELLIPSE_IMAGE_DARK_PATH     "./images/canvas/dark_theme/image_filled_ellipse_dark.png"
 #define    EMPTY_ELLIPSE_IMAGE_DARK_PATH      "./images/canvas/dark_theme/image_empty_ellipse_dark.png"
 #define    RANDOM_LINE_IMAGE_DARK_PATH        "./images/canvas/dark_theme/image_random_line_dark.png"
+#define    RANDOM_ARROW_IMAGE_DARK_PATH        "./images/canvas/dark_theme/image_random_arrow_dark.png"
 #define    SIMPLE_ARROW_IMAGE_DARK_PATH       "./images/canvas/dark_theme/image_simple_arrow_dark.png"
 #define    SIMPLE_LINE_IMAGE_DARK_PATH        "./images/canvas/dark_theme/image_simple_line_dark.png"
 
-#define CANVAS_OBJECTS_TYPES_MAX    8
+typedef enum DrawingWhat
+{
+    DRAWING_ZOOMED_AREA,
+    FREEHAND_DRAWING,
+    DRAWING_TEXT,
+    DRAWING_PRIMITIVE,
+    DRAWING_NOTHING
+} DrawingWhat;
+
+typedef enum ObjectType
+{
+    TEXT_OBJECT        =   0,
+    FILLED_RECTANGLE   =   1,
+    EMPTY_RECTANGLE    =   2,
+    FILLED_ELLIPSE     =   3,
+    EMPTY_ELLIPSE      =   4,
+    RANDOM_LINE        =   5,
+    RANDOM_ARROW       =   6,
+    SIMPLE_ARROW       =   7,
+    SIMPLE_LINE        =   8,
+    NOT_A_DRAWN_OBJECT = 100
+} ObjectType;
+
+typedef struct DrawnObject
+{
+    unsigned int anObjectType;
+    float thickness;
+    bool selected;
+    bool hovered;
+    bool record;
+    ImVector <ImVec2>  objectPoints;
+    ImU32  objBackgroundColor;
+    ImU32  objOutlineColor;
+} DrawnObject;
+
+
+#define CANVAS_OBJECTS_TYPES_MAX    9
 
 #endif /*  __CANVAS_OBJECTS_HPP */
