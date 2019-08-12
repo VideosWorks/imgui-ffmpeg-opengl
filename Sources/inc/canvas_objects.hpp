@@ -1,8 +1,8 @@
 /*
  * canvas_objects.hpp
  * Copyright Eric Bachard  2019 August 1st
- * License MIT
- *
+ * This document is under GPL v2 license
+ * See : http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 #include <vector>
