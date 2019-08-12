@@ -26,6 +26,7 @@ namespace md
         pTextObject->duration =  DEFAULT_INCRUSTATION_DURATION;
         pTextObject->annotations_current_font = SystemFontFile[0];
         pTextObject->fontHeight = DEFAULT_FONTSIZE;
+        pTextObject->frameCount = DEFAULT_FRAMERATE_FPS * pTextObject->duration;
     };
 
     TextCanvas::~TextCanvas()
@@ -34,9 +35,6 @@ namespace md
 
     bool TextCanvas::init()
     {
-        // KEPT JUST IN CASE a well choosen environment variable can be used on Windows (should be the case)
-        //putenv('GDFONTPATH=' . realpath('.'));
-
         // initialize the text to be overlayed
         pTextObject->sText = "";
 
@@ -54,7 +52,7 @@ namespace md
         //pTextObject->b_fillpoly = true;
         //pTextObject->b_text_centered = true;
         pTextObject->b_displayable = false;
-        pTextObject->frameCount = 24 * pTextObject->duration;
+        pTextObject->frameCount = ImGui::GetIO().Framerate * pTextObject->duration;
 
         // TODO : uggly. implement vector of lines + push/pop
         pTextObject->number_of_lines = 1;
@@ -65,9 +63,9 @@ namespace md
         //pTextObject->fontHeight = DEFAULT_FONT_SIZE;
 
         pTextObject->thickness = DEFAULT_THICKNESS;
-        pTextObject->lineType = DEFAULT_LINETYPE;
+        pTextObject->lineType  = DEFAULT_LINETYPE;
         pTextObject->lineStyle = DEFAULT_LINESTYLE;
-        pTextObject->textOrg = cv::Point(0,0);
+        pTextObject->textOrg   = cv::Point(0,0);
 
         // TODO LATER : animation purpose !
         pTextObject->delta   = cv::Point(0,0);
@@ -105,32 +103,17 @@ namespace md
         short int toReturn = 0;
         bool line2_started = false;
 
-#ifdef CANVAS_DEBUG
-        short int len = strlen( (const char *) pTextObject->sText.c_str());
-        fprintf(stdout, "Nombre de caractères contenus dans text : %hd \n", len);
-#endif
         std::istringstream iss ((const char *) pTextObject->sText.c_str());
         short int string_size  = 0;
         short int string_size2 = 0;
 
-#ifdef CANVAS_DEBUG
-        std::cout << "La chaîne complète contient :" << pTextObject->sText.c_str() << std::endl;
-        fprintf(stdout, "Nbre de caractères maxi :  %d , et len = %hd \n", CHARACTERS_PER_LINE_MAX, len);
-        fprintf(stdout, "longueur de la chaine = : %hd \n", len);
-#endif
         while (std::getline(iss, word, ' '))
         {
-#ifdef CANVAS_DEBUG
-            std::cout << " Taille du mot : " <<  word << " : " <<  word.length() << '\n';
-#endif
             if (line2_started == false)
             {
                 if ((string_size + word.length()) <= (CHARACTERS_PER_LINE_MAX) - 1)
                 {
                     strncat(pTextObject->ligne1, &word[0], word.length());
-#ifdef CANVAS_DEBUG
-                    std::cout << word << " a été copié dans ligne1 "<< std::endl;
-#endif
                     string_size += word.length(); // add the word
 
                     if ((string_size) < (CHARACTERS_PER_LINE_MAX) - 1)
@@ -147,9 +130,6 @@ namespace md
                     pTextObject->ligne2[0] = '\0';
 
                     strncat(pTextObject->ligne2, &word[0], word.length());
-#ifdef CANVAS_DEBUG
-                    std::cout << word <<" a été copié dans ligne2 "<< std::endl;
-#endif
                     strncat(pTextObject->ligne2, " "     , 1);
 
                     string_size2 += word.length();
@@ -157,24 +137,12 @@ namespace md
 
                     line2_started = true;
                 }
-#ifdef CANVAS_DEBUG
-                std::cout << "  taille de ligne1 : " <<  string_size << std::endl;
-                std::cout << "  taille de ligne2 : " <<  string_size2 << std::endl;
-                fprintf(stdout, "ligne1 contient : %s \n", pTextObject->ligne1);
-                fprintf(stdout, "ligne2 contient : %s \n", pTextObject->ligne2);
-#endif
             }
             else
             {
-#ifdef CANVAS_DEBUG
-                std::cout << "  taille de ligne2 : " <<  string_size2 << std::endl;
-#endif
                 if ((string_size2 + word.length()) <= (CHARACTERS_PER_LINE_MAX) - 1)
                 {
                     strncat(pTextObject->ligne2, &word[0], word.length());
-#ifdef CANVAS_DEBUG
-                    std::cout << word <<" a été copié dans ligne2 "<< std::endl;
-#endif
                     string_size2 += word.length();
 
                     if ((string_size2) < (CHARACTERS_PER_LINE_MAX - 1))
@@ -185,10 +153,6 @@ namespace md
                 }
                 else
                     break;
-#ifdef CANVAS_DEBUG
-                fprintf(stdout, "ligne2 contient : %s \n", pTextObject->ligne2);
-                std::cout << "  taille de la ligne2 : " <<  string_size2 << std::endl;
-#endif
             }
             word = { '\0' };
         }
@@ -199,19 +163,6 @@ namespace md
         if (string_size2 > toReturn)
             toReturn = string_size2;
 
-#ifdef CANVAS_DEBUG
-        fprintf(stdout, "Nombre de lignes au total : %hd \n", pTextObject->number_of_lines);
-        fprintf(stdout, "ligne1 contient : %s \n", pTextObject->ligne1);
-        fprintf(stdout, "string_size vaut : %hd \n", string_size);
-        fprintf(stdout, "toReturn vaut : %hd \n", toReturn);
-
-        if (pTextObject->number_of_lines > 1)
-        {
-            fprintf(stdout, "ligne2 contient : %s \n", pTextObject->ligne2);
-            fprintf(stdout, "(rappel : on peut saisir au maximum %d caractères dans le message) \n", CHARACTERS_MAX );
-
-        }
-#endif
         return toReturn;
     }
 
@@ -219,7 +170,7 @@ namespace md
     {
         init();
         pTextObject->b_displayable = false;
-        pTextObject->frameCount = 30 * DEFAULT_INCRUSTATION_DURATION;
+        pTextObject->frameCount = ImGui::GetIO().Framerate * DEFAULT_INCRUSTATION_DURATION;
     }
 
     void TextCanvas::clearString(void)
@@ -247,17 +198,7 @@ namespace md
         for (i = 0; i < pTextObject->number_of_lines; i++)
         {
             pTextObject->ft2 = cv::freetype::createFreeType2();
-
-//#define CANVAS_DEBUG2
-#ifdef CANVAS_DEBUG2
-            std::cout <<  "pTextObject->ligne1 "       << pTextObject->ligne1 << std::endl;
-            std::cout <<  "pTextObject->ligne2 "       << pTextObject->ligne2 << std::endl;
-            std::cout <<  "pTextObject->fontHeight "   << pTextObject->fontHeight << std::endl;
-            std::cout <<  "pTextObject->thickness "    << pTextObject->thickness << std::endl;
-            std::cout <<  "pTextObject->baseline "     << pTextObject->baseline << std::endl;
-#endif
             pTextObject->ft2->loadFontData(pTextObject->annotations_current_font, false);
-
             pTextObject->textSize = pTextObject->ft2->getTextSize(  pTextObject->ligne1,
                                                                     pTextObject->fontHeight,
                                                                     pTextObject->thickness,
@@ -308,18 +249,13 @@ namespace md
                 }
             }
 
-
-#ifdef CANVAS_DEBUG
-            std::cout <<  "pTextObject->textSize "     << pTextObject->textSize << std::endl;
-#endif
-
             //draw_everything();
 
             if (pTextObject->b_draw_outline == true)
             {
                 cv::rectangle( aFrame,
-                               pTextObject->textOrg,
-                               pTextObject->textOrg + cv::Point(boxWidth, pTextObject->baseline + boxHeight + 2*pTextObject->thickness),
+                               pTextObject->delta + pTextObject->textOrg,
+                               pTextObject->delta + pTextObject->textOrg + cv::Point(boxWidth, pTextObject->baseline + boxHeight + 2*pTextObject->thickness),
                                pTextObject->outlineColor,
                                1,
                                8);
@@ -343,10 +279,10 @@ namespace md
 
                 if (pTextObject->b_text_changed == true)
                 {
-                    pTextObject->box_points[0][0] = pTextObject->textOrg + cv::Point(0, pTextObject->baseline + pTextObject->thickness);
-                    pTextObject->box_points[0][1] = pTextObject->textOrg + cv::Point(pTextObject->textSize.width, pTextObject->baseline + pTextObject->thickness);
-                    pTextObject->box_points[0][2] = pTextObject->textOrg + cv::Point(pTextObject->textSize.width, pTextObject->baseline + pTextObject->fontHeight + 2*pTextObject->thickness);
-                    pTextObject->box_points[0][3] = pTextObject->textOrg + cv::Point(0, pTextObject->baseline + pTextObject->fontHeight + 2*pTextObject->thickness);
+                    pTextObject->box_points[0][0] = pTextObject->delta + pTextObject->textOrg + cv::Point(0, pTextObject->baseline + pTextObject->thickness);
+                    pTextObject->box_points[0][1] = pTextObject->delta + pTextObject->textOrg + cv::Point(pTextObject->textSize.width, pTextObject->baseline + pTextObject->thickness);
+                    pTextObject->box_points[0][2] = pTextObject->delta + pTextObject->textOrg + cv::Point(pTextObject->textSize.width, pTextObject->baseline + pTextObject->fontHeight + 2*pTextObject->thickness);
+                    pTextObject->box_points[0][3] = pTextObject->delta + pTextObject->textOrg + cv::Point(0, pTextObject->baseline + pTextObject->fontHeight + 2*pTextObject->thickness);
                 }
 
                 // set a colored box containing the text)
@@ -360,7 +296,7 @@ namespace md
 
             pTextObject->ft2->putText(  aFrame,
                                         pTextObject->ligne1,
-                                        pTextObject->textOrg,      // to animate, create do textOrg(t)
+                                        pTextObject->delta + pTextObject->textOrg,      // to animate, create do textOrg(t)
                                         pTextObject->fontHeight,
                                         pTextObject->fontColor,
                                         -1,                        // pTextObject->thickness : -1 == CV doing the job (>0 values == other rendering)
@@ -371,8 +307,8 @@ namespace md
             {
                 // ... and the baseline. FIXME : before the font ?
                 cv::line(aFrame,
-                         pTextObject->textOrg + cv::Point(0, pTextObject->baseline + pTextObject->thickness + pTextObject->textSize.height),
-                         pTextObject->textOrg + cv::Point(pTextObject->textSize.width, pTextObject->baseline + pTextObject->thickness + pTextObject->textSize.height),
+                         pTextObject->delta + pTextObject->textOrg + cv::Point(0, pTextObject->baseline + pTextObject->thickness + pTextObject->textSize.height),
+                         pTextObject->delta + pTextObject->textOrg + cv::Point(pTextObject->textSize.width, pTextObject->baseline + pTextObject->thickness + pTextObject->textSize.height),
                          pTextObject->baselineColor);
             }
 
@@ -388,5 +324,34 @@ namespace md
             pTextObject->b_text_changed = false;
 
         return EXIT_SUCCESS;
+    }
+
+    bool TextCanvas::textBoxHovered(cv::Mat aFrame, ImVec2 image_pos)
+    {
+        bool b_inside_rect = false;
+
+        ImVec2 mouse_pos_in_image = ImVec2(ImGui::GetIO().MousePos.x - image_pos.x, ImGui::GetIO().MousePos.y - image_pos.y);
+        ImVec2 topLeft    ((image_size.x*pTextObject->box_points[0][0].x)/aFrame.cols, ((image_size.y-58)*pTextObject->box_points[0][0].y)/aFrame.rows);
+        ImVec2 bottomRight((image_size.x*pTextObject->box_points[0][2].x)/aFrame.cols, ((image_size.y-58)*pTextObject->box_points[0][2].y)/aFrame.rows);
+
+        if ((mouse_pos_in_image.x < topLeft.x)||(mouse_pos_in_image.x > bottomRight.x)||
+            (mouse_pos_in_image.y < topLeft.y)||(mouse_pos_in_image.y > bottomRight.y)   )
+        {
+            b_inside_rect = false;
+        }
+        else
+        {
+            b_inside_rect = true;
+        }
+        return b_inside_rect;
+    }
+
+
+    int TextCanvas::move(void)
+    {
+        pTextObject->delta.x += 2*ImGui::GetIO().MouseDelta.x;
+        pTextObject->delta.y += 2*ImGui::GetIO().MouseDelta.y;
+        pTextObject->b_text_changed = true;
+        return 0;
     }
 }
