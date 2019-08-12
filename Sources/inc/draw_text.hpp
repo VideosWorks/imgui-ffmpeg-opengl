@@ -13,6 +13,8 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/freetype.hpp>
 
+#include "imgui.h"
+
 #include <sstream>
 #include <iostream>
 #include <cstring>
@@ -20,6 +22,7 @@
 #include <string>
 
 #define DEFAULT_INCRUSTATION_DURATION      10
+#define DEFAULT_FRAMERATE_FPS              60
 #define DEFAULT_TEXT_INCRUSTATION_BASELINE  0
 #define DEFAULT_THICKNESS                   1
 #define DEFAULT_LINETYPE                    0
@@ -96,7 +99,6 @@ namespace md  // miniDart alias
         cv::Scalar    outlineColor;
         cv::Scalar    backgroundColor;
         cv::Scalar    baselineColor;
-
     } TEXT_Object;
 
     class TextCanvas
@@ -118,7 +120,10 @@ namespace md  // miniDart alias
           void      clearString(void);
           int       insertString( cv::Mat aFrame,
                                   md::TEXT_Object * pTextObject);
-
+          bool      textBoxHovered(cv::Mat, ImVec2);
+          int       move(void);
+          ImVec2    image_pos;
+          ImVec2    image_size;
         private:
     };
 }
