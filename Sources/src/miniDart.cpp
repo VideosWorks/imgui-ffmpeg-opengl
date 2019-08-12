@@ -4369,44 +4369,8 @@ int main(int argc, char * argv[])
                             if ((show_shooters) && (i < shooters.Size))
                                 draw_list->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(canvas_pos.x+points[i].x - 2.0f ,canvas_pos.y+points[i].y+5.0f), ImColor(0,0,0,255), shooters[i], NULL, 0.0f, &clip_rect);
 
-//TEST                          draw_list->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(canvas_pos.x+points[i].x - 2.0f ,canvas_pos.y+points[i].y+5.0f), ImColor(0,0,0,255), &shooters[i], NULL, 0.0f, &clip_rect);
                         }
                     }
-                    //control_points.push_back(ImVec2(canvas_pos.x + points[i].x + (points[i+1].x - points[i].x)*0.25f, canvas_pos.y + points[i].y + (points[i+1].y - points[i].y)*0.25f));
-                    //control_points.push_back(ImVec2(canvas_pos.x + points[i].x + (points[i+1].x - points[i].x)*0.75f, canvas_pos.y + points[i].y + (points[i+1].y - points[i].y)*0.75f));
-
-                    // OK, works
-                    // dessine une ligne entre 2 points : ajouter la sélection possible ligne / rectangle
-                    //A// ajouter l'option flèche à l'extrémité
-
-                    //draw_list->AddLine(ImVec2(canvas_pos.x + points[i].x, canvas_pos.y + points[i].y), ImVec2(canvas_pos.x + points[i+1].x, canvas_pos.y + points[i+1].y), /*IM_COL32(255,0,0,255)*/ colors[i], 2.0f);
-
-                    //R// dessine un rectangle de couleur donnée.
-                    //draw_list->AddRect(ImVec2(canvas_pos.x + points[i].x, canvas_pos.y + points[i].y), ImVec2(canvas_pos.x + points[i+1].x, canvas_pos.y + points[i+1].y), /*IM_COL32(255,0,0,255)*/ colors[i], 2.0f);
-
-                    // Text WORKS
-                    //T//
-                    //ELL//
-                    // => ajouter le choix dessiner une courbe ou un trait, un cercle ou un rectangle de le remplir ou pas
-                    // => ajouter des boutons permettant de sélectionner un type d'annotation
-                    // => ajouter le choix de l'épaisseur du trait
-                    // => ajouter le choix de la couleur avec un colopicker (ou une palette simplifiée ?)
-                    // => ajouter insérer du texte (dans une boîte ?),
-                    // => ajouter un bouton invisible actif lorsque le curseur de la souris passe dessus, puis une fenêtre type popup qu s'ouvre quand on passe l
-
-                    //C// dessiner un cercle en partant du premier point
-                    //C// szx = (points[i+1].x-points[i].x);
-                    //C// szy = (points[i+1].y-points[i].y);
-                    //C// draw_list->AddCircle(ImVec2((canvas_pos.x + points[i].x)+szx*0.5f, (canvas_pos.y + points[i].y)+szy*0.5f), (abs(szx)+abs(szy))*0.5f, colors[i], 32, 3);
-
-                    //BZ// Dessine une courbe de bezier (mais on ne peut pas encore modifier les points de contrôle)
-/*
-                    if (ImGui::IsItemActive() && ImGui::IsMouseDragging(0))
-                    {
-                        control_points[i*2+0].x += ImGui::GetIO().MouseDelta.x / canvas_size.x;
-                        control_points[i*2+0].y += ImGui::GetIO().MouseDelta.x / canvas_size.x;
-                    }
-*/
                     draw_list->AddBezierCurve(   /*P1 start*/
                                                  ImVec2(canvas_pos.x + points[i].x, canvas_pos.y + points[i].y),
                                                  //control_points[i],
@@ -4419,15 +4383,6 @@ int main(int argc, char * argv[])
                                                  ImVec2(canvas_pos.x + points[i+1].x, canvas_pos.y + points[i+1].y),
                                                  /* drawing parameters*/
                                                  colors[i], 2.0f, 64);
-
-                    //                draw_list->AddLine(ImVec2(canvas_pos.x + points[i+1].x, canvas_pos.y + points[i+1].y), ImVec2(canvas_pos.x + points[i+1].x - 15.0f, canvas_pos.y + points[i+1].y -15.0f), /*IM_COL32(255,0,0,255)*/ colors[i], 2.0f);
-
-                    // Pour la suite : ajouter le dessin des points de contrôle (des boutons invisibles pour les 4 points)
-                    // 1. on dessine la courbe sous forme de ligne droite : les points de contrôle sont apparents, et on peut modifier
-                    // 2. si on clique ailleurs, les points de contrôle ne sont plus visibles après un certain temps,
-                    //    mais peuvent réapparaître lorsqu'on passe le curseur sur le premier point
-                    // 4 les points de contrôle ne sont modifiable que pour la dernière courbe entrée
-                    // 5. ensuite, on ne peut que supprimer la courbe avec "défaire"
 
                 }
                 draw_list->PopClipRect();
