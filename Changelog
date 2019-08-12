@@ -7,6 +7,10 @@ Dear ImGui upgrade : now using docking branch sync'ed with 1.72b version.
 Currently found no issue (build is ok, no unexpected crash yet). Follow up in progress
 Waiting for feedback.
 
+FIXED : (random line) Separate preview from definitily drawn. The feature works very well, but that's not easy to remove zillions of little points one by one ...
+FIXED : crash when mixing freehand objects and primitives. Very probably caused by one pop_back() in excess. 
+FIXED : add colors + thickness management for every case
+FIXED : improve the drawing : first primitives, then draw zoom area (not always, only when magnifier is selected)
 
 2019 August 11th
 
@@ -28,6 +32,8 @@ FIXED : empty_rectangle, empty circle, simple_arrow, simple_line, filled_rectang
 FIXED : random crash when using empty rectangle. Was caused by typo in  AddRec()
 FIXED : new fields in DrawnObject : active, hovered
 
+FIXME : add colors + thickness management for every case  // visibility issue, or maybe wrong color format ?
+FIXME : scale does not work => fullscreen resizing does not work  // subview->size should be marked as "changed"
 
 2019 August 10th
 
@@ -41,9 +47,9 @@ Interface :
 FIXME : Separate preview from definitily drawn. The feature works very well, but that's not easy to remove zillions of little points one by one ...
 FIXME : crash when mixing freehand objects and primitives. Very probably caused by one pop_back() in excess. 
 FIXME : add colors + thickness management for every case
-FIXME : improve the drawing : first primitives, then draw zoom area (not always, only when magnifier is selected)
 FIXME : create a CanvasManager class 
 FIXME : scale does not work => fullscreen resizing does not work
+FIXME : improve the drawing : first primitives, then draw zoom area (not always, only when magnifier is selected)
 
 
 2019 August 9th
