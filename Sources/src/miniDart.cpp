@@ -48,9 +48,11 @@
 #include "miniDart_en-US.hpp"
 #endif
 
-//#define BACKGROUND_IMAGE "./images/test.bmp"
-//#define BACKGROUND_IMAGE "./images/test3.png"
-#define BACKGROUND_IMAGE "./images/test5.png"
+//#define BACKGROUND_IMAGE "./images/test5.png"
+
+// TEST
+#define BACKGROUND_IMAGE "./images/test6.png"
+
 #define HANDBALL_PLAYGROUND_IMAGE "./images/analyse_GB/secteurs_tirs.png"
 
 /* video player */
@@ -96,16 +98,12 @@ static std::string myContainer = ".avi";
 static int outWidth = 1280;
 static int outHeight = 720;
 static cv::Size outFrameSize(static_cast<int>(outWidth), static_cast<int>(outHeight));
-//static int old_container = 1;
-//static int new_container = 1;
-//static double outFPS = DEFAULT_FRAMERATE;
 static double outFPS = 24;
 
 #ifdef FPS_FEATURE_ENABLED
 static int out_image_format = DEFAULT_IMAGE_FORMAT; // IMAGE_FORMAT_720P
 static int out_old_framesize = outWidth * outHeight;
 static int out_new_framesize = out_old_framesize;
-// later use
 //static double out_oldFPS = outFPS;
 //static double out_newFPS = out_oldFPS;
 #endif
@@ -115,11 +113,6 @@ static bool b_audio_paused = false;
 
 
 static void do_seek(double incr, long int pos);
-
-
-// INPUT DEVICE  class CaptureDev
-//static bool bCaptureDevicePresent = false;
-
 
 static void ToggleButton(const char* str_id, bool* v);
 
@@ -165,19 +158,12 @@ static int image_rotation_value = NO_ROTATION;
 // Application::b_spot_active
 static bool b_spot_active = false;
 static bool b_record_rectangle= false;
-static float spot_radius = 60.0f;
-
-// Application::b_record_spot
-//static bool b_record_spot = false;
+//static float spot_radius = 60.0f;
 
 // CaptureDev parameters (input)
 static int image_format = DEFAULT_IMAGE_FORMAT; // IMAGE_FORMAT_720P
 static int old_image_format = image_format;
 static char defaultPath[PATH_MAX];
-
-
-// TODO : choose when / where use the feature, bcause only working with Logitech webcams
-//#define PTZ_ACTIVE
 
 #define EXPOSURE_FEATURE
 
@@ -221,9 +207,6 @@ static int set_theme(int aTheme)
 }
 // End Gui::change_theme()
 
-// Later. The idea is to display the first frame of every video located in a given directory,
-// playing them using slow motion effect
-
 // just a value for the slider on the tabs
 static float value2 = 0.0f;
 
@@ -258,11 +241,6 @@ double video_duration = 0.0f;
 static double origin = 0.0f;
 static double max_position = origin + video_duration;
 
-
-//static bool mp4_origin = 0.0f;
-
-// buggy ?
-//#define MASTER_CLOCK
 
 // declaration forward
 static float initialize_position(void);
@@ -397,6 +375,7 @@ const std::string canvasObjectImagePath[CANVAS_OBJECTS_TYPES_MAX] =
     FILLED_ELLIPSE_IMAGE_DARK_PATH,
     EMPTY_ELLIPSE_IMAGE_DARK_PATH,
     RANDOM_LINE_IMAGE_DARK_PATH,
+    RANDOM_ARROW_IMAGE_DARK_PATH,
     SIMPLE_ARROW_IMAGE_DARK_PATH,
     SIMPLE_LINE_IMAGE_DARK_PATH
 #else
@@ -406,6 +385,7 @@ const std::string canvasObjectImagePath[CANVAS_OBJECTS_TYPES_MAX] =
     FILLED_ELLIPSE_IMAGE_PATH,
     EMPTY_ELLIPSE_IMAGE_PATH,
     RANDOM_LINE_IMAGE_PATH,
+    RANDOM_ARROW_IMAGE_PATH,
     SIMPLE_ARROW_IMAGE_PATH,
     SIMPLE_LINE_IMAGE_PATH
 #endif
@@ -421,9 +401,6 @@ static void loadCanvasObjectsIcons(void)
     {
         canvasObjectImage[i] = cv::imread(canvasObjectImagePath[i]);
     }
-#ifdef DEBUG
-    std::cout << "loadCanvasObjectsIcons done" << std::endl;
-#endif
 }
 
 static void createCanvasObjectsImagesTexIds(void)
@@ -444,6 +421,7 @@ static void cleanCanvasObjectsImagesTexIds(void)
             glDeleteTextures(1, &canvasObjectImageTexId[i]);
     }
 }
+
 
 
 int main(int argc, char * argv[])
@@ -470,10 +448,6 @@ int main(int argc, char * argv[])
     // Class GUI
     bool b_is_fullscreen = false;
 
-    // later use
-    // class GUI
-    //bool high_dpi_screen = false;
-
     // class CaptureDev. Public
     bool b_recording_video = false;
 
@@ -493,7 +467,6 @@ int main(int argc, char * argv[])
     bool b_display_activity_time = false;
     bool b_display_total_time = false;
     bool b_zoom_available = false;
-
     loadCanvasObjectsIcons();
 
     int lastFrameNumber = pClipReader->getMaxFrame();
@@ -543,13 +516,10 @@ int main(int argc, char * argv[])
 
     cv::Size frameSize(static_cast<int>(dWidth), static_cast<int>(dHeight));
 
+
     // SDL engine + OpenGL, basicaly needed by Dear ImGui
     ////Engine  engine;
 
-    // https://www.gog.com/forum/thimbleweed_park/linux_unable_to_init_sdl_mixer_alsa_couldnt_open_audio_device_no_such_device
-    // https://wiki.libsdl.org/FAQUsingSDL
-
-//    SDL_setenv("SDL_AUDIODRIVER", "alsa", true);
     putenv((char *)"SDL_AUDIODRIVER=alsa");
 
     // about issues between OpenGL 3.3. and OpenGL 3.0 (only Linux concerned)
@@ -674,13 +644,8 @@ int main(int argc, char * argv[])
     // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Multi-ViewPorts
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-ViewPorts
 
-    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-////
-////    ImGuiStyle* style = &ImGui::GetStyle();
     ImGuiStyle& style = ImGui::GetStyle();
 
-    // Gui::setTheme()
-    //ImGui::StyleColorsWindows();
     ImGui::StyleColorsLightGreen();  // back to this theme as default
 
     std::cout << "style =  " << &style << std::endl;
@@ -710,18 +675,7 @@ int main(int argc, char * argv[])
     static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
     config.PixelSnapH = true;
 
-    // suggestions : ICON_FA_CAMERA, ICON_FA_VIDEO_CAMERA, ICON_FA_STEP_FORWARD, ICON_FA_STEP_BACKWARD,
-    // ICON_FA_UNDO,ICON_FA_PLAY, ICON_FA_PAUSE, ICON_FA_ERASER, ICON_FA_FILE_IMAGE_O,ICON_FA_FOLDER_OPEN_O
-
     io.Fonts->AddFontFromFileTTF("./fonts/Icons/FontAwesome/FontAwesome.ttf", 19.0f, &config, icons_ranges);
-
-    //io.WantCaptureKeyboard = false;
-    //io.Fonts->Build();
-
-    // Gui::setStyle();
-    // Application::SetImGuiStyle(); // default style
-    // shouldn't this value be in imgui.ini ?
-    //ImGui::StyleColorsLightGreen();
 
     ImVec4 clear_color = ImColor(114, 144, 154);
 
@@ -752,8 +706,8 @@ int main(int argc, char * argv[])
 
     md::TextCanvas * pTextCanvas = &aTextCanvas;
 
-    // NOT POSSIBLE (needs a cv::namedWindow)
-    //cvSetMouseCallback("miniDart", MOUSE_CLICK, 0);
+    DrawnObject * p_aDrawnObject;
+    std::vector <DrawnObject> * p_delayTabDrawnObjects;
 
     // Application::Loop()
     while (!quit)
@@ -781,6 +735,7 @@ int main(int argc, char * argv[])
                     switch(event.window.event)
                     {
                         case SDL_WINDOWEVENT_RESIZED:
+
                             // faster than SDL_GetWindowSize(window, &currentWidth, &currentHeight);
                             currentWidth = event.window.data1;
                             currentHeight = event.window.data2;
@@ -793,9 +748,6 @@ int main(int argc, char * argv[])
                     break;
 
                 case SDL_DROPFILE:
-#ifdef DEBUG
-                    fprintf(stdout, "Dropped file: %s\n", event.drop.file);
-#endif
                 break;
 
                 default:
@@ -1023,6 +975,26 @@ int main(int argc, char * argv[])
             }
         }
 
+///////////////////////////////////////////////////////////////////
+/*
+    // recorded objects
+
+    1. create the video recorder
+    2. select the frame to be displayed, its source, plus the eventual delay
+    3. draw recorded ext
+    4. draw recorded rectagle
+    5. draw recorded chrono
+    6. draw recorded panel
+    7. add the frame to the vidéo
+
+    // not recorded (only displayed on overlay or whatever)
+    8. draw "REC"  when recording
+    9. draw the delay value (only when not recording)
+   10. draw the magnifier rectangle (if defined)
+*/
+///////////////////////////////////////////////////////////////////
+
+            // CREATE THE VIDEO RECORDER, WHEN NEEDED
         static ImVec2 topLeft = ImVec2( 0.0f, 0.0f);
         static ImVec2 bottomRight = ImVec2( 0.0f, 0.0f);
         static ImVec2 * p_topLeft = &topLeft;
@@ -1113,7 +1085,8 @@ int main(int argc, char * argv[])
                     b_Once = true;
                 }
             }
-            // DISPLAY WITH A DELAY
+
+// DISPLAY WITH A DELAY
 
             // the buffer is now full, so let's copy the frames on the screen
             if ((b_display_delayed)&&(!b_phone_waiting_frames))
@@ -1181,9 +1154,13 @@ int main(int argc, char * argv[])
                 displayed_frame = frame.clone();
                 frame.release();
             }
+// END DISPLAY WITH A DELAY
 
 
-// DRAW TEXT
+// DRAW RECORDED TEXT
+
+            // TODO : draw a vector of textObjets
+
             // add freetype magic // video incrustation of text
             if ( (pTextCanvas->pTextObject->b_displayable == true) && (!displayed_frame.empty()))
             {
@@ -1197,13 +1174,18 @@ int main(int argc, char * argv[])
                 if (pTextCanvas->pTextObject->frameCount < 0)
                 {
                     pTextCanvas->pTextObject->b_displayable = false;
-//                    pTextCanvas->clearString();
                     pTextCanvas->stopStringIncrustation();
                 }
+
+                //  DRAG the TEXT !!
+                if ((pTextCanvas->textBoxHovered(displayed_frame, ImVec2(pTextCanvas->image_pos.x, pTextCanvas->image_pos.y)) == true) && (ImGui::IsMouseDragging(0, 0.0f)))
+                    pTextCanvas->move();
             }
+
 // END DRAW TEXT
 
-// DRAW RECTANGLE
+
+// DRAW RECORDED RECTANGLE
             if ((b_record_rectangle) && (!displayed_frame.empty()))
             {
                 // we need to define a minimal area, to avoid displaying " ghost rectangles"
@@ -1214,21 +1196,63 @@ int main(int argc, char * argv[])
                     static int rWidth  = rBase - 28.0f;
                     static int rHeight = rBase * ratio;
                     cv::rectangle(  displayed_frame,
-                                    cv::Point((p_topLeft->x/rWidth)*displayed_frame.cols,(p_topLeft->y/rHeight)*displayed_frame.rows ),
+                                    cv::Point((p_topLeft->x/rWidth)*displayed_frame.cols,(p_topLeft->y/rHeight)*displayed_frame.rows),
                                     cv::Point((p_bottomRight->x/rWidth)*displayed_frame.cols, (p_bottomRight->y/rHeight)*displayed_frame.rows),
                                     cv::Scalar(255, 255, 255, 255),
                                     2,
                                     8);
                 }
             }
-// END DRAW RECTANGLE
+// END DRAW RECORDED RECTANGLE
 
-
+// DRAW RECORDED CHRONO
             if (b_record_chrono && b_chrono)
                 putText(displayed_frame,TIME_DISPLAY+floatToString((unsigned long int)aTimer.getActivityTime()/1000.0f)+" s",cv::Point(60,WINDOW_HEIGHT - 70), 2 /*FONT_HERSHEY_COMPLEX ou 1 */,/*1.5*/1.0,ANNOTATIONS_COLOR_YELLOW, 2);
+// END DRAW RECORDED CHRONO
+
+// DRAW RECORDED PANEL
+
+            // TODO : IMPLEMENT ME !
+            //     _________________
+            //     |  PSG     12   |
+            //     |---------------|
+            //     |  MHBA    11   |
+            //     |---------------|
+            //     |               |
+            //     |  MT1 : 12:45  |
+            //     |_______________|
+            //
+            // Draw : a retangle + ghost window to draw/drop
+            // Select colors
+            //
+            // default horizontal/vertical values : x0 = 5, y0 = 5
+            // hovering + right click = open parameters
+            // PARAMETERS :
+            // move <--> or |
+            // Enter teams names
+            // Select colors
+            // Background
+            // Font and font color for chronometer
+            // Font for teams and score
+            // Color for club (rectangle
+            // HALF TIME
+            // time in progress + pause/play
+            // Add chronometer 
+            // be able to change the time + be able to select the half time
+
+// END DRAW RECORDED PANEL
+
+
+///////////////////  RECORD VIDEO ////////////////////////////////////////////
+
+            static unsigned int recorded_old_time = 0;
+            static unsigned int recorded_current_time = 0;
 
 // CREATE THE NEW VIDEO
             // create a new VideoWriter + a new video name ?
+
+            // 
+
             if ((b_startNewRecording == true) && (strlen(defaultPath) !=  0))
             {
                 oVideoWriter  = cv::VideoWriter((std::string)defaultPath+UNIX_PATH_SEPARATOR+OUTPUT_FILENAME_PREFIX+intToString(inc)+myContainer,
@@ -1244,19 +1268,15 @@ int main(int argc, char * argv[])
                 else
                 {
                     std::cout << "New Recording Started at " <<  outFPS << " images / second" << std::endl;
-
                     b_startNewRecording = false;
                     cout<<"New video file created MyVideo"+intToString(inc)+myContainer<<endl;
                     inc++;
                 }
             }
+
 // VIDEO CREATED (or failed)
 
 // RECORD THE RIGHT FRAME : if we're in recording mode, we write to file here
-
-            static unsigned int recorded_old_time = 0;
-            static unsigned int recorded_current_time = 0;
-
             if ((b_recording_video) && (!b_audio_paused))
             {
                 recorded_current_time = SDL_GetTicks();
@@ -1267,10 +1287,14 @@ int main(int argc, char * argv[])
                     recorded_old_time = recorded_current_time;
                 }
             }
-// END RECORD THE RIGHT FRAME
+// DISPLAYED FRAME RECORDED
+
+///////////////////  END RECORD VIDEO ////////////////////////////////////////////
+
+
+//////////////////  WHAT FOLLOWS WILL NOT BE RECORDED, JUST DRAWN  ///////////////////////////
 
             // DELAY MODIFIED ?
-
             if (delay_ref != delay)
             {
                 //the user modified the delay, so the stack has to be cleaned up
@@ -1300,7 +1324,6 @@ int main(int argc, char * argv[])
                 putText(displayed_frame,RECORD_DISPLAY,cv::Point(40,60),2,2,aColor,2);
             }
 
-
             // TODO : use a timer, and display "delayed  x seconds" only 2 seconds, to avoid noise with the recorded video
             // e.g. :  start record set the delay, stop record reset it, and the message will be displayed 1 or two seconds only
             // the goal is to display this message only : when not recording, nor paused or only the two fisrt seconds when recording a delayed video
@@ -1310,8 +1333,10 @@ int main(int argc, char * argv[])
 
         }   /* if (!b_paused) */
 
+//////////////////  WHAT FOLLOWS WILL NOT BE RECORDED, BUT JUST DRAWN  ///////////////////////////
+
+
         // AT THE END, fill OpenGL buffers
-        static ImVector<ImVec2> points;
 
         if (!displayed_frame.empty())
         {
@@ -1327,8 +1352,6 @@ int main(int argc, char * argv[])
         else
             backgroundTextureId = glConvertMatToTexture(backgroundImage);
 
-        // RENDER //
-
         /// GUI::Draw();
         ImGui_ImplOpenGL3_NewFrame();
         // ImGui_ImplSDL2_NewFrame(engine.window);
@@ -1342,6 +1365,9 @@ int main(int argc, char * argv[])
 
         static bool open = true;
         ImGuiWindowFlags mD_window_flags = 0;
+
+        // The points for the canvas
+        static ImVector<ImVec2> points;
 
         // for testing purpose : will be simplified soon
         static bool no_titlebar = true;
@@ -1417,6 +1443,7 @@ int main(int argc, char * argv[])
                 ImGui::EndMenu();
             }
 
+
             // Gui::addImagesSourceMenuEntry();
             if ((current_tab == DELAY_TAB) && (!b_video_running))
             {
@@ -1486,6 +1513,10 @@ int main(int argc, char * argv[])
             // avoid modifying the delay in another tab
             current_tab = DELAY_TAB;
 
+            // Visible from DELAY_TAB ONLY
+            static int current_delayTab_drawing_task = DRAWING_NOTHING;
+            static int selectedObject = NOT_A_DRAWN_OBJECT; // default
+
             // with that, we can display every frame at the right time
             if ((b_video_running)&&(!b_audio_paused))
             {
@@ -1493,6 +1524,7 @@ int main(int argc, char * argv[])
                 SDL_PushEvent(&aDummyEvent);
             }
 
+            // TODO FIXME UGGLY (and probably PLAIN WRONG)
             float w = 0.82*currentWidth - WEBCAM_PARAMETERS_AREA_WIDTH - 45.0f;//- 50.0f /* be sure it will fit */;
             float w2 = w + WEBCAM_PARAMETERS_AREA_WIDTH + 9.0f;
 #ifdef TEST_SCALE
@@ -1506,17 +1538,22 @@ int main(int argc, char * argv[])
             ImU32 color = ImColor(col);
             static float outline_thickness = 2.5f;
 
+            pTextCanvas->image_size.x = w;
+            pTextCanvas->image_size.y = h;
+
             ImGui::BeginGroup();  // DEBUT1
             {
                 ImGui::Dummy (ImVec2(80.0f, 0.0f)); ImGui::SameLine();
-                // WEBCAM IMAGE
                 //------------------------------------------------
                 ImGui::BeginChild("child1", ImVec2(w + 40.0f, h), true);
-                ImDrawList * draw_list = ImGui::GetWindowDrawList();
-                static bool adding_rect = false;
+// CHILD1 : DRAW THE FRAME displayed_image OR DRAW DEFAULT  BACKGROUND 
 
-                ImVec2 image_pos = ImGui::GetCursorScreenPos();
-                ImVec2 image_size = ImGui::GetContentRegionAvail();
+                ImDrawList * draw_list = ImGui::GetWindowDrawList();
+                pTextCanvas->image_pos = ImGui::GetCursorScreenPos();
+                ImVec2 subview_size = ImGui::GetContentRegionAvail();
+                //ImVec2 subview_size = pTextCanvas->image_size;
+                static bool adding_rect = false;
+                //static bool adding_rect2 = false;
 
 #define CLASSICAL_DRAW_IMAGE
 #ifdef  CLASSICAL_DRAW_IMAGE
@@ -1525,98 +1562,450 @@ int main(int argc, char * argv[])
 #else
                 // Kept because interesting (saves time in runtime, bcause rendering once). Does the same, but there is no white boreder drawn.
                 // Indeed, the second color when using ImGui::Image instead, means a white frame is drawn around the image)
-                ImVec2 pos = ImGui::GetCursorScreenPos();
-                draw_list->AddImage(reinterpret_cast<void * >(backgroundTextureId), pos, pos + ImVec2(w - 28.0f, w*ratio), ImVec2(0.0f,0.0f), ImVec2(1.0f,1.0f),
+                draw_list->AddImage(reinterpret_cast<void * >(backgroundTextureId), pTextCanvas->image_pos, pTextCanvas->image_pos + ImVec2(w - 28.0f, w*ratio), ImVec2(0.0f,0.0f), ImVec2(1.0f,1.0f),
                              IM_COL32(255,255,255,255));
 #endif
                 ImGui::EndChild();
+
+// END CHILD1 : DRAW THE FRAME displayed_image OR DRAW DEFAULT  BACKGROUND 
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
+
+// CHILD11 : NOW DRAW OVER THE FRAME
+
                 //------------------------------------------------
                 ImGui::BeginChild("child1");
 
-                ImVec2 mouse_pos_in_image = ImVec2(ImGui::GetIO().MousePos.x - image_pos.x,  (ImGui::GetIO().MousePos.y - image_pos.y));
+                ImVec2 mouse_pos_in_image = ImVec2(ImGui::GetIO().MousePos.x - pTextCanvas->image_pos.x,  (ImGui::GetIO().MousePos.y - pTextCanvas->image_pos.y));
 
-                bool adding_preview = false;
+                ///ericb SURVEILLANCE (static / non static)
+                static bool adding_preview1 = false;
+                static bool adding_rect2 = false;
+                static bool adding_preview2 = false;
 
-                if (adding_rect)
+                static float fthickness = 2.5;
+
+                static DrawnObject aDrawnObject;
+                p_aDrawnObject = & aDrawnObject;
+
+                static std::vector <DrawnObject> delayTabDrawnObjects;
+                p_delayTabDrawnObjects = &delayTabDrawnObjects;
+
+                // Hack improve me
+
+                // initialize
+                if (current_delayTab_drawing_task == DRAWING_ZOOMED_AREA)
+                    aDrawnObject.anObjectType = NOT_A_DRAWN_OBJECT;
+                else
+                    aDrawnObject.anObjectType = selectedObject;
+
+                aDrawnObject.objBackgroundColor = ImColor(  0, 255, 0, 255);
+                aDrawnObject.objOutlineColor    = ImColor(255,   0, 0, 255);
+                aDrawnObject.thickness = 2.5f;
+
+                float P1P4 = 0.1f;
+                float arrowLength = 8.0;
+                float arrowWidth = 3.0;
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                //                               CATCH THE POINTS TO BE DRAWN                                //
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+
+                // be sure the cursor position exists
+
+                if ( mouse_pos_in_image.x < 0 )
+                    mouse_pos_in_image.x = LEFT_IMAGE_BORDER; // ... because the outline border thickness
+
+                if (( mouse_pos_in_image.y < 0 ))
+                    mouse_pos_in_image.y = TOP_IMAGE_BORDER;
+
+                if ( mouse_pos_in_image.x > (RIGHT_IMAGE_BORDER) )
+                    mouse_pos_in_image.x = RIGHT_IMAGE_BORDER;
+
+                if (( mouse_pos_in_image.y > BOTTOM_IMAGE_BORDER ))
+                    mouse_pos_in_image.y = BOTTOM_IMAGE_BORDER;
+
+                switch(aDrawnObject.anObjectType)
                 {
-                    if ( mouse_pos_in_image.x < 0 )
-                        mouse_pos_in_image.x = LEFT_IMAGE_BORDER; // ... because the outline border thickness
+                    case EMPTY_RECTANGLE:
+                    case EMPTY_ELLIPSE:
+                    case FILLED_RECTANGLE:
+                    case FILLED_ELLIPSE:
+                    case SIMPLE_LINE:
+                    case SIMPLE_ARROW:
 
-                    if (( mouse_pos_in_image.y < 0 ))
-                        mouse_pos_in_image.y = TOP_IMAGE_BORDER;
-
-                    if ( mouse_pos_in_image.x > (RIGHT_IMAGE_BORDER) )
-                        mouse_pos_in_image.x = RIGHT_IMAGE_BORDER;
-
-                    if (( mouse_pos_in_image.y > BOTTOM_IMAGE_BORDER ))
-                        mouse_pos_in_image.y = BOTTOM_IMAGE_BORDER;
-
-                    adding_preview = true;
-
-                    points.push_back(mouse_pos_in_image);
-
-                    if (!ImGui::GetIO().MouseDown[0])
-                        adding_rect = adding_preview = false;
-                }
-
-                if (ImGui::IsItemHovered())
-                {
-                    if ( (((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1) )  && (!points.empty()))) && !ImGui::IsMouseDragging() )
+                    if (adding_rect2)
                     {
-                            adding_rect = adding_preview = false;
+                        adding_preview2 = true;
+                        // catch the second point
+                        aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
+
+                        // preview
+                        if (!aDrawnObject.objectPoints.empty())
+                        {
+                            switch(aDrawnObject.anObjectType)
                             {
-                                points.pop_back();
-                                points.pop_back();
+                                case EMPTY_RECTANGLE:
+                                    ImGui::GetOverlayDrawList()->AddRect(pTextCanvas->image_pos + aDrawnObject.objectPoints[0],
+                                                                            pTextCanvas->image_pos + aDrawnObject.objectPoints[1],
+                                                                            aDrawnObject.objBackgroundColor, 0.0f, ~0 , aDrawnObject.thickness);
+                                break;
+
+                                case EMPTY_ELLIPSE:
+                                    // AddCircle(const ImVec2& centre, float radius, ImU32 col, int num_segments = 12, float thickness = 1.0f);
+                                    P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
+                                    ImGui::GetOverlayDrawList()->AddCircle(ImVec2(pTextCanvas->image_pos.x + aDrawnObject.objectPoints[0].x, pTextCanvas->image_pos.y + aDrawnObject.objectPoints[1].y),
+                                                                           P1P4,
+                                                                           aDrawnObject.objBackgroundColor, 32, aDrawnObject.thickness);
+                                break;
+
+                                case FILLED_RECTANGLE:
+                                    ImGui::GetOverlayDrawList()->AddRectFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], ImColor(0, 0, 255,255));
+                                break;
+
+                                case FILLED_ELLIPSE:
+                                    P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
+                                    ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], P1P4, ImColor(0, 0, 255,255), 32);
+                                break;
+
+                                case SIMPLE_LINE:
+                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                                break;
+
+                                case SIMPLE_ARROW:
+                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                                    //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
+                                    P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
+
+                                    if (P1P4 > 1.5f * arrowLength)
+                                    {
+                                        ImVec2 pointC(  aDrawnObject.objectPoints[1].x - (arrowLength * (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4,
+                                                        aDrawnObject.objectPoints[1].y - (arrowLength * (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/P1P4);
+                                        ImVec2 pointD(  pointC.x + (arrowWidth*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/P1P4,
+                                                        pointC.y - (arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4);
+                                        ImVec2 pointE(  pointC.x - (arrowWidth*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/P1P4,
+                                                        pointC.y + (arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4);
+                                        // FIXME
+                                        ImGui::GetOverlayDrawList()->PathClear();
+                                        ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
+                                        ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(aDrawnObject.objectPoints[1].x + pTextCanvas->image_pos.x, aDrawnObject.objectPoints[1].y + pTextCanvas->image_pos.y));
+                                        ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
+                                        ImGui::GetOverlayDrawList()->PathStroke(ImColor(255,0,255,255), false, fthickness);
+                                        ///draw_list->PathStroke(colors[i], false, thickness);
+                                    }
+                                break;
+
+                                default:
+                                break;
                             }
+                        } // end preview
+
+                        if (!ImGui::GetIO().MouseDown[0])
+                        {
+#ifdef DEBUG
+                            std::cout << "Souris relâchée !!  " << __LINE__ << std::endl;
+#endif
+///!!!///
+                            adding_rect2    = false;
+                            adding_preview2 = false;
+                            delayTabDrawnObjects.push_back(aDrawnObject);
+///!!!///
+                            // prepare next turn
+                            while (!aDrawnObject.objectPoints.empty())
+                            {
+                                aDrawnObject.objectPoints.pop_back();
+                            }
+
+                        }
                     }
 
-                    if ( (!adding_rect && ImGui::IsMouseClicked(0)) )
+                    if (ImGui::IsItemHovered())
                     {
+                        if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
+                        {
+                            // on clique n'importe où, ce qui permet d'effacer les 2 points précédents
+                            adding_rect2 = adding_preview2 = false;
+                        }
+
+                        if ( (!adding_rect2 && ImGui::IsMouseClicked(0)) )
+                        {
+                            // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
+                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
+                            adding_rect2 = true;
+                        }
+                    }
+
+                    //std::cout << "Pas relâché la souris, on enlève le point de la pile : " << __LINE__ << std::endl;
+                    if (adding_preview2)
+                        aDrawnObject.objectPoints.pop_back();
+
+                    break;
+
+                    case RANDOM_LINE :
+                    case RANDOM_ARROW:
+
+                    static bool adding_circle   = false;
+
+                    if ((current_delayTab_drawing_task == FREEHAND_DRAWING))
+                    {
+                        if ((adding_circle)/* && (can_draw)*/)
+                        {
+                            aDrawnObject.anObjectType = selectedObject;
+                            aDrawnObject.objBackgroundColor = ImColor(  0, 255, 0, 255);
+                            aDrawnObject.objOutlineColor    = ImColor(255,   0, 0, 255);
+                            aDrawnObject.thickness = 3.0f;
+
+                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
+
+                            // preview
+                            for (int i = 0 ; i < aDrawnObject.objectPoints.size(); i++)
+                            {
+                                ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[i], outline_thickness, ImColor(0, 0, 255,255), 4);
+                            } // end preview
+
+                            if (!ImGui::GetIO().MouseDown[0])
+                            {
+                                //std::cout << "Souris relâchée !!  " << __LINE__ << std::endl;
+                                adding_circle = false;
+                                delayTabDrawnObjects.push_back(aDrawnObject);
+                                // prepare next turn
+                                while (!aDrawnObject.objectPoints.empty())
+                                {
+                                    aDrawnObject.objectPoints.pop_back();
+                                }
+                            }
+                        }
+
+                        if (ImGui::IsItemHovered())
+                        {
+                            if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
+                            {
+                                // l'utilisateur n'a pas relâché le bouton de la souris, mais il s'est arrêté => on arrête d'ajouter des "points"
+                                adding_circle = false;
+                            }
+
+                            if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
+                                adding_circle = true;
+
+                            if ( (!adding_circle && ImGui::IsMouseClicked(0)) )
+                            {
+                                // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
+                                aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
+                                adding_circle = true;
+                            }
+                        }
+                    }
+                    break;
+
+                    //case TEXT_OBJECT:
+                    case NOT_A_DRAWN_OBJECT:
+
+                    if (adding_rect)
+                    {
+                        adding_preview1 = true;
+                        // catch the second point
                         points.push_back(mouse_pos_in_image);
-                        adding_rect = true;
+
+                        if (!ImGui::GetIO().MouseDown[0])
+                            adding_rect = adding_preview1 = false;
                     }
 
-                    if (b_spot_active && !adding_rect)
+                    if (ImGui::IsItemHovered())
                     {
-                        //C// dessiner un cercle en partant du premier point
-                        draw_list->AddCircle(ImVec2(ImGui::GetIO().MousePos.x - image_pos.x + spot_radius      ,
-                                                    ImGui::GetIO().MousePos.y - image_pos.y + 2.0f*spot_radius),
-                                                    2.0f*spot_radius,
-                                                    ImColor(255, 255, 255,255), 32, 3);
+                        if ( (((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1) )  && (!points.empty()))) && !ImGui::IsMouseDragging() )
+                        {
+                            // on clique n'importe où, ce qui permet d'effacer les 2 points précédents
+                            adding_rect = false;
+                            adding_preview1 = false;
+                            points.pop_back();
+                            points.pop_back();
+                        }
+                        if ( (!adding_rect && ImGui::IsMouseClicked(0)) )
+                        {
+                            // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
+                            points.push_back(mouse_pos_in_image);
+                            adding_rect = true;
+                        }
                     }
+                    // clip lines and objects within the canvas (if we resize it, etc.)
+                    draw_list->PushClipRect(ImVec2(0.0f, 0.0f), pTextCanvas->image_pos + subview_size);
+
+                    for (int i = 0; i < points.Size - 1; i += 2)
+                    {
+                        // be sure the area is enough big to be drawn
+                        if ((abs(points[i].x-points[i+1].x) > 2) && (abs(points[i].y-points[i+1].y)> 2))
+                        {
+                            draw_list->AddRect(ImVec2(pTextCanvas->image_pos.x + points[i].x, pTextCanvas->image_pos.y + points[i].y),
+                                               ImVec2(pTextCanvas->image_pos.x + points[i+1].x, pTextCanvas->image_pos.y + points[i+1].y), color, 0.0f, ~0 ,outline_thickness);
+                            topLeft     = points[i];
+                            bottomRight = points[i+1];
+                        }
+                        else
+                        {
+                            // in this case, draw nothing in the lense
+                            topLeft     = ImVec2(0.0f,0.0f);
+                            bottomRight = ImVec2(ZOOM_WIDTH_MIN, ZOOM_HEIGHT_MIN);
+                        }
+                    }
+                    draw_list->PopClipRect();
+
+                    reorder_points(p_topLeft, p_bottomRight);
+
+                    if (adding_preview1)
+                        points.pop_back();
+
+                    break;
+
+                    case TEXT_OBJECT:
+                    default:
+                    break;
                 }
+
+                ///////////////////////////////////////////////////////////////////////////////////////////////
+                //                                           DRAW ALL
+                ///////////////////////////////////////////////////////////////////////////////////////////////
 
                 // clip lines and objects within the canvas (if we resize it, etc.)
-                draw_list->PushClipRect(ImVec2(0.0f, 0.0f), ImVec2(image_pos.x + image_size.x, image_pos.y+ image_size.y));
+                draw_list->PushClipRect(ImVec2(0.0f, 0.0f), pTextCanvas->image_pos + subview_size);
 
-                for (int i = 0; i < points.Size - 1; i += 2)
+                for (unsigned int i = 0; i < delayTabDrawnObjects.size(); i++)
                 {
-                    // be sure the area is enough big to be drawn
-                    if ((abs(points[i].x-points[i+1].x) > 2) && (abs(points[i].y-points[i+1].y)> 2))
                     {
-                        draw_list->AddRect(ImVec2(image_pos.x + points[i].x, image_pos.y + points[i].y),
-                                        ImVec2(image_pos.x + points[i+1].x, image_pos.y + points[i+1].y), color, 0.0f, ~0 ,outline_thickness);
-                        topLeft     = points[i];
-                        bottomRight = points[i+1];
-                    }
-                    else
-                    {
-                        // in this case, draw nothing in the lense
-//                        topLeft     = ImVec2(4.0f,4.0f);
-                        topLeft     = ImVec2(0.0f,0.0f);
-                        bottomRight = ImVec2(ZOOM_WIDTH_MIN, ZOOM_HEIGHT_MIN);
+                        switch(delayTabDrawnObjects[i].anObjectType)
+                        {
+                            case EMPTY_RECTANGLE:
+
+                            // already stored
+                            draw_list->AddRect( pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0],
+                                                pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1],
+                                                delayTabDrawnObjects[i].objBackgroundColor, 0.0f, ~0 , delayTabDrawnObjects[i].thickness);
+                            break;
+
+                            case EMPTY_ELLIPSE:
+
+                            // AddCircle(const ImVec2& centre, float radius, ImU32 col, int num_segments = 12, float thickness = 1.0f);
+                            P1P4 = sqrtf( ( delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
+                                            draw_list->AddCircle(ImVec2(pTextCanvas->image_pos.x + delayTabDrawnObjects[i].objectPoints[0].x, pTextCanvas->image_pos.y + delayTabDrawnObjects[i].objectPoints[1].y),
+                                            P1P4,
+                                            delayTabDrawnObjects[i].objBackgroundColor, 32, delayTabDrawnObjects[i].thickness);
+                            break;
+
+                            case FILLED_RECTANGLE:
+
+                            draw_list->AddRectFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], ImColor(0, 0, 255,255));
+                            break;
+
+                            case FILLED_ELLIPSE:
+
+                            //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
+                            P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
+                            draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], P1P4, ImColor(0, 0, 255,255), 32);
+                            break;
+
+                            case SIMPLE_LINE:
+
+                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                            break;
+
+                            case SIMPLE_ARROW:
+
+                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], ImColor(255, 255, 255,255), 1.0f);
+                            //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
+                            P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
+
+                            if (P1P4 > 1.5f * arrowLength)
+                            {
+                                ImVec2 pointC(  delayTabDrawnObjects[i].objectPoints[1].x - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4,
+                                                delayTabDrawnObjects[i].objectPoints[1].y - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4);
+                                ImVec2 pointD(  pointC.x + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
+                                                pointC.y - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
+                                ImVec2 pointE(  pointC.x - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
+                                                pointC.y + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
+                                // FIXME
+                                draw_list->PathClear();
+                                draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
+                                draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[1].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[1].y + pTextCanvas->image_pos.y));
+                                draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
+                                draw_list->PathStroke(ImColor(255,0,255,255), false, fthickness);
+                                ///draw_list->PathStroke(colors[i], false, thickness);
+                            }
+                            break;
+
+                            case RANDOM_LINE :
+                            case RANDOM_ARROW:
+
+                            for (unsigned int i = 0 ; i < delayTabDrawnObjects.size(); i++)
+                            {
+                                switch(delayTabDrawnObjects[i].anObjectType)
+                                {
+                                    case RANDOM_LINE:
+                                    case RANDOM_ARROW:
+                                    for (int j = 0 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
+                                    {
+                                        draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[j], outline_thickness, ImColor(128, 0, 255,255), 4);
+                                    }
+                                    break;
+
+                                    /*
+                                    if (draw_arrow)
+                                    {
+                                        P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
+
+                                        if (P1P4 > 1.5f * arrowLength)
+                                        {
+                                            ImVec2 pointC(  delayTabDrawnObjects[i].objectPoints[1].x - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4,
+                                                            delayTabDrawnObjects[i].objectPoints[1].y - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4);
+                                            ImVec2 pointD(  pointC.x + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
+                                                            pointC.y - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
+                                            ImVec2 pointE(  pointC.x - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
+                                                            pointC.y + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
+                                            // FIXME
+                                            draw_list->PathClear();
+                                            draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
+                                            draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[1].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[1].y + pTextCanvas->image_pos.y));
+                                            draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
+                                            draw_list->PathStroke(ImColor(255,0,255,255), false, fthickness);
+                                            ///draw_list->PathStroke(colors[i], false, thickness);
+                                        }
+                                    }
+                                    */
+
+                                    default:
+                                    break;
+                                }
+                            }
+
+                            break;
+
+                            // draw lot of circles = random line 
+                            // Bezier = random arrow
+                            /*
+                                                draw_list->AddBezierCurve(   //P1 == start
+                                                                             ImVec2(canvas_pos.x + points[i].x, canvas_pos.y + points[i].y),
+                                                                             //control_points[i],
+                                                                             //control_points[i+1],
+                                                                             // P2 == CP1
+                                                                             ImVec2(canvas_pos.x + points[i].x + (points[i+1].x - points[i].x)*0.25f, canvas_pos.y + points[i].y + (points[i+1].y - points[i].y)*0.25f),
+                                                                             // P3 == CP2
+                                                                             ImVec2(canvas_pos.x + points[i].x + (points[i+1].x - points[i].x)*0.75f, canvas_pos.y + points[i].y + (points[i+1].y - points[i].y)*0.75f),
+                                                                             // P4 == end
+                                                                             ImVec2(canvas_pos.x + points[i+1].x, canvas_pos.y + points[i+1].y),
+                                                                             // drawing parameters
+                                                                             colors[i], 2.0f, 64);
+*/
+                            break;
+
+                            default:
+                            break;
+                        }
                     }
                 }
-
                 draw_list->PopClipRect();
-                reorder_points(p_topLeft, p_bottomRight);
 
-                if (adding_preview)
-                    points.pop_back();
+// END CANVAS
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                // MAGNIFIER TODO : always available
+// MAGNIFIER
+                // MAGNIFIER todo : always available
 
                 // zoom value
                 static     float aZoom = 1.0f;
@@ -1637,9 +2026,9 @@ int main(int argc, char * argv[])
 
                 if ((b_zoom_available) && (!b_paused))
                 {
-// usefull ?                    ImVec2 aSize(W + 18.0f, H + 100.0f);
+                    current_delayTab_drawing_task = DRAWING_ZOOMED_AREA;
+                    p_aDrawnObject->anObjectType = NOT_A_DRAWN_OBJECT;
                     ImGui::SetNextWindowFocus();
-
                     ImGuiWindowFlags zoomWinFlags = 0;
                     zoomWinFlags |= ImGuiWindowFlags_NoSavedSettings;
 
@@ -1650,7 +2039,6 @@ int main(int argc, char * argv[])
                     {
                         // resizable window
                         ImGui::Image(reinterpret_cast<void * >(backgroundTextureId),
-/// old                                     ImVec2(ImGui::GetWindowWidth() - 18.0f, ImGui::GetWindowHeight() - 70.0f - 5.0f),
                                      ImVec2(ImGui::GetWindowWidth() - 18.0f, ImGui::GetWindowHeight() - 70.0f),
                                      uv0,uv1, ImColor(255,255,255,255), ImColor(255,255,255,255));
 
@@ -1664,13 +2052,17 @@ int main(int argc, char * argv[])
                             // in this case, draw nothing in the lense
                             ImGui::SetWindowSize(ImVec2(ZOOM_WIDTH_MIN, ZOOM_HEIGHT_MIN));
                             b_zoom_available = false;
+                            p_aDrawnObject->anObjectType = NOT_A_DRAWN_OBJECT;
                         }
                     }
                     ImGui::End();
+// END MAGNIFIER
+
                 }
                 ImGui::SameLine();
                 ImGui::Spacing();
 
+// DRAW THE CHRONO 
                 if (b_chrono)
                 {
                     static float activityTime = 0.0f;
@@ -1717,7 +2109,6 @@ int main(int argc, char * argv[])
                         totalTimeMinutes = (unsigned int)totalTime / 60;
                         totalTimeSeconds = (unsigned int)totalTime % 60;
                         totalTimeTenth = (unsigned int)(100 * (totalTime - floor(totalTime)));
-
                         ImGui::SameLine(); ImGui::Text("  "); ImGui::SameLine();
 
                         if (totalTimeMinutes < 1)
@@ -1730,6 +2121,9 @@ int main(int argc, char * argv[])
                 }
                 else
                     ImGui::Dummy(ImVec2(2.0f, 2.0f));
+// END DRAW THE CHRONO 
+
+// DRAW THE PLAYER
 
                 if (b_video_running)
                 {
@@ -1880,14 +2274,12 @@ int main(int argc, char * argv[])
                             std::cout << "position            = " << position << std::endl;
                             std::cout << "get_audio_clock(is) = " << get_audio_clock(is) << std::endl;
 #ifdef MASTER_CLOCK
-////TEST                            incr =  position - 0.2f;
                             incr =  position - get_master_clock(is) - 0.2f;
 #else
-////TEST                            incr =  position - 0.2f;
                             incr =  position - get_audio_clock(is) - 0.2f;
 #endif
                             do_seek(incr, -1);
-                            SDL_Delay(50);
+//                            SDL_Delay(50);
 
                             std::cout << "origin              = " << origin << std::endl;
                             std::cout << "position            = " << position << std::endl;
@@ -1898,17 +2290,17 @@ int main(int argc, char * argv[])
                             b_changing_value = false;
                         }
                     }
-
                     ImGui::PopStyleVar();
 
-//                    if ((is != 0) && (position != origin) && (!b_audio_paused) && ((position - origin) >= (video_duration - 0.1f)))
                     if ((is != nullptr) && (position != origin) && (!b_audio_paused) && ((position - origin) >= (video_duration - 0.1f)))
                     {
                         b_audio_paused = true;
                         SDL_PauseAudioDevice(audio_dev, b_audio_paused);
                     }
 
-                    ImGui::PopItemWidth();
+                    ImGui::PopItemWidth(); // Time position in currently playing video
+// END DRAW THE PLAYER
+
                     ImGui::SameLine();
 
                     // END TIME POSITION
@@ -1920,8 +2312,10 @@ int main(int argc, char * argv[])
                 ImGui::EndChild();
                 ImGui::EndGroup(); // FIN1
             }
+// END CHILD1 : NOW DRAW OVER THE FRAME
 
             ImGui::SameLine(); ImGui::Dummy (ImVec2(40.0f, 0.0f)); ImGui::SameLine();
+
             ImGui::BeginChild("child2", ImVec2(WEBCAM_PARAMETERS_AREA_WIDTH, h), true);
 
             /*  Chronomètre, choix de la webcam etc */
@@ -2446,10 +2840,6 @@ int main(int argc, char * argv[])
                             cap2.set(CV_CAP_PROP_AUTO_EXPOSURE, 0.25); //MINIDART_V4L2_EXPOSURE_MANUAL);// == 1 );
                             cap2.set(CV_CAP_PROP_EXPOSURE, (double)current_manual_exposure / 2047.0f);
                             old_manual_exposure = current_manual_exposure;
-#ifdef DEBUG
-                            fprintf(stdout, "Exposition actuelle : %.2f\n",cap2.get(CV_CAP_PROP_EXPOSURE));
-                            fprintf(stdout, "Exposition (manuelle)  : %f\n",cap2.get(CV_CAP_PROP_AUTO_EXPOSURE));
-#endif
                         }
 
                         if ((b_old_exposure_auto != b_exposure_auto) && (b_exposure_auto))
@@ -2466,6 +2856,8 @@ int main(int argc, char * argv[])
 
 #endif /* EXPOSURE_FEATURE */
 
+/////  anyway, not working well on Windows ...
+/////                      // -36000/+36000 on Linux
                       #define PAN_STEP 3600
                       #define TILT_STEP 3600
                         static int current_absolute_pan = 0;
@@ -2660,13 +3052,19 @@ int main(int argc, char * argv[])
                 } /* current_source == FULL_VIDEO */
 
 
-
-
-
                 if (!b_paused)
                 {
                     ImGui::PushID(OUTLINE_THICKNESS_VALUE);
                     ImGui::Checkbox( ICON_FA_SEARCH ZOOM_ENABLE_CHECKBOX, &b_zoom_available);
+
+                    if (ImGui::IsItemClicked(0))
+                    {
+                        std::cout << "Loupe activée" << std::endl;
+                        std::cout << "(before) p_aDrawnObject->anObjectType : " << p_aDrawnObject->anObjectType << std::endl;
+                        p_aDrawnObject->anObjectType = NOT_A_DRAWN_OBJECT;
+                        std::cout << "(after) p_aDrawnObject->anObjectType : " << p_aDrawnObject->anObjectType << std::endl;
+                    }
+
                     ImGui::PushItemWidth(80.0f);
                     ImGui::SliderFloat(" ", &outline_thickness, 2.0f, 4.0f, "###Épaisseur du trait: ");
                     ImGui::SameLine();
@@ -2737,6 +3135,7 @@ int main(int argc, char * argv[])
                     ImGui::EndPopup();
                 } // BeginPopupModal()
 
+
                 if (ImGui::Button(CHANGE_IMAGES_ORIENTATION_BUTTON))
                     ImGui::OpenPopup(IMAGES_ROTATION);
 
@@ -2744,10 +3143,10 @@ int main(int argc, char * argv[])
                 {
                     static int rotation = 0;
 
-                    ImGui::RadioButton( ZERO_ROTATION        , &rotation, 0);// ImGui::SameLine();
-                    ImGui::RadioButton( CLOCKWISE_90_DEGREES_ROTATION  , &rotation, 1);// ImGui::SameLine();
-                    ImGui::RadioButton( _180_DEGREES_ROTATION          , &rotation, 2);// ImGui::SameLine();
-                    ImGui::RadioButton( TRIGO_90_DEGREES_ROTATION      , &rotation, 3);// ImGui::SameLine();
+                    ImGui::RadioButton( ZERO_ROTATION        , &rotation, 0);
+                    ImGui::RadioButton( CLOCKWISE_90_DEGREES_ROTATION  , &rotation, 1);
+                    ImGui::RadioButton( _180_DEGREES_ROTATION          , &rotation, 2);
+                    ImGui::RadioButton( TRIGO_90_DEGREES_ROTATION      , &rotation, 3);
 
                     switch(rotation)
                     {
@@ -2796,10 +3195,36 @@ int main(int argc, char * argv[])
 
                 if (b_create_canvas)
                 {
+                    // FIXME
                     int iconWidth   = 32;
                     int iconHeight  = 32;
                     int frame_padding = 4;
-                    static int choice = TEXT_OBJECT;
+
+/////////////////////////////////////////////////////////////////////////
+                    static bool alpha_half_preview = false ;
+                    static bool drag_and_drop = true;
+                    static bool options_menu = true;
+                    static float object_thickness = 2.5f;
+                    static float bcol[4] = { 0.0f, 0.0f, 1.0f, 0.5 };
+                    static float ocol[4] = { 0.4f, 0.4f, 0.4f, 0.5 };
+
+                    ImGui::Checkbox(HALF_ALPHA_PREVIEW, &alpha_half_preview); ImGui::SameLine();
+                    ImGui::Checkbox(WITH_DRAG_AND_DROP, &drag_and_drop); ImGui::SameLine();
+                    ImGui::Checkbox(WITH_OPTIONS_MENU, &options_menu);//ImGui::SameLine() ; HelpMarker(RIGHT_CLICK_FOR_INDIVIDUAL_COLOR_WIDGET_OPTIONS);
+
+                    ImGuiColorEditFlags misc_flags = /*(hdr ? ImGuiColorEditFlags_HDR : 0) |*/ (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | ImGuiColorEditFlags_AlphaPreviewHalf | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
+
+                    ImGui::PushItemWidth(150);
+                    ImGui::ColorEdit3(DRAWN_OBJECT_BACKGROUND_COLOR, bcol/*&bcol[0]*/, misc_flags); ImGui::SameLine();
+                    ImGui::ColorEdit3(DRAWN_OBJECT_OUTLINE_COLOR, ocol/*&ocol[0]*/, misc_flags); ImGui::SameLine();
+                    ImGui::SliderFloat(DRAWN_OBJECT_LINE_THICKNESS, &object_thickness, 0.5, 20, "%.1f\n" );
+                    ImGui::PopItemWidth();
+
+                    p_aDrawnObject->objBackgroundColor =  IM_COL32((int)bcol[0]*255, (int)bcol[1]*255, (int)bcol[2]*255, (int)bcol[3]*255);
+                    p_aDrawnObject->objOutlineColor    = IM_COL32(ocol[0], ocol[1], ocol[2], ocol[3]);
+
+                    p_aDrawnObject->thickness = object_thickness;
+/////////////////////////////////////////////////////////////////////////
 
                     createCanvasObjectsImagesTexIds();
 
@@ -2808,57 +3233,101 @@ int main(int argc, char * argv[])
                         ImGui::PushID(i);
                         ImGui::ImageButton( reinterpret_cast<void * >(canvasObjectImageTexId[i]), ImVec2(iconWidth, iconHeight),
                                                 ImVec2(0,0), ImVec2(1,1), frame_padding, ImColor(0,0,0,255));
-
                         if (ImGui::IsItemClicked(0))
-                        {
-                            // std::cout << "choice vaut : " << choice << std::endl;
-                            choice = i;
-                        }
-                        ImGui::PopID();
+                            selectedObject = i;
 
+                        ImGui::PopID();
                         ImGui::SameLine();
                     }
+
+                    ImGui::SameLine();
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    if (p_delayTabDrawnObjects->size() > 0)
+                    {
+                        if (ImGui::Button(DELETE_ALL_BUTTON))
+                            ImGui::OpenPopup("Tout effacer ?");
+
+                        if (ImGui::BeginPopupModal("Tout effacer ?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+                        {
+                            ImGui::Text(ALL_ANNOTATIONS_WILL_BE_CANCELED_Q);
+
+                            if (ImGui::Button(CONFIRM_BUTTON, ImVec2(120,0)))
+                            {
+                                while (!(p_delayTabDrawnObjects->empty()))
+                                {
+                                    p_delayTabDrawnObjects->pop_back();
+                                }
+                                ImGui::CloseCurrentPopup();
+                            }
+                            ImGui::SameLine();
+
+                            if (ImGui::Button(CANCEL_BUTTON, ImVec2(120,0)))
+                            {
+                                ImGui::CloseCurrentPopup();
+                            }
+                            ImGui::EndPopup();
+                        }
+
+                        ImGui::SameLine();
+
+                        if (ImGui::Button(UNDO_BUTTON)) // || cancel_last_action)
+                        {
+                            p_delayTabDrawnObjects->pop_back();
+                        }
+                    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// FIXME : call the canvas() from there !
+
                     ImGui::NewLine();
 
-                    switch (choice)
+                    switch (selectedObject)
                     {
                         case TEXT_OBJECT:
                             pTextCanvas->pTextObject->b_displayable = text_in_video_helper(pTextCanvas);
+                            current_delayTab_drawing_task = DRAWING_TEXT; 
                         break;
 
                         case FILLED_RECTANGLE:
-                          ImGui::NewLine();
-                          ImGui::Text(FILLED_RECTANGLE_SOON_INTEGRATED);
+                            ImGui::NewLine();
+                            //addFilledObjectParameters(); //  type = FILLED_RECTANGLE, filled_color, outline color
+                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
                         break;
 
                         case EMPTY_RECTANGLE:
-                          ImGui::NewLine();
-                          ImGui::Text(EMPTY_RECTANGLE_SOON_INTEGRATED);
+                            ImGui::NewLine();
+                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
                         break;
 
                         case FILLED_ELLIPSE:
-                          ImGui::NewLine();
-                          ImGui::Text(FILLED_ELLIPSE_SOON_INTEGRATED);
+                            ImGui::NewLine();
+                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
                         break;
 
                         case EMPTY_ELLIPSE:
-                          ImGui::NewLine();
-                          ImGui::Text(EMPTY_ELLIPSE_SOON_INTEGRATED);
+                            ImGui::NewLine();
+                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
                         break;
 
                         case RANDOM_LINE:
-                          ImGui::NewLine();
-                          ImGui::Text(RANDOM_LINE_SOON_INTEGRATED);
+                            ImGui::NewLine();
+                            current_delayTab_drawing_task = FREEHAND_DRAWING; 
+                        break;
+
+                        case RANDOM_ARROW:
+                            ImGui::NewLine();
+                            ImGui::Text(RANDOM_LINE_SOON_INTEGRATED);
+                            current_delayTab_drawing_task = FREEHAND_DRAWING; 
                         break;
 
                         case SIMPLE_ARROW:
-                          ImGui::NewLine();
-                          ImGui::Text(SIMPLE_ARROW_SOON_INTEGRATED);
+                            ImGui::NewLine();
+                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
                         break;
 
                         case SIMPLE_LINE:
                           ImGui::NewLine();
-                          ImGui::Text(SIMPLE_LINE_SOON_INTEGRATED);
+                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
                         break;
 
                         default:
@@ -2871,12 +3340,15 @@ int main(int argc, char * argv[])
             ImGui::EndChild();
             ImGui::EndTabItem(); // END DELAY_TAB
         }
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 
         if (ImGui::BeginTabItem(ICON_FA_COGS " " ICON_FA_WPFORMS ANALYSIS_WORKSHOP))
         {
             current_tab = ANALYSIS_TAB;
             static float myW = 960.0f;
             static float myH = 540.0f;
+//            ImGui::Dummy(ImVec2(0.0f,6.0f));
 
             ImGui::BeginGroup();
             {
@@ -3305,6 +3777,7 @@ int main(int argc, char * argv[])
             current_tab = GK_STATS_TAB;
             b_spot_active = false;
 
+
             ImGui::Text(STATISTICS_AND_GK_FOLLOW_UP);
             static int match_officiel = 0;
             static int nombre_arrets_GB = 0;
@@ -3326,7 +3799,7 @@ int main(int argc, char * argv[])
             /*       Nom du GB        */
             ImGui::SameLine(); ImGui::Text("         "); ImGui::SameLine();
             static char name[32] = "Julia";
-            char buf[64]; sprintf(buf, "GB suivi(e) : %s###Toto", name); // ### operator override ID ignoring the preceeding label
+            char buf[64]; sprintf(buf, "GB suivi(e) : %s###Toto", name); // ### operator override ID ignoring the previous label
 
             ImGui::PushID("name");
             ImGui::Button(buf);
@@ -3472,10 +3945,6 @@ int main(int argc, char * argv[])
                 ImGui::BeginChild("playground", ImVec2(620,603), true);
                 ImDrawList * draw_list = ImGui::GetWindowDrawList();
 
-                // LATER
-                //static float pourcentage_tirs_de_loin = 0.0f;
-                //static float pourcentage_tirs_a_laile = 0.0f;
-                //static float pourcentage_tirs_a_6m = 0.0f;
 
                 if (ImGui::Button(DELETE_ALL_BUTTON))
                     ImGui::OpenPopup("Tout effacer ?");
@@ -3525,17 +3994,7 @@ int main(int argc, char * argv[])
                         colors.pop_back();
                         points.pop_back();
                         points.pop_back();
-                        //control_points.pop_back();
-                        //control_points.pop_back();
-#ifdef DEBUG
-                        if (!unTir.empty())
-                        {
-                            std::cout << " unTir.Size " << unTir.Size << std::endl;
-                            std::cout << " unPenalty.Size " << unPenalty.Size << std::endl;
-                            std::cout << " unTir.Size[unTir.Size-1] =  " << unTir[unTir.Size-1] << std::endl;
-                            std::cout << " unTir.Penalty[unPenalty.Size-1] =  " << unPenalty[unPenalty.Size-1] << std::endl;
-                        }
-#endif
+
                         if (!cancel_last_action)
                         {
                             shooters.pop_back();
@@ -3600,16 +4059,6 @@ int main(int argc, char * argv[])
                                     pourcentage_arrets_7m = 0.0f;
                                 }
                             }
-#ifdef DEBUG
-                            std::cout << " nombre_de_tirs : " << nombre_de_tirs << std::endl;
-                            std::cout << " unTir[unTir.Size-1] : " << unTir[unTir.Size-1] << std::endl;
-                            std::cout << " unPenalty[unTir.Size-1] : " << unPenalty[unTir.Size-1] << std::endl;
-                            std::cout << " nombre_de_buts_pris : " << nombre_de_buts_pris << std::endl;
-                            std::cout << " nombre_arrets_GB : " << nombre_arrets_GB << std::endl;
-                            std::cout << " nombre_de_poteaux : " << nombre_de_poteaux << std::endl;
-                            std::cout << " nombre_de_penalties : " << nombre_de_penalties << std::endl;
-                            std::cout << " nombre_de_tirs_hors_cadre : " << nombre_de_tirs_hors_cadre << std::endl;
-#endif
                         }
                         nouveau_tir = false;
                         enable_7m = false;
@@ -3871,7 +4320,6 @@ int main(int argc, char * argv[])
                     shooters.push_back(numero);
                     shooters.push_back("");
 
-
 #ifdef DEBUG
                     for (int k = 0 ; k < shooters.Size ; k++)
                     {
@@ -3920,6 +4368,8 @@ int main(int argc, char * argv[])
 
                             if ((show_shooters) && (i < shooters.Size))
                                 draw_list->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(canvas_pos.x+points[i].x - 2.0f ,canvas_pos.y+points[i].y+5.0f), ImColor(0,0,0,255), shooters[i], NULL, 0.0f, &clip_rect);
+
+//TEST                          draw_list->AddText(ImGui::GetFont(), ImGui::GetFontSize(), ImVec2(canvas_pos.x+points[i].x - 2.0f ,canvas_pos.y+points[i].y+5.0f), ImColor(0,0,0,255), &shooters[i], NULL, 0.0f, &clip_rect);
                         }
                     }
                     //control_points.push_back(ImVec2(canvas_pos.x + points[i].x + (points[i+1].x - points[i].x)*0.25f, canvas_pos.y + points[i].y + (points[i+1].y - points[i].y)*0.25f));
@@ -4064,6 +4514,8 @@ int main(int argc, char * argv[])
                 }
                 ImGui::EndChild();
 
+//                ImGui::NewLine();
+
                 ImGui::BeginChild(EFFICIENCY_AREA, ImVec2(350.0f,300.0f ), true);
                 {
                     ImGui::Text(GK_EFFICIENCY_AREA);
@@ -4083,6 +4535,8 @@ int main(int argc, char * argv[])
                 }
                 ImGui::EndChild();
 
+//                ImGui::NewLine();
+
                 ImGui::BeginChild(GOAL_FIGURES, ImVec2(350.0f,325.0f ), true);
                 {
                     ImGui::Text(GOALS_FIGURES);
@@ -4095,13 +4549,9 @@ int main(int argc, char * argv[])
             ImGui::NewLine();
             ImGui::Text(CHARACTERISTICS_OF_THE_SHOOTS_TEXT);
             // ---------------------------------//
-////!!
             ImGui::EndTabItem();
         }
 
-        // Old API
-        // ImGui::PushID(ICON_FA_WRENCH "  Préférences");
-        // if (ImGui::AddTab(ICON_FA_WRENCH "  Préférences"))
 
         if (ImGui::BeginTabItem(ICON_FA_WRENCH PREFERENCES_TAB_ITEM))
         {
@@ -4142,6 +4592,7 @@ int main(int argc, char * argv[])
                 default:
                     break;
             }
+
             ImGui::EndTabItem();
         }
 
@@ -4156,7 +4607,7 @@ int main(int argc, char * argv[])
             ImGui::BeginGroup();
             {
                 backgroundTextureId2 = glConvertMatToTexture(backgroundImage);
-                ImGui::Image(reinterpret_cast<void * >(backgroundTextureId2), ImVec2(256, 256), ImVec2(0,0), ImVec2(1,1),
+                ImGui::Image(reinterpret_cast<void * >(backgroundTextureId2), ImVec2(512, 288), ImVec2(0,0), ImVec2(1,1),
                              ImColor(255,255,255,255), ImColor(255,255,255,255));
 
                 ImGui::SameLine();
@@ -4196,6 +4647,7 @@ int main(int argc, char * argv[])
                 ImGui::PopStyleVar(2);
             }
             ImGui::EndGroup();
+////!!
             ImGui::EndTabItem();
         }
 
@@ -4240,10 +4692,13 @@ int main(int argc, char * argv[])
 
         }
 
+////!! FIXME TEST
 }
         ImGui::End();
 
         // end GUI::Draw()
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Gui::render()
         // add new shaders there ?
@@ -4356,29 +4811,10 @@ static void ShowMenuFile()
     if (ImGui::MenuItem("New")) {}
     if (ImGui::MenuItem("Open", "Ctrl+O"))
     {
-/*
-        crash. Investigate ...
-        an_Event.type = SDL_KEYDOWN;
-        an_Event.key.keysym.sym = KMOD_CTRL;
-        SDL_PushEvent(&an_Event);
-        an_Event2.type = SDL_KEYDOWN;
-        an_Event2.key.keysym.sym = SDLK_o;
-        SDL_PushEvent(&an_Event2);
-*/
     }
 
     if (ImGui::MenuItem("Fullscreen", "ALT+F"))
     {
-/*
-        // FIXME : broken
-        an_Event.type = SDL_KEYDOWN;
-        an_Event.key.keysym.sym = KMOD_ALT;
-        SDL_PushEvent(&an_Event);
-        an_Event2.type = SDL_KEYDOWN;
-        an_Event2.key.keysym.sym = SDLK_f;
-        SDL_PushEvent(&an_Event2);
-        std::cout << "Après pushEvent2" << std::endl;
-*/
     }
 
     if (ImGui::MenuItem("Checked", NULL, true)) {}
