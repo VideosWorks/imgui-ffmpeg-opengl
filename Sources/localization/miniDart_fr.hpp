@@ -656,3 +656,20 @@
 
 #define PA_ALL_ACTIONS_WILL_BE_CANCELED_STRING          "Tous ce qui a été saisi va être effacé. L'effacement est définitif"
 
+#define DRAWN_OBJECT_BACKGROUND_COLOR                   "Couleur du fond"
+
+#define DRAWN_OBJECT_OUTLINE_COLOR                 "Couleur du contour"
+
+#define DRAWN_OBJECT_LINE_THICKNESS                "Épaisseur du trait"
+
+#define RIGHT_CLICK_FOR_INDIVIDUAL_COLOR_WIDGET_OPTIONS  "Clic droit sur le sélecteur de couleurs pour voir les options"
+
+#define HALF_ALPHA_PREVIEW  "Avec prévisualisation du canal alpha"
+
+#define WITH_DRAG_AND_DROP  "Avec glisser-déposer"
+
+#define WITH_OPTIONS_MENU  "Avec menu d'options"
+
+#define ALL_ANNOTATIONS_WILL_BE_CANCELED_Q  "Tout ce qui a été dessiné va être effacé."
+
+#define CONFIRM_BUTTON                      "Confirmer"

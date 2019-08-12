@@ -655,3 +655,20 @@
 
 #define PA_ALL_ACTIONS_WILL_BE_CANCELED_STRING          "Everything will be definitely deleted. "
 
+#define DRAWN_OBJECT_BACKGROUND_COLOR                   "Background color"
+
+#define DRAWN_OBJECT_OUTLINE_COLOR                 "Outline color"
+
+#define DRAWN_OBJECT_LINE_THICKNESS                 "Thickness"
+
+#define RIGHT_CLICK_FOR_INDIVIDUAL_COLOR_WIDGET_OPTIONS  "Right click on the individual color widget to show options"
+
+#define HALF_ALPHA_PREVIEW  "With half alpha preview"
+
+#define WITH_DRAG_AND8DROP  "With drag and drop"
+
+#define WITH_OPTIONS_MENU  "With Options menu"
+
+#define ALL_ANNOTATIONS_WILL_BE_CANCELED_Q  "All drawn objects will be deleted."
+
+#define CONFIRM_BUTTON                              "Confirm"
