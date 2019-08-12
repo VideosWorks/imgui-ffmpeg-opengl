@@ -1,17 +1,23 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 August 12th
 
-2019 August 10th
+Dear ImGui upgrade : now using docking branch sync'ed with 1.72b version.
+Currently found no issue (build is ok, no unexpected crash yet). Follow up in progress
+Waiting for feedback.
+
+
+2019 August 11th
 
 State of the canvas :
-NOT RECORDABLE : can draw / delete : filled or empty circle, filled or empty rectangle, line, arrow
-RECORDABLE : can write text, and move the text
+NOT RECORDABLE (changes not included in the video yet) : can draw / delete : filled or empty circle, filled or empty rectangle, line, arrow
+RECORDABLE (means can be inside the video) : can write text, and move the text
 
-TODO : rewrite the loop, because the ordre the objects are drawn is currently wrong 
+TODO : rewrite the loop, because the order the objects are drawn is currently wrong 
 
-FIXED : can draw random line 
-FIXED : add undo / clear all button-
+FIXED : can draw random line. Seems to work very well for a first try.
+FIXED : add undo / clear all buttons
 FIXED : added new strings (en_US + fr_FR)
 FIXED : all preview are drawn now. FIXME (renaming only) : ImGui::GetOverlayDrawList is deprecated (ImGui::GetForegroundDrawList() is the new name)
 FIXED : add_preview2 NOT accessible ? (why oh why ?)
@@ -21,6 +27,10 @@ FIXED:  added a vector of annotations. Tested until 150 annotations => no more c
 FIXED : empty_rectangle, empty circle, simple_arrow, simple_line, filled_rectangle, filled_circle : WORK as expected.
 FIXED : random crash when using empty rectangle. Was caused by typo in  AddRec()
 FIXED : new fields in DrawnObject : active, hovered
+
+
+2019 August 10th
+
 
 TODO (CANVAS) :
 Work in progress : create CanvasManager
