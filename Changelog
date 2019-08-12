@@ -1,6 +1,41 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+
+2019 August 10th
+
+State of the canvas :
+NOT RECORDABLE : can draw / delete : filled or empty circle, filled or empty rectangle, line, arrow
+RECORDABLE : can write text, and move the text
+
+TODO : rewrite the loop, because the ordre the objects are drawn is currently wrong 
+
+FIXED : can draw random line 
+FIXED : add undo / clear all button-
+FIXED : added new strings (en_US + fr_FR)
+FIXED : all preview are drawn now. FIXME (renaming only) : ImGui::GetOverlayDrawList is deprecated (ImGui::GetForegroundDrawList() is the new name)
+FIXED : add_preview2 NOT accessible ? (why oh why ?)
+FIXED : Canvas : all primitives work well. Can draw a vector of them
+FIXED : horizontal or vertical lines cannot be drawn  (no longer calculate minimal area fixed everything)
+FIXED:  added a vector of annotations. Tested until 150 annotations => no more crash, no big issue (just circle too big, but so what ...)
+FIXED : empty_rectangle, empty circle, simple_arrow, simple_line, filled_rectangle, filled_circle : WORK as expected.
+FIXED : random crash when using empty rectangle. Was caused by typo in  AddRec()
+FIXED : new fields in DrawnObject : active, hovered
+
+TODO (CANVAS) :
+Work in progress : create CanvasManager
+Interface :
+ - init(), create(what, whichTab), update(), activate object(), moveObject() fillDrawList(what, where),
+ - add(), remove, record_object(), display(), hide(), flush(), clean(), quit()
+
+FIXME : Separate preview from definitily drawn. The feature works very well, but that's not easy to remove zillions of little points one by one ...
+FIXME : crash when mixing freehand objects and primitives. Very probably caused by one pop_back() in excess. 
+FIXME : add colors + thickness management for every case
+FIXME : improve the drawing : first primitives, then draw zoom area (not always, only when magnifier is selected)
+FIXME : create a CanvasManager class 
+FIXME : scale does not work => fullscreen resizing does not work
+
+
 2019 August 9th
 
 Added (encapsulation purpose)
@@ -18,7 +53,7 @@ Works somewhat :
 It needs more work, but the principle is ok and other nice things can be drawn this way
 
 Fixed some refresh issues (e.g.the black box not replaced)
-Fixed incrustation duration (now simplylinked to ImGui::GetIO().Framerate)
+Fixed incrustation duration (now simply linked to ImGui::GetIO().Framerate)
 Next step : freehand drawing (e.g. circles of a given radius, giving the thickness)
 
 2019 August 5th
