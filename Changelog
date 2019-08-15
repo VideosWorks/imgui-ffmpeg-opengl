@@ -1,7 +1,25 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 August 15th
 
+State of the canvas : everything can be drawn, and mixed, including in a video.
+Still missing : record the annotations (only text now)
+
+Missing : isHovered, move.
+
+
+FIXED : removed the extra points when mixing random lines and random arows (UFF !)
+FIXED : draw a random line breaks other drawn objects, adding extra circles.
+Not completely fixed, but avoid drawing the two first points of delayTabDrawnObjects[1] array seems to be an acceptable workaround.
+TODO later : rewrite the algorithm, probably wrong somewhere, or maybe some subtil visibility issue  (or static/not static) strikes again.
+
+Fixed : version number now appears in the window title
+
+2019 August 13th
+
+FIXED : Random line size not modifiable
+FIXED : Random line color not modifiable
 
 2019 August 12th
 
