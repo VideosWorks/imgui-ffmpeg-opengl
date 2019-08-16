@@ -9,7 +9,7 @@
 #ifndef miniDart_LOCALIZATION
 #define miniDart_LOCALIZATION
 
-#define APPLICATION_VERSION_STRING "miniDart 0.9.5 2019/07/09 Little Poisson Rouge"
+#define APPLICATION_VERSION_STRING "miniDart 0.9.6 2019/08/16 Ablette Agile"
 
 #define UNIX_PATH_SEPARATOR                  "/"
 #define WINDOWS_PATH_SEPARATOR               "\\"
@@ -170,9 +170,9 @@
 
 #define PRESENTATION_STRING1               "Logiciel d'analyse vidéo pour coachs de sports collectifs \n(handball ou autre sport collectif), écrit en C++"
 
-#define LINUX_PRESENTATION_STRING2         "Version : 0.9.5  (Linux Intel x86_64 )"
+#define LINUX_PRESENTATION_STRING2         "Version : 0.9.6  (Linux Intel x86_64 )"
 
-#define WINDOWS_PRESENTATION_STRING2       "Version : 0.9.5  (Windows 7+ x86_64 )"
+#define WINDOWS_PRESENTATION_STRING2       "Version : 0.9.6  (Windows 7+ x86_64 )"
 
 #define LINK_PRESENTATION_STRING3          "Téléchargement : https://framagit.org/ericb/miniDart"
 
@@ -657,6 +657,8 @@
 #define PA_ALL_ACTIONS_WILL_BE_CANCELED_STRING          "Tous ce qui a été saisi va être effacé. L'effacement est définitif"
 
 #define DRAWN_OBJECT_BACKGROUND_COLOR                   "Couleur du fond"
+
+#define DRAWN_OBJECT_COLOR                   "Couleur"
 
 #define DRAWN_OBJECT_OUTLINE_COLOR                 "Couleur du contour"
 
