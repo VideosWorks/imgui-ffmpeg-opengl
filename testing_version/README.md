@@ -1,4 +1,4 @@
-La version actuellement en test est la **0.9.5** (la 0.9.4 va être supprimée prochainement)
+La version actuellement en test est la **0.9.6** (la 0.9.5 va être supprimée prochainement)
 
 Pour les derniers changements, voir le contenu de releases notes (en anglais)
 
@@ -9,7 +9,7 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 
 **INSTALLATION SOUS WINDOWS 7** ou plus récent :
 * **INSTALLER le pilote OpenGL de votre machine** : soit il est fourni avec le CD/DVD fourni par le constructeur, soit il faut le télécharger sur son site (sans ce pilote, rien ne fonctionnera);
-* **télécharger l'archive miniDart_0.9.5_test.exe**
+* **télécharger l'archive miniDart_0.9.6_test.exe**
 * placer cette archive dans un endroit facile d'accès, par exemple sur le bureau ;
 * double-cliquer dessus pour lancer l'installeur ;
 * suivre les instructions.
@@ -63,6 +63,10 @@ Eric Bachard
 ************************************************************************************************************
 
                    Somme de contrôle (sha 256)                                   Version
+
+************************************************************************************************************
+
+     1fbe4fb8572d34dfa473f64a23b0ac064fd8a7c022d144bcaf1de6ab1c00b702  miniDart_0.9.6_test.exe
 
 ************************************************************************************************************
 
