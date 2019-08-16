@@ -1578,10 +1578,11 @@ int main(int argc, char * argv[])
 
                 ImVec2 mouse_pos_in_image = ImVec2(ImGui::GetIO().MousePos.x - pTextCanvas->image_pos.x,  (ImGui::GetIO().MousePos.y - pTextCanvas->image_pos.y));
 
-                ///ericb SURVEILLANCE (static / non static)
                 static bool adding_preview1 = false;
                 static bool adding_rect2 = false;
                 static bool adding_preview2 = false;
+
+                static ImVector <ImVec2> arrow_points;
 
                 static DrawnObject aDrawnObject;
                 p_aDrawnObject = & aDrawnObject;
@@ -1589,25 +1590,21 @@ int main(int argc, char * argv[])
                 static std::vector <DrawnObject> delayTabDrawnObjects;
                 p_delayTabDrawnObjects = &delayTabDrawnObjects;
 
-                // Hack improve me
-
-                // initialize
                 if (current_delayTab_drawing_task == DRAWING_ZOOMED_AREA)
                     aDrawnObject.anObjectType = NOT_A_DRAWN_OBJECT;
                 else
                     aDrawnObject.anObjectType = selectedObject;
 
                 float P1P4 = 0.1f;
-                float arrowLength = 4 * aDrawnObject.thickness;
-                float arrowWidth = 2*aDrawnObject.thickness;
+                float arrowLength = 5 * aDrawnObject.thickness;
+                float arrowWidth = 3 * aDrawnObject.thickness;
+
                 ///////////////////////////////////////////////////////////////////////////////////////////////
                 //                               CATCH THE POINTS TO BE DRAWN                                //
                 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-                // be sure the cursor position exists
-
                 if ( mouse_pos_in_image.x < 0 )
-                    mouse_pos_in_image.x = LEFT_IMAGE_BORDER; // ... because the outline border thickness
+                    mouse_pos_in_image.x = LEFT_IMAGE_BORDER;
 
                 if (( mouse_pos_in_image.y < 0 ))
                     mouse_pos_in_image.y = TOP_IMAGE_BORDER;
@@ -1630,10 +1627,8 @@ int main(int argc, char * argv[])
                     if (adding_rect2)
                     {
                         adding_preview2 = true;
-                        // catch the second point
                         aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
 
-                        // preview
                         if (!aDrawnObject.objectPoints.empty())
                         {
                             switch(aDrawnObject.anObjectType)
@@ -1645,7 +1640,6 @@ int main(int argc, char * argv[])
                                 break;
 
                                 case EMPTY_ELLIPSE:
-                                    // AddCircle(const ImVec2& centre, float radius, ImU32 col, int num_segments = 12, float thickness = 1.0f);
                                     P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
                                     ImGui::GetOverlayDrawList()->AddCircle(ImVec2(pTextCanvas->image_pos.x + aDrawnObject.objectPoints[0].x, pTextCanvas->image_pos.y + aDrawnObject.objectPoints[1].y),
                                                                            P1P4,
@@ -1666,8 +1660,7 @@ int main(int argc, char * argv[])
                                 break;
 
                                 case SIMPLE_ARROW:
-                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor, 1.0f);
-                                    //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
+                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor, aDrawnObject.thickness);
                                     P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
 
                                     if (P1P4 > 1.5f * arrowLength)
@@ -1678,37 +1671,107 @@ int main(int argc, char * argv[])
                                                         pointC.y - (arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4);
                                         ImVec2 pointE(  pointC.x - (arrowWidth*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/P1P4,
                                                         pointC.y + (arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4);
-                                        // FIXME
+
                                         ImGui::GetOverlayDrawList()->PathClear();
                                         ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
                                         ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(aDrawnObject.objectPoints[1].x + pTextCanvas->image_pos.x, aDrawnObject.objectPoints[1].y + pTextCanvas->image_pos.y));
                                         ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                        ImGui::GetOverlayDrawList()->PathStroke(aDrawnObject.objOutlineColor, false, aDrawnObject.thickness);
-                                        ///draw_list->PathStroke(colors[i], false, thickness);
+                                        ImGui::GetOverlayDrawList()->PathStroke(aDrawnObject.objBackgroundColor, false, aDrawnObject.thickness);
                                     }
                                 break;
 
                                 default:
                                 break;
                             }
-                        } // end preview
+                        }
 
                         if (!ImGui::GetIO().MouseDown[0])
                         {
-#ifdef DEBUG
-                            std::cout << "Souris relâchée !!  " << __LINE__ << std::endl;
-#endif
-///!!!///
                             adding_rect2    = false;
                             adding_preview2 = false;
                             delayTabDrawnObjects.push_back(aDrawnObject);
-///!!!///
-                            // prepare next turn
-                            while (!aDrawnObject.objectPoints.empty())
-                            {
-                                aDrawnObject.objectPoints.pop_back();
-                            }
+                            aDrawnObject.objectPoints.clear();
+                        }
+                    }
 
+                    if (ImGui::IsItemHovered())
+                    {
+                        if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
+                            adding_rect2 = adding_preview2 = false;
+
+                        if ( (!adding_rect2 && ImGui::IsMouseClicked(0)) )
+                        {
+                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
+                            adding_rect2 = true;
+                        }
+                    }
+
+                    if ((adding_preview2) && !(aDrawnObject.anObjectType == RANDOM_LINE))
+                        aDrawnObject.objectPoints.pop_back();
+
+                    break;
+
+                    case RANDOM_LINE:
+
+                    static bool adding_circle   = false;
+
+                    if (adding_circle)
+                    {
+                        aDrawnObject.anObjectType = selectedObject;
+                        aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
+
+                        for (int i = 0 ; i < aDrawnObject.objectPoints.size(); i++)
+                        {
+                            ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[i], aDrawnObject.thickness, aDrawnObject.objBackgroundColor, 8);
+                        }
+
+                        if (!ImGui::GetIO().MouseDown[0])
+                        {
+                            adding_circle = false;
+                            delayTabDrawnObjects.push_back(aDrawnObject);
+                            aDrawnObject.objectPoints.clear();
+                        }
+                    }
+
+                    if (ImGui::IsItemHovered())
+                    {
+                        if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging())
+                            adding_circle = false;
+
+                        if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
+                            adding_circle = true;
+
+                        if ( (!adding_circle && ImGui::IsMouseClicked(0)) )
+                        {
+                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
+                            adding_circle = true;
+                        }
+                    }
+                    break;
+
+                    case RANDOM_ARROW:
+                    static bool adding_circle2   = false;
+
+                    if (adding_circle2)
+                    {
+                        aDrawnObject.anObjectType = selectedObject;
+                        arrow_points.push_back(mouse_pos_in_image);
+
+                        for (int i = 0 ; i < arrow_points.size(); i++)
+                        {
+                            ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + arrow_points[i], aDrawnObject.thickness, aDrawnObject.objBackgroundColor, 8);
+                        }
+
+                        if (!ImGui::GetIO().MouseDown[0])
+                        {
+                            adding_circle2 = false;
+                            aDrawnObject.objectPoints.push_back(arrow_points[0]);
+                            aDrawnObject.objectPoints.push_back(arrow_points  [(int)(arrow_points.size()/3.0f)]);
+                            aDrawnObject.objectPoints.push_back(arrow_points[(int)((2*arrow_points.size())/3.0f)]);
+                            aDrawnObject.objectPoints.push_back(arrow_points[arrow_points.size()-1]);
+                            delayTabDrawnObjects.push_back(aDrawnObject);
+                            arrow_points.clear();
+                            aDrawnObject.objectPoints.clear();
                         }
                     }
 
@@ -1716,83 +1779,25 @@ int main(int argc, char * argv[])
                     {
                         if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
                         {
-                            // on clique n'importe où, ce qui permet d'effacer les 2 points précédents
-                            adding_rect2 = adding_preview2 = false;
+                            adding_circle2 = false;
                         }
 
-                        if ( (!adding_rect2 && ImGui::IsMouseClicked(0)) )
+                        if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
+                            adding_circle2 = true;
+
+                        if ( (!adding_circle2 && ImGui::IsMouseClicked(0)) )
                         {
-                            // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
-                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
-                            adding_rect2 = true;
-                        }
-                    }
-
-                    //std::cout << "Pas relâché la souris, on enlève le point de la pile : " << __LINE__ << std::endl;
-                    if (adding_preview2)
-                        aDrawnObject.objectPoints.pop_back();
-
-                    break;
-
-                    case RANDOM_LINE :
-                    case RANDOM_ARROW:
-
-                    static bool adding_circle   = false;
-
-                    if ((current_delayTab_drawing_task == FREEHAND_DRAWING))
-                    {
-                        if (adding_circle)
-                        {
-                            aDrawnObject.anObjectType = selectedObject;
-                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
-
-                            // preview
-                            for (int i = 0 ; i < aDrawnObject.objectPoints.size(); i++)
-                            {
-                                ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[i], outline_thickness, ImColor(0, 0, 255,255), 4);
-                            } // end preview
-
-                            if (!ImGui::GetIO().MouseDown[0])
-                            {
-                                //std::cout << "Souris relâchée !!  " << __LINE__ << std::endl;
-                                adding_circle = false;
-                                delayTabDrawnObjects.push_back(aDrawnObject);
-                                // prepare next turn
-                                while (!aDrawnObject.objectPoints.empty())
-                                {
-                                    aDrawnObject.objectPoints.pop_back();
-                                }
-                            }
-                        }
-
-                        if (ImGui::IsItemHovered())
-                        {
-                            if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
-                            {
-                                // l'utilisateur n'a pas relâché le bouton de la souris, mais il s'est arrêté => on arrête d'ajouter des "points"
-                                adding_circle = false;
-                            }
-
-                            if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
-                                adding_circle = true;
-
-                            if ( (!adding_circle && ImGui::IsMouseClicked(0)) )
-                            {
-                                // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
-                                aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
-                                adding_circle = true;
-                            }
+                            arrow_points.push_back(mouse_pos_in_image);
+                            adding_circle2 = true;
                         }
                     }
                     break;
 
-                    //case TEXT_OBJECT:
                     case NOT_A_DRAWN_OBJECT:
 
                     if (adding_rect)
                     {
                         adding_preview1 = true;
-                        // catch the second point
                         points.push_back(mouse_pos_in_image);
 
                         if (!ImGui::GetIO().MouseDown[0])
@@ -1803,7 +1808,6 @@ int main(int argc, char * argv[])
                     {
                         if ( (((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1) )  && (!points.empty()))) && !ImGui::IsMouseDragging() )
                         {
-                            // on clique n'importe où, ce qui permet d'effacer les 2 points précédents
                             adding_rect = false;
                             adding_preview1 = false;
                             points.pop_back();
@@ -1811,7 +1815,6 @@ int main(int argc, char * argv[])
                         }
                         if ( (!adding_rect && ImGui::IsMouseClicked(0)) )
                         {
-                            // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
                             points.push_back(mouse_pos_in_image);
                             adding_rect = true;
                         }
@@ -1863,7 +1866,6 @@ int main(int argc, char * argv[])
                         switch(delayTabDrawnObjects[i].anObjectType)
                         {
                             case EMPTY_RECTANGLE:
-
                             // already stored
                             draw_list->AddRect( pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0],
                                                 pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1],
@@ -1872,7 +1874,6 @@ int main(int argc, char * argv[])
 
                             case EMPTY_ELLIPSE:
 
-                            // AddCircle(const ImVec2& centre, float radius, ImU32 col, int num_segments = 12, float thickness = 1.0f);
                             P1P4 = sqrtf( ( delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
                                             draw_list->AddCircle(ImVec2(pTextCanvas->image_pos.x + delayTabDrawnObjects[i].objectPoints[0].x, pTextCanvas->image_pos.y + delayTabDrawnObjects[i].objectPoints[1].y),
                                             P1P4,
@@ -1886,7 +1887,6 @@ int main(int argc, char * argv[])
 
                             case FILLED_ELLIPSE:
 
-                            //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
                             P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
                             draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], P1P4, delayTabDrawnObjects[i].objBackgroundColor, 32);
                             break;
@@ -1899,7 +1899,6 @@ int main(int argc, char * argv[])
                             case SIMPLE_ARROW:
 
                             draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], delayTabDrawnObjects[i].objBackgroundColor, delayTabDrawnObjects[i].thickness);
-                            //P1P4 = sqrtf( (points[i+1].x -points[i].x)*(points[i+1].x -points[i].x) + (points[i+1].y -points[i].y)*(points[i+1].y - points[i].y) );
                             P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
 
                             if (P1P4 > 1.5f * arrowLength)
@@ -1910,78 +1909,73 @@ int main(int argc, char * argv[])
                                                 pointC.y - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
                                 ImVec2 pointE(  pointC.x - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
                                                 pointC.y + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
-                                // FIXME
+
                                 draw_list->PathClear();
                                 draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
                                 draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[1].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[1].y + pTextCanvas->image_pos.y));
                                 draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                draw_list->PathStroke(delayTabDrawnObjects[i].objOutlineColor, false, delayTabDrawnObjects[i].thickness);
-                                ///draw_list->PathStroke(colors[i], false, thickness);
+                                draw_list->PathStroke(delayTabDrawnObjects[i].objBackgroundColor, false, delayTabDrawnObjects[i].thickness);
+                            }
+                            break;
+
+                            case RANDOM_ARROW:
+
+                            for (int j = 2 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
+                            {
+                                    //draw a bezier curve
+                                    draw_list->AddBezierCurve(   pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0],  //P1 == start
+                                                                 pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], // P2 == CP1
+                                                                 pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[2], // P3 == CP2
+                                                                 pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[3], // P4 == end
+                                                                 delayTabDrawnObjects[i].objBackgroundColor, delayTabDrawnObjects[i].thickness, 64); // drawing parameters
+                            }
+
+                            P1P4 = sqrtf((delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[0].y) );
+
+                            if (P1P4 > 1.5f * arrowLength)
+                            {
+                                ImVec2 pointC(  delayTabDrawnObjects[i].objectPoints[3].x - (arrowLength * (delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[2].x))/P1P4,
+                                                delayTabDrawnObjects[i].objectPoints[3].y - (arrowLength * (delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[2].y))/P1P4);
+                                ImVec2 pointD(  pointC.x + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[2].y))/P1P4,
+                                                pointC.y - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[2].x))/P1P4);
+                                ImVec2 pointE(  pointC.x - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[2].y))/P1P4,
+                                                pointC.y + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[2].x))/P1P4);
+
+                                draw_list->PathClear();
+                                draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
+                                draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[3].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[3].y + pTextCanvas->image_pos.y));
+                                draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
+                                draw_list->PathStroke(delayTabDrawnObjects[i].objBackgroundColor, false, delayTabDrawnObjects[i].thickness);
+
                             }
                             break;
 
                             case RANDOM_LINE :
-                            case RANDOM_ARROW:
-
                             for (unsigned int i = 0 ; i < delayTabDrawnObjects.size(); i++)
                             {
-                                switch(delayTabDrawnObjects[i].anObjectType)
+                                for (int j = 2 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
                                 {
-                                    case RANDOM_LINE:
-                                    case RANDOM_ARROW:
-                                    for (int j = 0 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
-                                    {
-                                        draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[j], outline_thickness, delayTabDrawnObjects[i].objBackgroundColor, 4);
-                                    }
-                                    break;
+                                    if (delayTabDrawnObjects[i].anObjectType == RANDOM_LINE)
+                                         draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[j], delayTabDrawnObjects[i].thickness, delayTabDrawnObjects[i].objBackgroundColor, 8);
+                                }
 
-                                    /*
-                                    if (draw_arrow)
-                                    {
-                                        P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
+                            }
+#ifdef DEBUG
+                            std::cout << "The points coordinates are : " << __LINE__ << std::endl;
 
-                                        if (P1P4 > 1.5f * arrowLength)
-                                        {
-                                            ImVec2 pointC(  delayTabDrawnObjects[i].objectPoints[1].x - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4,
-                                                            delayTabDrawnObjects[i].objectPoints[1].y - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4);
-                                            ImVec2 pointD(  pointC.x + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
-                                                            pointC.y - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
-                                            ImVec2 pointE(  pointC.x - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
-                                                            pointC.y + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
-                                            // FIXME
-                                            draw_list->PathClear();
-                                            draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
-                                            draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[1].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[1].y + pTextCanvas->image_pos.y));
-                                            draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                            draw_list->PathStroke(ImColor(255,0,255,255), false, fthickness);
-                                            ///draw_list->PathStroke(colors[i], false, thickness);
-                                        }
-                                    }
-                                    */
+                            for (unsigned int i = 0; i < delayTabDrawnObjects.size(); i++)
+                            {
+                                // be sure the area is enough big to be drawn
+                                std::cout << "DRAW delayTabDrawnObjects.objectPoints[" << i << "].size() vaut :  " << delayTabDrawnObjects[i].objectPoints.size() << std::endl;
+                                std::cout << "DRAW delayTabDrawnObjects.anObjectType vaut :  " << delayTabDrawnObjects[i].anObjectType << std::endl;
 
-                                    default:
-                                    break;
+                                for (int j = 0 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
+                                {
+                                    std::cout << "DRAW  delayTabDrawnObjects[" << i << "].objectPoints[" << j << "].x : "  << delayTabDrawnObjects[i].objectPoints[j].x << std::endl;
+                                    std::cout << "DRAW  delayTabDrawnObjects[" << i << "].objectPoints[" << j << "].y : "  << delayTabDrawnObjects[i].objectPoints[j].y << std::endl;
                                 }
                             }
-
-                            break;
-
-                            // draw lot of circles = random line 
-                            // Bezier = random arrow
-                            /*
-                                                draw_list->AddBezierCurve(   //P1 == start
-                                                                             ImVec2(canvas_pos.x + points[i].x, canvas_pos.y + points[i].y),
-                                                                             //control_points[i],
-                                                                             //control_points[i+1],
-                                                                             // P2 == CP1
-                                                                             ImVec2(canvas_pos.x + points[i].x + (points[i+1].x - points[i].x)*0.25f, canvas_pos.y + points[i].y + (points[i+1].y - points[i].y)*0.25f),
-                                                                             // P3 == CP2
-                                                                             ImVec2(canvas_pos.x + points[i].x + (points[i+1].x - points[i].x)*0.75f, canvas_pos.y + points[i].y + (points[i+1].y - points[i].y)*0.75f),
-                                                                             // P4 == end
-                                                                             ImVec2(canvas_pos.x + points[i+1].x, canvas_pos.y + points[i+1].y),
-                                                                             // drawing parameters
-                                                                             colors[i], 2.0f, 64);
-*/
+#endif
                             break;
 
                             default:
@@ -3181,7 +3175,7 @@ int main(int argc, char * argv[])
 
                 ImGui::AlignTextToFramePadding(); ImGui::SameLine();
 
-                ToggleButton(ANNOTATE_THE_VIDEO, &b_create_canvas); ImGui::SameLine();
+                ToggleButton(ANNOTATE_THE_VIDEO, &b_create_canvas);
 
                 if (b_create_canvas)
                 {
@@ -3191,48 +3185,18 @@ int main(int argc, char * argv[])
                     int frame_padding = 4;
 
 /////////////////////////////////////////////////////////////////////////
-                    static bool alpha_half_preview = false ;
+
+                    static bool alpha_half_preview = true ;
                     static bool drag_and_drop = true;
                     static bool options_menu = true;
                     static float object_thickness = 2.5f;
                     static ImVec4 bcol = ImVec4( 0.3f, 0.4f, 1.0f, 0.5);
-                    static ImVec4 ocol = ImVec4( 0.4f, 0.4f, 0.4f, 0.5);
+                    // LATER USE static ImVec4 ocol = ImVec4( 0.4f, 0.4f, 0.4f, 0.5);
 
-                    ImGui::Checkbox(HALF_ALPHA_PREVIEW, &alpha_half_preview); ImGui::SameLine();
-                    ImGui::Checkbox(WITH_DRAG_AND_DROP, &drag_and_drop); ImGui::SameLine();
-                    ImGui::Checkbox(WITH_OPTIONS_MENU, &options_menu);//ImGui::SameLine() ; HelpMarker(RIGHT_CLICK_FOR_INDIVIDUAL_COLOR_WIDGET_OPTIONS);
-
-                    ImGuiColorEditFlags misc_flags = /*(hdr ? ImGuiColorEditFlags_HDR : 0) |*/ (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | ImGuiColorEditFlags_AlphaPreviewHalf | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
-
-                    ImGui::PushItemWidth(150);
-                    ImGui::ColorEdit4(DRAWN_OBJECT_BACKGROUND_COLOR, &bcol.x, misc_flags); ImGui::SameLine();
-                    ImGui::ColorEdit4(DRAWN_OBJECT_OUTLINE_COLOR, &ocol.x, misc_flags); ImGui::SameLine();
-                    ImGui::SliderFloat(DRAWN_OBJECT_LINE_THICKNESS, &object_thickness, 0.5, 20, "%.1f\n" );
-                    ImGui::PopItemWidth();
-
-                    p_aDrawnObject->objBackgroundColor =  ImColor(bcol.x, bcol.y, bcol.z, bcol.w);
-                    p_aDrawnObject->objOutlineColor    =  ImColor(ocol.x, ocol.y, ocol.z, ocol.w);
-                    p_aDrawnObject->thickness = object_thickness;
-
-                    createCanvasObjectsImagesTexIds();
-
-                    for (int i = 0 ; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
-                    {
-                        ImGui::PushID(i);
-                        ImGui::ImageButton( reinterpret_cast<void * >(canvasObjectImageTexId[i]), ImVec2(iconWidth, iconHeight),
-                                                ImVec2(0,0), ImVec2(1,1), frame_padding, ImColor(0,0,0,255));
-                        if (ImGui::IsItemClicked(0))
-                            selectedObject = i;
-
-                        ImGui::PopID();
-                        ImGui::SameLine();
-                    }
-
-                    ImGui::SameLine();
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     if (p_delayTabDrawnObjects->size() > 0)
                     {
+                        ImGui::SameLine();
+
                         if (ImGui::Button(DELETE_ALL_BUTTON))
                             ImGui::OpenPopup("Tout effacer ?");
 
@@ -3264,6 +3228,58 @@ int main(int argc, char * argv[])
                             p_delayTabDrawnObjects->pop_back();
                         }
                     }
+
+                    createCanvasObjectsImagesTexIds();
+
+                    for (int i = 0 ; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
+                    {
+                        ImGui::ImageButton( reinterpret_cast<void * >(canvasObjectImageTexId[i]), ImVec2(iconWidth, iconHeight),
+                                            ImVec2(0,0), ImVec2(1,1), frame_padding, ImColor(0,0,0,255));
+                        ImGui::PushID(i);
+                        if (ImGui::IsItemClicked(0))
+                            selectedObject = i;
+                        ImGui::PopID();
+                        ImGui::SameLine();
+                    }
+
+                    if (selectedObject != TEXT_OBJECT)
+                    {
+                        ImGuiColorEditFlags misc_flags = /*(hdr ? ImGuiColorEditFlags_HDR : 0) |*/ (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | ImGuiColorEditFlags_AlphaPreviewHalf | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
+                        misc_flags |= ImGuiColorEditFlags_NoInputs;
+
+                        ImGui::NewLine();
+                        ImGui::Text(DRAWN_OBJECT_COLOR);
+                        ImGui::SameLine();
+                        ImGui::PushItemWidth(30);
+                        ImGui::ColorEdit4("  ", &bcol.x, misc_flags);
+                        ImGui::PopItemWidth();
+/*
+    LATER USE
+                        ImGui::SameLine();
+
+                        ImGui::Text(DRAWN_OBJECT_OUTLINE_COLOR);
+                        ImGui::SameLine();
+                        ImGui::PushItemWidth(30);
+                        ImGui::ColorEdit4(" ", &ocol.x, misc_flags);
+                        ImGui::PopItemWidth();
+*/
+                        ImGui::SameLine();
+
+                        ImGui::Text(DRAWN_OBJECT_LINE_THICKNESS);
+                        ImGui::SameLine();
+                        ImGui::PushItemWidth(150);
+                        ImGui::SliderFloat(" ", &object_thickness, 0.5, 20, "%.1f\n" );
+                        ImGui::PopItemWidth();
+
+                        p_aDrawnObject->objBackgroundColor =  ImColor(bcol.x, bcol.y, bcol.z, bcol.w);
+                        p_aDrawnObject->thickness = object_thickness;
+                        // LATER USE p_aDrawnObject->objOutlineColor    =  ImColor(ocol.x, ocol.y, ocol.z, ocol.w);
+
+                        ImGui::Checkbox(HALF_ALPHA_PREVIEW, &alpha_half_preview); ImGui::SameLine();
+                        ImGui::Checkbox(WITH_DRAG_AND_DROP, &drag_and_drop); ImGui::SameLine();
+                        ImGui::Checkbox(WITH_OPTIONS_MENU, &options_menu);//ImGui::SameLine() ; HelpMarker(RIGHT_CLICK_FOR_INDIVIDUAL_COLOR_WIDGET_OPTIONS);
+                    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FIXME : call the canvas() from there !
 
@@ -3304,7 +3320,6 @@ int main(int argc, char * argv[])
 
                         case RANDOM_ARROW:
                             ImGui::NewLine();
-                            ImGui::Text(RANDOM_LINE_SOON_INTEGRATED);
                             current_delayTab_drawing_task = FREEHAND_DRAWING; 
                         break;
 
@@ -4688,7 +4703,6 @@ int main(int argc, char * argv[])
             glDeleteTextures(1, &backgroundTextureId3);
         if (backgroundTextureId4 != 0)
             glDeleteTextures(1, &backgroundTextureId4);
-
 
         cleanCanvasObjectsImagesTexIds();
 
