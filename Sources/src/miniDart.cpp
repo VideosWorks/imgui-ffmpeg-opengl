@@ -1995,7 +1995,7 @@ int main(int argc, char * argv[])
                 if ((b_zoom_available) && (!b_paused))
                 {
                     current_delayTab_drawing_task = DRAWING_ZOOMED_AREA;
-                    p_aDrawnObject->anObjectType = NOT_A_DRAWN_OBJECT;
+                    selectedObject = NOT_A_DRAWN_OBJECT;
                     ImGui::SetNextWindowFocus();
                     ImGuiWindowFlags zoomWinFlags = 0;
                     zoomWinFlags |= ImGuiWindowFlags_NoSavedSettings;
