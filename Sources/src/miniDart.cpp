@@ -1953,29 +1953,13 @@ int main(int argc, char * argv[])
                             case RANDOM_LINE :
                             for (unsigned int i = 0 ; i < delayTabDrawnObjects.size(); i++)
                             {
-                                for (int j = 2 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
+                                for (int j = 0 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
                                 {
                                     if (delayTabDrawnObjects[i].anObjectType == RANDOM_LINE)
                                          draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[j], delayTabDrawnObjects[i].thickness, delayTabDrawnObjects[i].objBackgroundColor, 8);
                                 }
 
                             }
-#ifdef DEBUG
-                            std::cout << "The points coordinates are : " << __LINE__ << std::endl;
-
-                            for (unsigned int i = 0; i < delayTabDrawnObjects.size(); i++)
-                            {
-                                // be sure the area is enough big to be drawn
-                                std::cout << "DRAW delayTabDrawnObjects.objectPoints[" << i << "].size() vaut :  " << delayTabDrawnObjects[i].objectPoints.size() << std::endl;
-                                std::cout << "DRAW delayTabDrawnObjects.anObjectType vaut :  " << delayTabDrawnObjects[i].anObjectType << std::endl;
-
-                                for (int j = 0 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
-                                {
-                                    std::cout << "DRAW  delayTabDrawnObjects[" << i << "].objectPoints[" << j << "].x : "  << delayTabDrawnObjects[i].objectPoints[j].x << std::endl;
-                                    std::cout << "DRAW  delayTabDrawnObjects[" << i << "].objectPoints[" << j << "].y : "  << delayTabDrawnObjects[i].objectPoints[j].y << std::endl;
-                                }
-                            }
-#endif
                             break;
 
                             default:
