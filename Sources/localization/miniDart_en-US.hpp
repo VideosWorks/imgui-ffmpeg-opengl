@@ -657,7 +657,7 @@
 
 #define DRAWN_OBJECT_BACKGROUND_COLOR                   "Background color"
 
-#define DRAWN_OBJECT__COLOR                   "Clor"
+#define DRAWN_OBJECT_COLOR                   "Color"
 
 #define DRAWN_OBJECT_OUTLINE_COLOR                 "Outline color"
 
@@ -667,10 +667,12 @@
 
 #define HALF_ALPHA_PREVIEW  "With half alpha preview"
 
-#define WITH_DRAG_AND8DROP  "With drag and drop"
+#define WITH_DRAG_AND_DROP  "With drag and drop"
 
 #define WITH_OPTIONS_MENU  "With Options menu"
 
 #define ALL_ANNOTATIONS_WILL_BE_CANCELED_Q  "All drawn objects will be deleted."
 
 #define CONFIRM_BUTTON                              "Confirm"
+
+#define MINIDART_VERSION_NUMBER                     "0.9.6"

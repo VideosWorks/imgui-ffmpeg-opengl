@@ -675,3 +675,5 @@
 #define ALL_ANNOTATIONS_WILL_BE_CANCELED_Q  "Tout ce qui a été dessiné va être effacé."
 
 #define CONFIRM_BUTTON                      "Confirmer"
+
+#define MINIDART_VERSION_NUMBER             "0.9.6"
