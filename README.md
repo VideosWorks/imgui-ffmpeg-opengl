@@ -16,10 +16,10 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# miniDart (version actuelle au téléchargement : 0.9.5 (Windows7+ avec annotations de commentaires enregistrables dans la vidéo inclus) 0.9.3 (binaire pour LinuxMint)** )
+# miniDart (version actuelle au téléchargement : 0.9.6 (Windows7+ avec annotations de commentaires enregistrables dans la vidéo inclus) 0.9.3 (binaire pour LinuxMint)** )
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
-**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.5_test.exe**
+**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.6_test.exe**
 
 Pour télécharger une autre version : https://framagit.org/ericb/miniDart/tree/master/testing_version
 
@@ -67,7 +67,7 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Derniers ajouts (version 0.9.5) **
+**Derniers ajouts (version 0.9.6) **
 
 **Atelier analyse** :
 - [x] **Dessin : on peut écrire et dessiner sur l'image** : primitives(rectangle, rond plein ou évidé), traits, flèches, dessin à main levée
@@ -94,7 +94,7 @@ En cours de test ou à venir :
 - [ ] (Windows seulement) possibilité d'affcher la boîte de dialogue pour régler tous les paramètres de la source sonore.
 - [ ] Possibilité de créer **plusieurs incrustations simultanées**
 
-**Ce qui est actuellement fonctionnel** (dans la **version 0.9.5**) :
+**Ce qui est actuellement fonctionnel** (dans la **version 0.9.6**) :
 
 - [x] ajout d'annotations dans la vidéo
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
@@ -214,7 +214,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-#miniDart (current version: 0.9.5 (Windows7+ including recordable text annotations in the video) and 0.9.3 (binary for LinuxMint)** )
+#miniDart (current version: 0.9.6 (Windows7+ including recordable text annotations in the video) and 0.9.3 (binary for LinuxMint)** )
 Video analysis software for team sports coaches (handball, but not only)
 
 This is a demo version of the **miniDart** software. It is not complete, and probably has some bugs. Some of the features are still missing, and should be implemented progressively.
@@ -255,7 +255,7 @@ Important : just in case the application crashes at launch, without any informat
 to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
 
 
-**Recent changes in the 0.9.5 version (Windows only)**
+**Recent changes in the 0.9.6 version (Windows only). For the Linux version, please read the compilation insctructions **
 
 **Analysis workshop** :
 - [x] **Canvas** : one can draw on top of the images : usual primitives are available (rectangle, empty of filled), lines, arrows + free hand drawing.
@@ -284,7 +284,7 @@ Currently in test or work in progress :
 - [ ] Create several (a vector of) incrustations simulaneously
 
 
-**What is currently functional in the 0.9.5** (and will be improved progressively):
+**What is currently functional in the 0.9.6** (and will be improved progressively):
 
 - [x] **Pan, Tilt and Zoom** : hardware zoom, depending on your webcam. The zoomed images can be directly recorded, delayed or not. Example : Logitech Brio allows until x 5.0 hardware zoom + pan and tilt in the zoomed area. Logitech C920 and C922 : zoom x 2.0 only + pan and tilt
 - [x]    Lense (from x1.0 to x3.0 and up to x4.0 for Linux version) of part of the image (but the zoomed area cannot be recorded)
