@@ -67,7 +67,7 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Derniers ajouts (version 0.9.6) **
+**Derniers ajouts (version 0.9.6)**
 
 **Atelier analyse** :
 - [x] **Dessin : on peut écrire et dessiner sur l'image** : primitives(rectangle, rond plein ou évidé), traits, flèches, dessin à main levée
