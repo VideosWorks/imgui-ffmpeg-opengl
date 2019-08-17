@@ -146,16 +146,16 @@ En cours de test ou à venir :
 - [x] icônes pour le chronomètre, les sources (webcam 1 ou 2)
 
 À venir (suivi GB) :
-- tracé de la course + la trajectoire du tir 
-- possibilité d'ajouter le côté de la réception du ballon,
-- tracé en temps réel des impacts et 
-- affichage des zones échec/réussite du GB,
-- amélioration du suivi d'équipe en fonction des retours
+- [ ] tracé de la course + la trajectoire du tir 
+- [ ] possibilité d'ajouter le côté de la réception du ballon,
+- [ ] tracé en temps réel des impacts et 
+- [ ] affichage des zones échec/réussite du GB,
+- [ ] amélioration du suivi d'équipe en fonction des retours
 
 **En cours de développement** (mais déjà partiellement fonctionnel) :
-- **multi écrans** ( on peut détacher l'onglet avec les images sur un second écran, tout en continuant le suivi GB et le remettre après !)
-- **onglets déplaçables/détachables activables/désactivables : on pourra "sortir" l'onglet contenant la vidéo, et l'afficher sur un autre écran**
-- **Traduction de l'interface utilisateur en anglais : 40% réalisé à ce jour** (actually)
+- [ ] **multi écrans** ( on peut détacher l'onglet avec les images sur un second écran, tout en continuant le suivi GB et le remettre après !)
+- [ ] **onglets déplaçables/détachables activables/désactivables : on pourra "sortir" l'onglet contenant la vidéo, et l'afficher sur un autre écran**
+- [ ] **Traduction de l'interface utilisateur en anglais : 40% réalisé à ce jour** (actually)
 
 
 Atelier retard :
