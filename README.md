@@ -84,7 +84,6 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 - [x] détection et affichage de toutes les sources sonores pouvant être enregistrées
 - [x] **sélection de la source audio** (enregistrable) à associer à l'image en cours de visionnage
 - [x] Nombreuses corrections de bugs
-
 En cours de test ou à venir :
 
 - [ ] affichage d'une incrustation vidéo "customisée" (image transparente par exemple)
@@ -92,7 +91,8 @@ En cours de test ou à venir :
 - [ ] **capture audio** : (fonctionnel mais pas intégré encore)
 - [ ] (à venir) création de vidéos **incluant le  son** et image avec **multiplexage audio et son** (ffmpeg) + **openal** (Linux) ou **direct show** (Windows)
 - [ ] (Windows seulement) possibilité d'affcher la boîte de dialogue pour régler tous les paramètres de la source sonore.
-- [ ] Possibilité de créer **plusieurs incrustations simultanées**
+- [ ] Possibilité de créer **plusieurs incrustations texte simultanées**
+- [ ] Possibilité de déplacer l'objet dessiné inséré
 
 **Ce qui est actuellement fonctionnel** (dans la **version 0.9.6**) :
 
@@ -125,12 +125,17 @@ En cours de test ou à venir :
 - [x] **analyse image par image** : on ouvre une vidéo de courte durée (30 s max conseillé) et on peut piloter le défilement avec les flèches G/D 
 - [x] modification de la taille de l'image en mode slideshow
 - [x] **ralenti (nouvel algorithme) ajustable en images par seconde**. Fonctionne de 5 images par seconde à ~60 images par seconde (accéléré si fps réel < 60)
+
+En cours de test ou à venir :
 - [ ] extraction et annotation d'une image (à venir, puis enregistrement sur une durée donnée (format .avi, pas de son)
+- [ ] canvas
 
 **Atelier Suivi de l'équipe** :
 - [x] Suivi par actions : But, Attaque placée, etc
 - [x] Mesure performance de l'équipe : + - en fonction des actions pour chaque jouer, et affichés de façon globale pour léquipe (version payante)
-
+- [ ] canvas
+- [ ] Suivi d'équipe pendant un match : enregistrement des résultats dans un fichier type xml (tinyxml2)
+- 
 À venir : incrustations + annotations + enregistrement de l'image sous forme d'une vidéo de durée donnée
 
 **Atelier suivi GB** :
@@ -146,6 +151,13 @@ En cours de test ou à venir :
 - [x] mode suivi statistique type feuille de match (GB ou joueurs d'une équipe) ;
 - [x] choix du type de tir (pour un 7m, il faut activer le bouton "7m" AVANT de tracer le tir, sinon le tir sera pris pour un tir normal)
 - [x] icônes pour le chronomètre, les sources (webcam 1 ou 2)
+
+À venir (suivi GB) :
+- tracé de la course + la trajectoire du tir 
+- possibilité d'ajouter le côté de la réception du ballon,
+- tracé en temps réel des impacts et 
+- affichage des zones échec/réussite du GB,
+- amélioration du suivi d'équipe en fonction des retours
 
 **En cours de développement** (mais déjà partiellement fonctionnel) :
 - **multi écrans** ( on peut détacher l'onglet avec les images sur un second écran, tout en continuant le suivi GB et le remettre après !)
