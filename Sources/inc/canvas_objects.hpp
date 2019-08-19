@@ -65,8 +65,6 @@ typedef struct DrawnObject
     bool         hovered;
     bool         record;
 
-    ImGui::InvisibleButton() invisibleButton;
-
     ImVector <ImVec2>  objectPoints;
     ImU32  objBackgroundColor;
     ImU32  objOutlineColor;
