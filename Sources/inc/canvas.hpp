@@ -31,13 +31,13 @@ class Canvas
     float arrowLength;
     float arrowWidth;
 
-    setMousePosValid();
-    setCurrentActiveDrawnObject();
-    getCurrentActiveDrawnObject();
-    update();
-    draw();
-    clean();
-    remove();
+    bool           setMousePosValid();
+    void           setCurrentActiveDrawnObject(DrawnObject *);
+    DrawnObject *  getCurrentActiveDrawnObject(void);
+    void update();
+    int draw();
+    void clean();
+    bool remove();
 
     ImVec2 mouse_pos_in_image;
     ImVector <ImVec2> arrow_points;
