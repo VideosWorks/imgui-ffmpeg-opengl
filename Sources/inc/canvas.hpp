@@ -32,6 +32,8 @@ class Canvas
     float arrowWidth;
 
     setMousePosValid();
+    setCurrentActiveDrawnObject();
+    getCurrentActiveDrawnObject();
     update();
     draw();
     clean();
@@ -42,6 +44,9 @@ class Canvas
     DrawnObject  aDrawnObject;
     p_aDrawnObject = & aDrawnObject;
     std::vector <DrawnObject> currentlyDrawnObjects;
+
+  private:
+    DrawnObject currentActiveObject;
 
     // unused
     // ImVector <ImVec2> objectPoints;
