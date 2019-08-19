@@ -59,10 +59,13 @@ typedef enum ObjectType
 typedef struct DrawnObject
 {
     unsigned int anObjectType;
-    float thickness;
-    bool selected;
-    bool hovered;
-    bool record;
+    float        thickness;
+    bool         selected;
+    bool         hovered;
+    bool         record;
+
+    ImGui::InvisibleButton() invisibleButton;
+
     ImVector <ImVec2>  objectPoints;
     ImU32  objBackgroundColor;
     ImU32  objOutlineColor;
