@@ -16,9 +16,9 @@ class Canvas
   public:
     Canvas();
     ~Canvas();
-    init();
-    preview();
-    addObject();
+    bool  init();
+    void preview();
+    bool addObject();
 
     bool adding_circle;
     bool adding_circle2;
