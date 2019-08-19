@@ -1,7 +1,8 @@
 /*
  * canvas_objects.hpp
  * Copyright Eric Bachard  2019 August 1st
- * License MIT
+ * License : GPL v2
+ * See: http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
 
