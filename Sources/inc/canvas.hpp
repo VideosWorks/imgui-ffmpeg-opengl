@@ -6,7 +6,7 @@
  */
 
 #ifndef __CANVAS_HPP__
-#define __canvCANVAS_HPP__
+#define __CANVAS_HPP__
 
 #include "canvas_object.hpp"
 #include <list>
