@@ -1,8 +1,8 @@
 /*
  * canvas_objects.hpp
  * Copyright Eric Bachard  2019 August 1st
- * This document is under GPL v2 license
- * See : http://www.gnu.org/licenses/gpl-2.0.html
+ * License MIT
+ *
  */
 
 #include <vector>
@@ -51,7 +51,9 @@ typedef enum ObjectType
     RANDOM_ARROW       =   6,
     SIMPLE_ARROW       =   7,
     SIMPLE_LINE        =   8,
-    NOT_A_DRAWN_OBJECT = 100
+    IMAGE_OBJECT       = 100,
+    FRAME_OBJECT       = 200,
+    NOT_A_DRAWN_OBJECT = 400
 } ObjectType;
 
 typedef struct DrawnObject
@@ -66,6 +68,8 @@ typedef struct DrawnObject
     ImU32  objOutlineColor;
 } DrawnObject;
 
+
+//std::vector <DrawnObject> DrawnObjects;
 
 #define CANVAS_OBJECTS_TYPES_MAX    9
 
