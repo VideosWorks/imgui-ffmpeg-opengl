@@ -1,6 +1,29 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 August 24th
+
+TODO : Implement Text in the canvas, for overlay reasons.
+
+ADDED : we can now draw ELLIPSES (FILLED, EMPTY), and all other objects.
+ADDED : CIRCLES (FILED, EMPTY) colors are now ok
+ADDED : select cursor icon as new Canvas entry
+
+FIXED (PERFORMANCE ISSUE) : now computing all values (P1P4, rotation, arrowLength, arrowWidth, and so on) at the end of the preview,
+just before storing the values
+
+FIXED : untranslated string "Toute effacer"
+FIXED : draw all colors
+FIXED : some crashes (my fault, some icons were missing in the images folder)
+
+STARTED : Canvas implementation (an instance of the class can be loaded, initialized, and seems to work).
+Some visibility issues remain.
+
+Wrote "move" "select object" algos. Integration will occur soon.
+
+TODO : completely rewrite the GK follow up, using curved arrows + the possibility to add the origin of the pass (+ player number should work too).
+
+
 2019 August 16th
 
 Preparing 0.9.6 aka "Ablette Agile"
