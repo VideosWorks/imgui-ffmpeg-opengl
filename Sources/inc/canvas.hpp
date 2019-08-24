@@ -8,56 +8,96 @@
 #ifndef __CANVAS_HPP__
 #define __CANVAS_HPP__
 
-#include "canvas_object.hpp"
+#include "application.hpp"
+#include "canvas_objects.hpp"
+#include "draw_text.hpp"
+#include <math.h>
+#include "imgui_helpers.h"
 #include <list>
 
-class Canvas
+#define DEFAULT_OBJECT_THICKNESS  2.5f
+#define DEFAULT_ICON_WIDTH          32
+#define DEFAULT_ICON_HEIGHT         32
+#define DEFAULT_FRAME_PADDING        4
+
+namespace md
+
 {
-  public:
-    Canvas();
-    ~Canvas();
-    bool  init();
-    void preview();
-    bool addObject();
+    class Canvas
+    {
+        public:
+            Canvas();
+            ~Canvas();
+            bool  init(ImVec2, ImVec2);
+            void preview();
+            bool addObject();
 
-    bool adding_circle;
-    bool adding_circle2;
-    bool adding_preview1;
-    bool adding_preview2;
-    bool adding_rect;
-    bool adding_rect2;
+            bool adding_circle;
+            bool adding_circle2;
+            bool adding_preview1;
+            bool adding_preview2;
+            bool adding_rect;
+            bool adding_rect2;
 
-    float P1P4;
-    float arrowLength;
-    float arrowWidth;
+            bool alpha_half_preview;
+            bool drag_and_drop;
+            bool options_menu;
 
-    bool           setMousePosValid();
-    void           setCurrentActiveDrawnObject(DrawnObject *);
-    DrawnObject *  getCurrentActiveDrawnObject(void);
-    void update();
-    int draw();
-    void clean();
-    bool remove();
+            ImVec4 bcol;
+            // future use
+            // ImVec4 ocol;
 
-    ImVec2 mouse_pos_in_image;
-    ImVector <ImVec2> arrow_points;
-    DrawnObject  aDrawnObject;
-    p_aDrawnObject = & aDrawnObject;
-    std::vector <DrawnObject> currentlyDrawnObjects;
+            int iconWidth;
+            int iconHeight;
+            int frame_padding;
 
-  private:
-    DrawnObject currentActiveObject;
+            float    P1P4;
+            float    radius_x;
+            float    radius_y;
+            float    rotation;
+            float    arrowLength;
+            float    arrowWidth;
 
-    // unused
-    // ImVector <ImVec2> objectPoints;
+            bool     selected;
+            bool     hovered;
+            bool     record;
 
-    // Currently : one canvas per tab
-    // Could be:
-    // - one DrawnObjects in delayTab,
-    // - one in GK folow up and so on
-    // Use a list ? 
-    // Something like :
-    // std::list <DrawnObjects>  DrawnObjectsList;   ??
-}
+            void           setMousePosValid(int, float);
+            void           setCurrentActiveDrawnObject(DrawnObject *);
+            DrawnObject *  getCurrentActiveDrawnObject(void);
+            void           update(int selectedObject, ImVector <ImVec2> points, int, float);
+            void           updateSelectedArea(ImVector <ImVec2> points, ImU32, float);
+            int            draw();
+            void           clean();
+            bool           remove();
+
+            bool           inside(ImVec2, ImVector<ImVec2>);
+
+            void           catchPrimitivesPoints(void);
+            int            show();
+
+            void           loadCanvasObjectsIcons(void);
+            void           createCanvasObjectsImagesTexIds(void);
+            void           cleanCanvasObjectsImagesTexIds(void);
+
+            GLuint         canvasObjectImageTexId[CANVAS_OBJECTS_TYPES_MAX];
+            cv::Mat        canvasObjectImage[CANVAS_OBJECTS_TYPES_MAX];
+
+            md::TextCanvas * mp_TextCanvas;
+
+            ImVec2 *         p_topLeft;
+            ImVec2 *         p_bottomRight;
+
+            ImDrawList *     p_drawList;
+            ImVec2           mouse_pos_in_image;
+            ImVector <ImVec2> arrow_points;
+            DrawnObject      aDrawnObject;
+            DrawnObject *    p_aDrawnObject = & aDrawnObject;
+            std::vector <DrawnObject> currentlyDrawnObjects;
+
+        private:
+            DrawnObject currentActiveObject;
+    };
+} /* namespace md */
 
 #endif /* __CANVAS_HPP__ */
