@@ -16,10 +16,10 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# miniDart (version actuelle au téléchargement : 0.9.6 (Windows7+ avec annotations de commentaires enregistrables dans la vidéo inclus) 0.9.3 (binaire pour LinuxMint)** )
+# miniDart (version actuelle au téléchargement : 0.9.6.1 (Windows7+ avec annotations de commentaires enregistrables dans la vidéo inclus) 0.9.3 (binaire pour LinuxMint)** )
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
-**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.6_test.exe**
+**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.6.1_test.exe**
 
 Pour télécharger une autre version : https://framagit.org/ericb/miniDart/tree/master/testing_version
 
@@ -60,10 +60,11 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Derniers ajouts (version 0.9.6)**
+**Derniers ajouts (version 0.9.6.1)**
 
 **Atelier analyse** :
-- [x] **Dessin : on peut écrire et dessiner sur l'image** : primitives(rectangle, rond plein ou évidé), traits, flèches, dessin à main levée
+- [x] **grosse amélioration des performances (meilleure optimisation du Canvas)
+- [x] **Dessin : on peut écrire et dessiner sur l'image** : primitives(ellipse, cercle, rectangle, rond plein ou évidé), traits, flèches droites ou arrondie (courbe de Bezier), dessin à main levée
 - [x] Effacement de l'ajout précédent, ou de tout ce qui a été ajouté .
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
 - [x] **Choix de la police** de caractères pour l'incrustation (parmi quelques polices. À venir : sélectionner une des polices du système)
