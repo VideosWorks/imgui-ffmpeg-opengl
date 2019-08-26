@@ -63,9 +63,10 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 **Derniers ajouts (version 0.9.6.1)**
 
 **Atelier analyse** :
+
 - [x] Nouvelles couleurs pour certains boutons + amélioration de l'interface (respect de la charte graphique)
 - [x] Stabilisation de l'image (webcam seulement). Vient de ffmpeg (deshake filter, master 4.2.x, Linux seulement pour l'instant)
-- [x] **grosse amélioration des performances (meilleure optimisation du Canvas)
+- [x] **grosse amélioration des performances** (meilleure optimisation du Canvas)
 - [x] **Dessin : on peut écrire et dessiner sur l'image** : primitives(ellipse, cercle, rectangle, rond plein ou évidé), traits, flèches droites ou arrondie (courbe de Bezier), dessin à main levée
 - [x] Effacement de l'ajout précédent, ou de tout ce qui a été ajouté .
 - [x] **Incrustation vidéo** : on peut ajouter à l'image en cours de lecture ou d'enregistrement, une incrustation contenant du texte (à entrer soi-même). 
