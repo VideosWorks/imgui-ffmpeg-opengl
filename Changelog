@@ -6,6 +6,7 @@ Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 FFMPEG (from master) :
  - added deshake filter (will be used with the webcam e.g.)
  - added several hw accel features (found some cuda_llvm, what's that  btw ?)
+REFERENCE LINK : https://github.com/FFmpeg/FFmpeg/commit/b29c7bcbf6bc257f4302b8bed0509bb5489ca068
 
 FIXED : Toggle button not respecting miniDart graphical chart
 
