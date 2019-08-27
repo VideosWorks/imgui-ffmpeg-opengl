@@ -6,7 +6,7 @@ Image enregistrée lors du stage **Excellentia 2019, Sélestat** (France) . Oui,
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-**AVANT TOUTE CHOSE : sous Windows, vous DEVEZ installer les pilotes 3D de votre carte graphique.**
+## **AVANT TOUTE CHOSE : sous Windows, vous DEVEZ installer les pilotes 3D de votre carte graphique.**
 
 **SINON, cela ne fonctionnera PAS.** (miniDart ne se lancera même pas ...)
 
