@@ -12,7 +12,7 @@ N.B. : merci de me contacter directement en cas de problème avec les instructio
 
 **INSTALLATION SOUS WINDOWS 7** ou plus récent :
 * **INSTALLER le pilote OpenGL de votre machine** : soit il est fourni avec le CD/DVD fourni par le constructeur, soit il faut le télécharger sur son site (sans ce pilote, rien ne fonctionnera);
-* **télécharger l'archive miniDart_0.9.6_test.exe**
+* **télécharger l'archive miniDart_0.9.6.1_test.exe**
 * placer cette archive dans un endroit facile d'accès, par exemple sur le bureau ;
 * double-cliquer dessus pour lancer l'installeur ;
 * suivre les instructions.
