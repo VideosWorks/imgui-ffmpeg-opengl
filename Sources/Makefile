@@ -120,6 +120,8 @@ NFD_INC = $(INCLUDE_3RD_PARTY_BASE)/nativefiledialogs
 
 FONT_AWESOME_INC = $(INCLUDE_ICON_FONTS_BASE)/Icons/FontAwesome
 
+MATERIAL_DESIGN_INC = $(INCLUDE_ICON_FONTS_BASE)/Icons/MaterialDesign
+
 ### TESTING PURPOSE
 ###LIBOPENSHOT_INC = $(INCLUDE_3RD_PARTY_BASE)/libopenshot/include
 
@@ -138,6 +140,7 @@ INCLUDE_DIR +=  $(INCLUDE_BASE) \
                 $(NFD_INC) \
                 $(TINYXML2_INC) \
                 $(FONT_AWESOME_INC) \
+                $(MATERIAL_DESIGN_INC) \
                 $(YUV2RGB_INC) \
                 $(SDL2_FFMPEG_INC)
 
