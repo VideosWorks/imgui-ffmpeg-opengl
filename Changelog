@@ -1,6 +1,25 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 August 29th
+
+Added ImRotate (not commited the code yet, because needs some portability fixes)
+Added Ellipses in the public repo.
+Added MaterialDesign icons, from Juliette Foucaut
+Compiles, and works. Tested some nice icons.
+TODO : add colors ?
+FIXME : size = half of FontAwesome size + strange baseline offset (can this be easely fixed ?)
+
+Improved the canvas, all algos seem to work now.
+
+
+2019 August 27th
+
+IMPROVED Canvas class
+FIXED : some broken methods in Canvas class
+FIXED : useless variables in Canvas class
+FIXED : empty or filled circle : useless values are stored (radius_x, radius_y)
+
 2019 August 26th
 
 FFMPEG (from master) :
@@ -359,9 +378,9 @@ FIXME :
 
   ~ size = 36 with 1920 x 1080 images (aka 2k)     // 1920/36 = 53.33 pixels per character
   ~ size = 24 with 1280 x  720 images (aka 720p)   // 1280/24 = 53.33 pixels per character
-  ~ size =  6 for   320 x  240 images( rtsp video)  //  320/6 = 53.33 pixels per character too !
+  ~ size =  6 for  320 x  240 images( rtsp video)  //  320/6 = 53.33 pixels per character too !
 
-Means it could be interesting to keep the ratio  (witdh/fontsize) = constant = 53.33 
+Means it could be intersting to keep the ratio  (witdh/fontsize) = constant = 53.33 
 Current (simple) choice: allow to select the fontsize between 6 and 80, to allow a max of cases.
 
 
