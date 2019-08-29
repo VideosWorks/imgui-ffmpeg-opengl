@@ -359,9 +359,9 @@ FIXME :
 
   ~ size = 36 with 1920 x 1080 images (aka 2k)     // 1920/36 = 53.33 pixels per character
   ~ size = 24 with 1280 x  720 images (aka 720p)   // 1280/24 = 53.33 pixels per character
-  ~ size =  6 for  320 x  240 images( rtsp video)  //  320/6 = 53.33 pixels per character too !
+  ~ size =  6 for   320 x  240 images( rtsp video)  //  320/6 = 53.33 pixels per character too !
 
-Means it could be intersting to keep the ratio  (witdh/fontsize) = constant = 53.33 
+Means it could be interesting to keep the ratio  (witdh/fontsize) = constant = 53.33 
 Current (simple) choice: allow to select the fontsize between 6 and 80, to allow a max of cases.
 
 
