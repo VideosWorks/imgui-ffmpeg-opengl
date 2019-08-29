@@ -116,7 +116,7 @@
 #define IMAGE_SIZE_IN_PIXELS_BUTTON          "Image size in pixels : "
 #define IMAGE_FORMAT_POPUP                   "format_image"
 #define RESET_THE_WEBCAM_BUTTON              "Reset the source"
-#define ZOOM_ENABLE_CHECKBOX                 " Enable the lense"
+#define ZOOM_ENABLE_CHECKBOX                 "Use the magnifier"
 #define SELECTED_AREA_COLOR                  "Selected area color"
 #define NETWORK_FLOW                         "#flux_reseau"
 #define FLOW_URL                             "URL of the flow : %s"
