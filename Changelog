@@ -3,6 +3,16 @@ Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
 2019 August 29th
 
+FIXED : the selected area to be magnified is drawn below the already drawn objects (Now, the selected area is using OverlayDrawList)
+FIXED : "Use the magnifier"  (instead of "lense")
+FIXED : magnifier + other window open is not possible.
+FIXED : cannot resize the magnifier area, while drawing. 
+Seems to work well now, since we can add objects, while the magnifier is on top, resize, and so on
+=> needs more test, but is far better than previously.
+
+TODO (not yet implemented) : include everything drawn in the video.
+
+
 Added ImRotate (not commited the code yet, because needs some portability fixes)
 Added Ellipses in the public repo.
 Added MaterialDesign icons, from Juliette Foucaut
