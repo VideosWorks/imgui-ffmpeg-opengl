@@ -54,7 +54,7 @@ sudo apt-get install \
 # créer le répertoire build (mkdir build)
 # aller dans build (cd build)
 # copier le configure_opencv.txt en attachement dans build. Il contient :
-#!/bin/bash
+##!/bin/bash
 # cmake  -DCMAKE_INSTALL_PREFIX=/usr/local  -DBUILD_SHARED_LIBS=YES -DBUILD_EXAMPLES=OFF 
 # -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-3.4.0/modules/  -DBUILD_NEW_PYTHON_SUPPORT=ON  -DWITH_TBB=OFF
 # -DWITH_V4L=ON  -DWITH_QT=OFF  -DWITH_OPENGL=ON  -DHAVE_FFMPEG_RESAMPLE=YES -DHAVE_GTK3=NO ..
