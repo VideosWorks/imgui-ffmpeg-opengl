@@ -35,6 +35,7 @@
 #include "pick_folder.h"
 #include "imgui_helpers.h"
 #include "FontAwesome.h"
+#include "md_definitions.h"
 #include "shoots.hpp"
 
 #include "ffmpeg_player.hpp"
@@ -672,10 +673,12 @@ int main(int argc, char * argv[])
     config.MergeMode = true;
 
     // merge in icons from Font Awesome
-    static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+    static const ImWchar fa_icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+    static const ImWchar md_icons_ranges[] = { ICON_MIN_MD, ICON_MAX_MD, 0 };
     config.PixelSnapH = true;
 
-    io.Fonts->AddFontFromFileTTF("./fonts/Icons/FontAwesome/FontAwesome.ttf", 19.0f, &config, icons_ranges);
+    io.Fonts->AddFontFromFileTTF("./fonts/Icons/FontAwesome/FontAwesome.ttf", 19.0f, &config, fa_icons_ranges);
+    io.Fonts->AddFontFromFileTTF("./fonts/Icons/MaterialDesign/font.ttf", 38.0f, &config, md_icons_ranges);
 
     ImVec4 clear_color = ImColor(114, 144, 154);
 
