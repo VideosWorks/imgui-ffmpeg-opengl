@@ -3914,8 +3914,8 @@ int main(int argc, char * argv[])
             //static ImVector<ImVec2> control_points;
             static ImVector<ImU32> colors;
             static bool adding_line = false;
-            static ImVec2 canvas_pos = ImGui::GetCursorScreenPos();            // ImDrawList API uses screen coordinates!
-            static ImVec2 canvas_size = ImGui::GetContentRegionAvail();        // Resize canvas to what's available
+            ImVec2 canvas_pos = ImGui::GetCursorScreenPos();            // ImDrawList API uses screen coordinates!
+            ImVec2 canvas_size = ImGui::GetContentRegionAvail();        // Resize canvas to what's available
             static bool draw_arrows = true;
             static float arrowLength = 8.0f;
             static float arrowWidth = 3.0f;
