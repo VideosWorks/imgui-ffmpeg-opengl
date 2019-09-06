@@ -20,84 +20,99 @@
 #define DEFAULT_ICON_HEIGHT         32
 #define DEFAULT_FRAME_PADDING        4
 
+#define EPSILON  1e-5
+
 namespace md
 
 {
-    class Canvas
-    {
-        public:
-            Canvas();
-            ~Canvas();
-            bool  init(ImVec2, ImVec2);
-            void preview();
-            bool addObject();
 
-            bool adding_circle;
-            bool adding_circle2;
-            bool adding_preview1;
-            bool adding_preview2;
-            bool adding_rect;
-            bool adding_rect2;
+class Canvas
+{
+    public:
+        Canvas();
+        ~Canvas();
 
-            bool alpha_half_preview;
-            bool drag_and_drop;
-            bool options_menu;
+        bool           init();
+        void           update();
 
-            ImVec4 bcol;
-            // future use
-            // ImVec4 ocol;
+        bool           addObject();
+        bool           adding_circle;
+        bool           adding_circle2;
+        bool           adding_preview1;
+        bool           adding_preview2;
+        bool           adding_rect;
+        bool           adding_rect2;
 
-            int iconWidth;
-            int iconHeight;
-            int frame_padding;
+        ImVec4  bcol;
+        // future use
+        // ImVec4 ocol;
 
-            float    P1P4;
-            float    radius_x;
-            float    radius_y;
-            float    rotation;
-            float    arrowLength;
-            float    arrowWidth;
+        int            iconWidth;
+        int            iconHeight;
+        int            frame_padding;
 
-            bool     selected;
-            bool     hovered;
-            bool     record;
+        void           setMousePosValid(int, float);
+        void           preview(int selectedObject, ImU32, int, float, float);
+        void           updateSelectedArea(ImVector <ImVec2> points, ImU32, float);
+        // FIXME, usefull
+        //void           setSelectedAreaPoints(ImVec2, ImVec2);
 
-            void           setMousePosValid(int, float);
-            void           setCurrentActiveDrawnObject(DrawnObject *);
-            DrawnObject *  getCurrentActiveDrawnObject(void);
-            void           update(int selectedObject, ImVector <ImVec2> points, int, float);
-            void           updateSelectedArea(ImVector <ImVec2> points, ImU32, float);
-            int            draw();
-            void           clean();
-            bool           remove();
+        int            draw();
+        void           clean();
+        bool           remove(unsigned int);
+        bool           moveObjectTo(unsigned int, int);
 
-            bool           inside(ImVec2, ImVector<ImVec2>);
+        bool           insideCircle(ImVec2, ImVec2, float);
+        bool           intersectEmptyCircle(ImVec2, ImVec2, float, float);
 
-            void           catchPrimitivesPoints(void);
-            int            show();
+        //             intersection when : (x == A) OR (x === B)  OR ((vec A)*(vec B) < EPSILON  AND  ( x bettwen xB and xC) AND ( y  between yB and yC))
+        bool           intersectSegment(ImVec2 /* mousePos */, ImVec2 /* Point_A */ , ImVec2  /* Point_B */);
+        bool           mousePosIsPoint(ImVec2 /* mousePos */, ImVec2 /* aGivenPoint */);
 
-            void           loadCanvasObjectsIcons(void);
-            void           createCanvasObjectsImagesTexIds(void);
-            void           cleanCanvasObjectsImagesTexIds(void);
+        bool           insideSimpleArrow(ImVec2, ImVector<ImVec2>);
+        bool           insidePolygon(ImVec2, ImVector<ImVec2>);
 
-            GLuint         canvasObjectImageTexId[CANVAS_OBJECTS_TYPES_MAX];
-            cv::Mat        canvasObjectImage[CANVAS_OBJECTS_TYPES_MAX];
+        //             only horizontal rectangle are drawn
+        bool           insideFilledRectangle(ImVec2, ImVector<ImVec2>);
+        bool           intersectEmptyRectangle(ImVec2, ImVector<ImVec2>, ImVector<ImVec2>);
 
-            md::TextCanvas * mp_TextCanvas;
+        bool           insideEllipse(ImVec2, float, float, float, float, float, ImVec2, ImVec2); // includes empty ellipse
+        bool           intersectEmptyEllipse(ImVec2, float, float, float, float, float, ImVec2, ImVec2, float /* thickness */);
 
-            ImVec2 *         p_topLeft;
-            ImVec2 *         p_bottomRight;
+        bool           insideCurve(ImVec2, ImVector<ImVec2>);
+        bool           insideArrow(ImVec2, ImVector<ImVec2>);
 
-            ImDrawList *     p_drawList;
-            ImVec2           mouse_pos_in_image;
-            ImVector <ImVec2> arrow_points;
-            DrawnObject      aDrawnObject;
-            DrawnObject *    p_aDrawnObject = & aDrawnObject;
-            std::vector <DrawnObject> currentlyDrawnObjects;
+        void           setSelected(unsigned int, bool);
+        inline unsigned int   getCurrentActiveDrawnObjectIndex(void) { return currentActiveDrawnObjectIndex ; }
 
-        private:
-            DrawnObject currentActiveObject;
-    };
+        void           catchPrimitivesPoints(void);
+        int            show();
+
+        void           loadCanvasObjectsIcons(void);
+        void           createCanvasObjectsImagesTexIds(void);
+        void           cleanCanvasObjectsImagesTexIds(void);
+
+        GLuint         canvasObjectImageTexId[CANVAS_OBJECTS_TYPES_MAX];
+        cv::Mat        canvasObjectImage[CANVAS_OBJECTS_TYPES_MAX];
+
+        md::TextCanvas * mp_TextCanvas;
+
+        ImVec2           topLeft;
+        ImVec2           bottomRight;
+
+        ImDrawList *     p_drawList;
+        ImVec2           mouse_pos_in_image;
+        ImVector <ImVec2> arrow_points;
+        ImVector <ImVec2> zoom_area_points;
+        DrawnObject      aDrawnObject;
+
+        std::vector <DrawnObject> currentlyDrawnObjects;
+
+    private:
+        unsigned int    currentActiveDrawnObjectIndex;
+
+};
+
 } /* namespace md */
 
 #endif /* __CANVAS_HPP__ */
