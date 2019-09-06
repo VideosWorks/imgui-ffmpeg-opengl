@@ -90,18 +90,8 @@ bool md::Canvas::init()
     iconHeight    = DEFAULT_ICON_HEIGHT;
     frame_padding = DEFAULT_FRAME_PADDING;
     bcol          = ImVec4(0.3f, 0.4f, 1.0f, 0.5f);
-    // ocol       = ImVec4(0.4f, 0.4f, 0.4f, 0.5f);
     return true;
 }
-
-/*
-FIXME (could be usefull)
-void md::Canvas::setSelectedAreaPoints(ImVec2 topLeft, ImVec2 bottomRight)
-{
-    p_topLeft     = & topLeft;
-    p_bottomRight = & bottomRight;
-}
-*/
 
 void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, float outline_thickness)
 {
@@ -137,7 +127,6 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
                 aDrawnObject.anObjectType = selectedObject;
                 aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
 
-                // random line preview
                 for (int i = 0 ; i < aDrawnObject.objectPoints.size(); i++)
                 {
                     ImGui::GetOverlayDrawList()->AddCircleFilled(ImVec2(mp_TextCanvas->image_pos.x + aDrawnObject.objectPoints[i].x,
@@ -212,14 +201,14 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
             if (ImGui::IsItemHovered())
             {
                 if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
-                    adding_circle2 = false; // l'utilisateur n'a pas relâché le bouton de la souris, mais il s'est arrêté => on arrête d'ajouter des "points"
+                    adding_circle2 = false;
 
                 if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
                     adding_circle2 = true;
 
                 if ( (!adding_circle2 && ImGui::IsMouseClicked(0)) )
                 {
-                    arrow_points.push_back(mouse_pos_in_image); // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
+                    arrow_points.push_back(mouse_pos_in_image);
                     adding_circle2 = true;
                 }
             }
@@ -324,12 +313,11 @@ void md::Canvas::catchPrimitivesPoints(void)
     if (adding_rect2)
     {
         adding_preview2 = true;
-        // catch the second point
         aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
 
         aDrawnObject.P1P4 = sqrtf(  (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
                                   + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
-        // preview
+
         if (!aDrawnObject.objectPoints.empty())
         {
             switch(aDrawnObject.anObjectType)
@@ -426,7 +414,7 @@ void md::Canvas::catchPrimitivesPoints(void)
                 default:
                 break;
             }
-        } // end preview
+        }
 
         if (!ImGui::GetIO().MouseDown[0])
         {
@@ -436,7 +424,6 @@ void md::Canvas::catchPrimitivesPoints(void)
             adding_rect2    = false;
             adding_preview2 = false;
 
-             // store object properties, to draw them fastly
             switch(aDrawnObject.anObjectType)
             {
                 case FILLED_ELLIPSE:
@@ -474,7 +461,6 @@ void md::Canvas::catchPrimitivesPoints(void)
              }
 
              currentlyDrawnObjects.push_back(aDrawnObject);
-             // prepare the next turn
              aDrawnObject.objectPoints.clear();
         }
  
@@ -484,19 +470,16 @@ void md::Canvas::catchPrimitivesPoints(void)
     {
         if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
         {
-            // on clique n'importe où, ce qui permet d'effacer les 2 points précédents
             adding_rect2 = adding_preview2 = false;
         }
 
         if ( (!adding_rect2 && ImGui::IsMouseClicked(0)) )
         {
-            // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
             aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
             adding_rect2 = true;
         }
     }
 
-    //std::cout << "Pas relâché la souris, on enlève le point de la pile : " << __LINE__ << std::endl;
     if ((adding_preview2) && !(aDrawnObject.anObjectType == RANDOM_LINE))
         aDrawnObject.objectPoints.pop_back();
 
@@ -508,11 +491,7 @@ int md::Canvas::draw()
 {
 
     ImDrawList * p_drawList = ImGui::GetWindowDrawList();
-
-    //ImVec2 subview_size = ImGui::GetContentRegionAvail();
     ImVec2 subview_size = mp_TextCanvas->image_size;
-
-    // clip lines and objects within the canvas (if we resize it, etc.)
     p_drawList->PushClipRect(ImVec2(0.0f, 0.0f), ImVec2(mp_TextCanvas->image_pos.x + subview_size.x, mp_TextCanvas->image_pos.y + subview_size.y) );
 
     for (unsigned int i = 0; i < currentlyDrawnObjects.size(); i++)
@@ -521,11 +500,8 @@ int md::Canvas::draw()
             switch(currentlyDrawnObjects[i].anObjectType)
             {
                 case EMPTY_RECTANGLE:
-                    // already stored
                     p_drawList->AddRect(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                         ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                // FIXME : hovered object == displayed in WHITE_COLOR, or RED
-                //                                        (currentlyDrawnObjects[i].selected == true) ? ImU32(255, 255, 255, 255) : currentlyDrawnObjects[i].objBackgroundColor,
                                         currentlyDrawnObjects[i].objBackgroundColor,
                                         0.0f,
                                         ~0,
@@ -614,7 +590,6 @@ int md::Canvas::draw()
                 case RANDOM_ARROW:
                     for (int j = 2 ; j < currentlyDrawnObjects[i].objectPoints.size() ; j++)
                     {
-                        //draw a bezier curve
                         p_drawList->AddBezierCurve(   ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
                                                              mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),  //P1 == start
                                                       ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
@@ -625,7 +600,7 @@ int md::Canvas::draw()
                                                              mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[3].y), // P4 == end
                                                       currentlyDrawnObjects[i].objBackgroundColor,
                                                       currentlyDrawnObjects[i].thickness,
-                                                      64); // drawing parameters
+                                                      64);
                     }
 
                     if ((currentlyDrawnObjects[i].P1P4 > 0.0f) && (currentlyDrawnObjects[i].P1P4 > 1.5f * currentlyDrawnObjects[i].arrowLength))
@@ -660,22 +635,7 @@ int md::Canvas::draw()
                         }
 
                     }
-#ifdef DEBUG
-                    std::cout << "The points coordinates are : " << __LINE__ << std::endl;
 
-                    for (unsigned int i = 0; i < currentlyDrawnObjects.size(); i++)
-                    {
-                        // be sure the area is enough big to be drawn
-                        std::cout << "DRAW currentlyDrawnObjects.objectPoints[" << i << "].size() vaut :  " << currentlyDrawnObjects[i].objectPoints.size() << std::endl;
-                        std::cout << "DRAW currentlyDrawnObjects.anObjectType vaut :  " << currentlyDrawnObjects[i].anObjectType << std::endl;
-
-                        for (int j = 0 ; j < currentlyDrawnObjects[i].objectPoints.size() ; j++)
-                        {
-                            std::cout << "DRAW  currentlyDrawnObjects[" << i << "].objectPoints[" << j << "].x : "  << currentlyDrawnObjects[i].objectPoints[j].x << std::endl;
-                            std::cout << "DRAW  currentlyDrawnObjects[" << i << "].objectPoints[" << j << "].y : "  << currentlyDrawnObjects[i].objectPoints[j].y << std::endl;
-                        }
-                    }
-#endif
                 break;
 
                 default:
@@ -749,11 +709,6 @@ bool md::Canvas::moveObjectTo(unsigned int positionInStack, int choice)
         break;
     }
 
-    // + UI :
-    //  Pour valider
-    //  => OK / Cancel
-    // sécurité de l'effacement:
-    //  [x] checkbox : confirmer la suppression ?
     return true;
 }
 
@@ -949,62 +904,6 @@ void md::Canvas::setSelected(unsigned int position, bool isSelected)
     else
         currentActiveDrawnObjectIndex = -1;
 }
-
-
-/* other algo to be tested :
-
-// Source : https://stackoverflow.com/questions/11716268/point-in-polygon-algorithm/20868925#20868925
-// testx, testy = mousePos
-// other points belong to the polygon
-
-
-int pnpoly(int nvert, float *vertx, float *verty, float testx, float testy)
-{
-  int i, j, c = 0;
-  for (i = 0, j = nvert-1; i < nvert; j = i++) {
-    if ( ((verty[i]>testy) != (verty[j]>testy)) &&
-     (testx < (vertx[j]-vertx[i]) * (testy-verty[i]) / (verty[j]-verty[i]) + vertx[i]) )
-       c = !c;
-  }
-  return c;
-}
-
-*/
-
-/*
-
-WIP
-
-if (inside) && !IsItemClicked(0) && !IsActive()
-{
-    // le curseur survole la zone (reconnu comme appartenant à un objet dessiné)
-    // mais l'utilisateur n'a pas cliqué, et l'object n'est pas actif
-
-    // => on affiche les points de contrôle
-}
-
-
-
-if ((inside && IsItemClicked(0) && !IsActive() )
-{
-
-
-
-}
-
-
-if ((inside && IsItemClicked(0) && IsActive && IsMouseDragging())
-    move(i, j);
-
-
-
-int TextCanvas::move(int object_numb, int point )
-{
-    currentlyDrawnObjects[object_numb].objectPoints[point].x += ImGui::GetIO().MouseDelta.x
-    currentlyDrawnObjects[object_numb].objectPoints[point].x += ImGui::GetIO().MouseDelta.y;
-    return 0;
-}
-*/
 
 // END CANVAS
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
