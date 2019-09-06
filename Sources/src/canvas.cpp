@@ -225,14 +225,13 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
             }
         break;
 
-            //case TEXT_OBJECT:
         case SELECT_CURSOR:
         case NOT_A_DRAWN_OBJECT:
         {
             if (adding_rect)
             {
                 adding_preview1 = true;
-                zoom_area_points.push_back(mouse_pos_in_image); // catch the second point
+                zoom_area_points.push_back(mouse_pos_in_image);
 
                 if (!ImGui::GetIO().MouseDown[0])
                    adding_rect = adding_preview1 = false;
@@ -243,7 +242,6 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
             {
                 if ( (((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1) )  && (!zoom_area_points.empty()))) && !ImGui::IsMouseDragging() )
                 {
-                    // on clique n'importe où, ce qui permet d'effacer les 2 points précédents
                     adding_rect = false;
                     adding_preview1 = false;
                     zoom_area_points.pop_back();
@@ -252,19 +250,11 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
 
                 if ( (!adding_rect && ImGui::IsMouseClicked(0)) )
                 {
-                    // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
                     zoom_area_points.push_back(mouse_pos_in_image);
                     adding_rect = true;
                 }
             }
-
-            // clip lines and objects within the canvas (if we resize it, etc.)
-            //p_drawList->PushClipRect(ImVec2(0.0f, 0.0f), ImVec2(mp_TextCanvas->image_pos.x + subview_size.x, mp_TextCanvas->image_pos.y + subview_size.y));
-
             updateSelectedArea(zoom_area_points, color, outline_thickness);
-
-            //p_drawList->PopClipRect();
-
             reorder_points(&topLeft, &bottomRight);
 
             if (adding_preview1)
@@ -282,7 +272,6 @@ void md::Canvas::updateSelectedArea(ImVector <ImVec2> zoom_area_points, ImU32 co
 {
     for (int i = 0; i < zoom_area_points.Size - 1; i += 2)
     {
-        // be sure the area is enough big to be drawn
         if ((abs(zoom_area_points[i].x - zoom_area_points[i+1].x) > 2) && (abs(zoom_area_points[i].y - zoom_area_points[i+1].y)> 2))
         {
             ImGui::GetOverlayDrawList()->AddRect(ImVec2(mp_TextCanvas->image_pos.x + zoom_area_points[i].x, mp_TextCanvas->image_pos.y + zoom_area_points[i].y),
@@ -293,7 +282,6 @@ void md::Canvas::updateSelectedArea(ImVector <ImVec2> zoom_area_points, ImU32 co
         }
         else
         {
-//            // in this case, draw nothing in the lense
             topLeft = ImVec2(0.0f,0.0f);
             bottomRight = ImVec2(ZOOM_WIDTH_MIN, ZOOM_HEIGHT_MIN);
         }
@@ -318,7 +306,7 @@ void  md::Canvas::setMousePosValid(int w, float ratio)
     mouse_pos_in_image = ImVec2(ImGui::GetIO().MousePos.x - mp_TextCanvas->image_pos.x,  (ImGui::GetIO().MousePos.y - mp_TextCanvas->image_pos.y));
 
     if ( mouse_pos_in_image.x < 0 )
-        mouse_pos_in_image.x = LEFT_IMAGE_BORDER; // ... because the outline border thickness
+        mouse_pos_in_image.x = LEFT_IMAGE_BORDER;
 
     if (( mouse_pos_in_image.y < 0 ))
         mouse_pos_in_image.y = TOP_IMAGE_BORDER;
