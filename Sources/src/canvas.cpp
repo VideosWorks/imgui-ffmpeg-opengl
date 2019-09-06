@@ -149,11 +149,9 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
 
                 if (!ImGui::GetIO().MouseDown[0])
                 {
-                    //std::cout << "Souris relâchée !!  " << __LINE__ << std::endl;
                     adding_circle = false;
                     currentlyDrawnObjects.push_back(aDrawnObject);
 
-                    // prepare next turn
                     while (!aDrawnObject.objectPoints.empty())
                     {
                         aDrawnObject.objectPoints.pop_back();
@@ -165,7 +163,6 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
             {
                 if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
                 {
-                    // l'utilisateur n'a pas relâché le bouton de la souris, mais il s'est arrêté => on arrête d'ajouter des "points"
                     adding_circle = false;
                 }
 
@@ -174,7 +171,6 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
 
                 if ( (!adding_circle && ImGui::IsMouseClicked(0)) )
                 {
-                    // l'utilisateur a cliqué, et il n'était pas en train de dessiner -> on part de ce point
                     aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
                     adding_circle = true;
                 }
@@ -189,7 +185,6 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
                 aDrawnObject.anObjectType = selectedObject;
                 arrow_points.push_back(mouse_pos_in_image);
 
-                // random arrow preview
                 for (int i = 0 ; i < arrow_points.size(); i++)
                 {
                     ImGui::GetOverlayDrawList()->AddCircleFilled( ImVec2(mp_TextCanvas->image_pos.x + arrow_points[i].x, mp_TextCanvas->image_pos.y + arrow_points[i].y), aDrawnObject.thickness, aDrawnObject.objBackgroundColor, 8);
@@ -197,9 +192,8 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
 
                 if (!ImGui::GetIO().MouseDown[0])
                 {
-                    //std::cout << "Souris relâchée !!  " << __LINE__ << std::endl;
                     adding_circle2 = false;
-                    // calculer les points  n1, n3 et last + push_back()
+
                     aDrawnObject.objectPoints.push_back(arrow_points[0]);
                     aDrawnObject.objectPoints.push_back(arrow_points  [(int)(arrow_points.size()/3.0f)]);
                     aDrawnObject.objectPoints.push_back(arrow_points[(int)((2*arrow_points.size())/3.0f)]);
@@ -208,8 +202,8 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
                                                *(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
                                               + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)
                                                *(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y));
-                     currentlyDrawnObjects.push_back(aDrawnObject);
-                    // prepare next turn
+                    currentlyDrawnObjects.push_back(aDrawnObject);
+
                     arrow_points.clear();
                     aDrawnObject.objectPoints.clear();
                 }
