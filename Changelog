@@ -1,6 +1,27 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 September 6th
+
+FIXED : using new canvas, now decoupled from the main loop. Far more easy to maintain
+FIXED : implemented inside*any_object* canvas methods.
+TODO : implement and use them, to allow mouse cursor hovering any drawn object (exepted text, currently separated from the canvas
+
+FIXED : using new magnifier. New class, new implementation, safer, faster and more easy to maintain
+FIXED : new magnifier behaviour, more consistent. Feedback awaited ...
+
+
+2019 Septembre 2nd
+
+Graphical chart : new color for the target (miniDart blue )
+Writing new class around images
+
+
+2019 August 30th 
+
+FIXED  : GK follow up : after some shoots are traced, the arrows do not follow the window, when moving it
+ (was visibility issue)
+
 2019 August 29th
 
 FIXED : the selected area to be magnified is drawn below the already drawn objects (Now, the selected area is using OverlayDrawList)
