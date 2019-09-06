@@ -42,6 +42,8 @@
 #include "engine.hpp"
 #include "cv_helpers.hpp"
 #include "canvas_objects.hpp"
+#include "canvas.hpp"
+#include "magnifier.hpp"
 
 #ifdef BUILDING_FRENCH
 #include "miniDart_fr.hpp"
@@ -366,64 +368,6 @@ const int SCREEN_TICK_PER_FRAME = 1000 / SCREEN_FPS;
 
 std::vector<std::string> recordableAudioDeviceNames;
 
-const std::string canvasObjectImagePath[CANVAS_OBJECTS_TYPES_MAX] =
-{
-#define TESTING_DARK_THEME
-#ifdef TESTING_DARK_THEME
-    TEXT_OBJECT_IMAGE_DARK_PATH,
-    FILLED_RECTANGLE_IMAGE_DARK_PATH,
-    EMPTY_RECTANGLE_IMAGE_DARK_PATH,
-    FILLED_ELLIPSE_IMAGE_DARK_PATH,
-    EMPTY_ELLIPSE_IMAGE_DARK_PATH,
-    RANDOM_LINE_IMAGE_DARK_PATH,
-    RANDOM_ARROW_IMAGE_DARK_PATH,
-    SIMPLE_ARROW_IMAGE_DARK_PATH,
-    SIMPLE_LINE_IMAGE_DARK_PATH
-#else
-    TEXT_OBJECT_IMAGE_PATH,
-    FILLED_RECTANGLE_IMAGE_PATH,
-    EMPTY_RECTANGLE_IMAGE_PATH,
-    FILLED_ELLIPSE_IMAGE_PATH,
-    EMPTY_ELLIPSE_IMAGE_PATH,
-    RANDOM_LINE_IMAGE_PATH,
-    RANDOM_ARROW_IMAGE_PATH,
-    SIMPLE_ARROW_IMAGE_PATH,
-    SIMPLE_LINE_IMAGE_PATH
-#endif
-
-};
-
-GLuint canvasObjectImageTexId[CANVAS_OBJECTS_TYPES_MAX];
-cv::Mat canvasObjectImage[CANVAS_OBJECTS_TYPES_MAX];
-
-static void loadCanvasObjectsIcons(void)
-{
-    for (short i = 0 ; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
-    {
-        canvasObjectImage[i] = cv::imread(canvasObjectImagePath[i]);
-    }
-}
-
-static void createCanvasObjectsImagesTexIds(void)
-{
-    short int i = 0;
-    for (i = 0; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
-    {
-        canvasObjectImageTexId[i] = glConvertMatToTexture(canvasObjectImage[i]);
-    }
-}
-
-static void cleanCanvasObjectsImagesTexIds(void)
-{
-    short int i = 0;
-    for (i = 0; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
-    {
-        if (canvasObjectImageTexId[i] != 0)
-            glDeleteTextures(1, &canvasObjectImageTexId[i]);
-    }
-}
-
-
 
 int main(int argc, char * argv[])
 {
@@ -468,7 +412,16 @@ int main(int argc, char * argv[])
     bool b_display_activity_time = false;
     bool b_display_total_time = false;
     bool b_zoom_available = false;
-    loadCanvasObjectsIcons();
+
+    bool * pb_zoom_available = &b_zoom_available;
+
+    md::Canvas delayTabCanvas;
+    delayTabCanvas.init();
+    delayTabCanvas.loadCanvasObjectsIcons();
+
+    md::Canvas * p_delayTabCanvas = &delayTabCanvas;
+    md::Magnifier magnifier(p_delayTabCanvas);
+
 
     int lastFrameNumber = pClipReader->getMaxFrame();
 
@@ -705,12 +658,11 @@ int main(int argc, char * argv[])
     // Application::init()
     md::TEXT_Object  aTextObject;
     md::TEXT_Object* pTextObject = &aTextObject;
-    md::TextCanvas   aTextCanvas(pTextObject);
 
-    md::TextCanvas * pTextCanvas = &aTextCanvas;
+    md::TextCanvas aTextCanvas(pTextObject);
+    md::TextCanvas *  pTextCanvas = &aTextCanvas;
 
-    DrawnObject * p_aDrawnObject;
-    std::vector <DrawnObject> * p_delayTabDrawnObjects;
+    delayTabCanvas.mp_TextCanvas = &aTextCanvas;
 
     // Application::Loop()
     while (!quit)
@@ -1518,7 +1470,7 @@ int main(int argc, char * argv[])
 
             // Visible from DELAY_TAB ONLY
             static int current_delayTab_drawing_task = DRAWING_NOTHING;
-            static int selectedObject = NOT_A_DRAWN_OBJECT; // default
+            static int selectedObject = SELECT_CURSOR; // default
 
             // with that, we can display every frame at the right time
             if ((b_video_running)&&(!b_audio_paused))
@@ -1541,8 +1493,8 @@ int main(int argc, char * argv[])
             ImU32 color = ImColor(col);
             static float outline_thickness = 2.5f;
 
-            pTextCanvas->image_size.x = w;
-            pTextCanvas->image_size.y = h;
+            aTextCanvas.image_size.x = w;
+            aTextCanvas.image_size.y = h;
 
             ImGui::BeginGroup();  // DEBUT1
             {
@@ -1552,11 +1504,9 @@ int main(int argc, char * argv[])
 // CHILD1 : DRAW THE FRAME displayed_image OR DRAW DEFAULT  BACKGROUND 
 
                 ImDrawList * draw_list = ImGui::GetWindowDrawList();
-                pTextCanvas->image_pos = ImGui::GetCursorScreenPos();
-                ImVec2 subview_size = ImGui::GetContentRegionAvail();
-                //ImVec2 subview_size = pTextCanvas->image_size;
-                static bool adding_rect = false;
-                //static bool adding_rect2 = false;
+
+                p_delayTabCanvas->p_drawList = draw_list;
+                p_delayTabCanvas->mp_TextCanvas->image_pos = ImGui::GetCursorScreenPos();
 
 #define CLASSICAL_DRAW_IMAGE
 #ifdef  CLASSICAL_DRAW_IMAGE
@@ -1579,457 +1529,24 @@ int main(int argc, char * argv[])
                 //------------------------------------------------
                 ImGui::BeginChild("child1");
 
-                ImVec2 mouse_pos_in_image = ImVec2(ImGui::GetIO().MousePos.x - pTextCanvas->image_pos.x,  (ImGui::GetIO().MousePos.y - pTextCanvas->image_pos.y));
-
-                static bool adding_preview1 = false;
-                static bool adding_rect2 = false;
-                static bool adding_preview2 = false;
-
-                static ImVector <ImVec2> arrow_points;
-
-                static DrawnObject aDrawnObject;
-                p_aDrawnObject = & aDrawnObject;
-
-                static std::vector <DrawnObject> delayTabDrawnObjects;
-                p_delayTabDrawnObjects = &delayTabDrawnObjects;
-
+                // initialize
                 if (current_delayTab_drawing_task == DRAWING_ZOOMED_AREA)
-                    aDrawnObject.anObjectType = NOT_A_DRAWN_OBJECT;
+                    p_delayTabCanvas->aDrawnObject.anObjectType = NOT_A_DRAWN_OBJECT;
                 else
-                    aDrawnObject.anObjectType = selectedObject;
+                    p_delayTabCanvas->aDrawnObject.anObjectType = selectedObject;
 
-                float P1P4 = 0.1f;
-                float arrowLength = 5 * aDrawnObject.thickness;
-                float arrowWidth = 3 * aDrawnObject.thickness;
-
-                ///////////////////////////////////////////////////////////////////////////////////////////////
-                //                               CATCH THE POINTS TO BE DRAWN                                //
-                ///////////////////////////////////////////////////////////////////////////////////////////////
-
-                if ( mouse_pos_in_image.x < 0 )
-                    mouse_pos_in_image.x = LEFT_IMAGE_BORDER;
-
-                if (( mouse_pos_in_image.y < 0 ))
-                    mouse_pos_in_image.y = TOP_IMAGE_BORDER;
-
-                if ( mouse_pos_in_image.x > (RIGHT_IMAGE_BORDER) )
-                    mouse_pos_in_image.x = RIGHT_IMAGE_BORDER;
-
-                if (( mouse_pos_in_image.y > BOTTOM_IMAGE_BORDER ))
-                    mouse_pos_in_image.y = BOTTOM_IMAGE_BORDER;
-
-                switch(aDrawnObject.anObjectType)
-                {
-                    case EMPTY_RECTANGLE:
-                    case EMPTY_ELLIPSE:
-                    case FILLED_RECTANGLE:
-                    case FILLED_ELLIPSE:
-                    case SIMPLE_LINE:
-                    case SIMPLE_ARROW:
-
-                    if (adding_rect2)
-                    {
-                        adding_preview2 = true;
-                        aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
-
-                        if (!aDrawnObject.objectPoints.empty())
-                        {
-                            switch(aDrawnObject.anObjectType)
-                            {
-                                case EMPTY_RECTANGLE:
-                                    ImGui::GetOverlayDrawList()->AddRect(pTextCanvas->image_pos + aDrawnObject.objectPoints[0],
-                                                                            pTextCanvas->image_pos + aDrawnObject.objectPoints[1],
-                                                                            aDrawnObject.objBackgroundColor, 0.0f, ~0 , aDrawnObject.thickness);
-                                break;
-
-                                case EMPTY_ELLIPSE:
-                                    P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
-                                    ImGui::GetOverlayDrawList()->AddCircle(ImVec2(pTextCanvas->image_pos.x + aDrawnObject.objectPoints[0].x, pTextCanvas->image_pos.y + aDrawnObject.objectPoints[1].y),
-                                                                           P1P4,
-                                                                           aDrawnObject.objBackgroundColor, 32, aDrawnObject.thickness);
-                                break;
-
-                                case FILLED_RECTANGLE:
-                                    ImGui::GetOverlayDrawList()->AddRectFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor);
-                                break;
-
-                                case FILLED_ELLIPSE:
-                                    P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
-                                    ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], P1P4, aDrawnObject.objBackgroundColor, 32);
-                                break;
-
-                                case SIMPLE_LINE:
-                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor, aDrawnObject.thickness);
-                                break;
-
-                                case SIMPLE_ARROW:
-                                    ImGui::GetOverlayDrawList()->AddLine(pTextCanvas->image_pos + aDrawnObject.objectPoints[0], pTextCanvas->image_pos + aDrawnObject.objectPoints[1], aDrawnObject.objBackgroundColor, aDrawnObject.thickness);
-                                    P1P4 = sqrtf( (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x) + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
-
-                                    if (P1P4 > 1.5f * arrowLength)
-                                    {
-                                        ImVec2 pointC(  aDrawnObject.objectPoints[1].x - (arrowLength * (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4,
-                                                        aDrawnObject.objectPoints[1].y - (arrowLength * (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/P1P4);
-                                        ImVec2 pointD(  pointC.x + (arrowWidth*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/P1P4,
-                                                        pointC.y - (arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4);
-                                        ImVec2 pointE(  pointC.x - (arrowWidth*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/P1P4,
-                                                        pointC.y + (arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/P1P4);
-
-                                        ImGui::GetOverlayDrawList()->PathClear();
-                                        ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
-                                        ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(aDrawnObject.objectPoints[1].x + pTextCanvas->image_pos.x, aDrawnObject.objectPoints[1].y + pTextCanvas->image_pos.y));
-                                        ImGui::GetOverlayDrawList()->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                        ImGui::GetOverlayDrawList()->PathStroke(aDrawnObject.objBackgroundColor, false, aDrawnObject.thickness);
-                                    }
-                                break;
-
-                                default:
-                                break;
-                            }
-                        }
-
-                        if (!ImGui::GetIO().MouseDown[0])
-                        {
-                            adding_rect2    = false;
-                            adding_preview2 = false;
-                            delayTabDrawnObjects.push_back(aDrawnObject);
-                            aDrawnObject.objectPoints.clear();
-                        }
-                    }
-
-                    if (ImGui::IsItemHovered())
-                    {
-                        if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
-                            adding_rect2 = adding_preview2 = false;
-
-                        if ( (!adding_rect2 && ImGui::IsMouseClicked(0)) )
-                        {
-                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
-                            adding_rect2 = true;
-                        }
-                    }
-
-                    if ((adding_preview2) && !(aDrawnObject.anObjectType == RANDOM_LINE))
-                        aDrawnObject.objectPoints.pop_back();
-
-                    break;
-
-                    case RANDOM_LINE:
-
-                    static bool adding_circle   = false;
-
-                    if (adding_circle)
-                    {
-                        aDrawnObject.anObjectType = selectedObject;
-                        aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
-
-                        for (int i = 0 ; i < aDrawnObject.objectPoints.size(); i++)
-                        {
-                            ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + aDrawnObject.objectPoints[i], aDrawnObject.thickness, aDrawnObject.objBackgroundColor, 8);
-                        }
-
-                        if (!ImGui::GetIO().MouseDown[0])
-                        {
-                            adding_circle = false;
-                            delayTabDrawnObjects.push_back(aDrawnObject);
-                            aDrawnObject.objectPoints.clear();
-                        }
-                    }
-
-                    if (ImGui::IsItemHovered())
-                    {
-                        if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging())
-                            adding_circle = false;
-
-                        if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
-                            adding_circle = true;
-
-                        if ( (!adding_circle && ImGui::IsMouseClicked(0)) )
-                        {
-                            aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
-                            adding_circle = true;
-                        }
-                    }
-                    break;
-
-                    case RANDOM_ARROW:
-                    static bool adding_circle2   = false;
-
-                    if (adding_circle2)
-                    {
-                        aDrawnObject.anObjectType = selectedObject;
-                        arrow_points.push_back(mouse_pos_in_image);
-
-                        for (int i = 0 ; i < arrow_points.size(); i++)
-                        {
-                            ImGui::GetOverlayDrawList()->AddCircleFilled(pTextCanvas->image_pos + arrow_points[i], aDrawnObject.thickness, aDrawnObject.objBackgroundColor, 8);
-                        }
-
-                        if (!ImGui::GetIO().MouseDown[0])
-                        {
-                            adding_circle2 = false;
-                            aDrawnObject.objectPoints.push_back(arrow_points[0]);
-                            aDrawnObject.objectPoints.push_back(arrow_points  [(int)(arrow_points.size()/3.0f)]);
-                            aDrawnObject.objectPoints.push_back(arrow_points[(int)((2*arrow_points.size())/3.0f)]);
-                            aDrawnObject.objectPoints.push_back(arrow_points[arrow_points.size()-1]);
-                            delayTabDrawnObjects.push_back(aDrawnObject);
-                            arrow_points.clear();
-                            aDrawnObject.objectPoints.clear();
-                        }
-                    }
-
-                    if (ImGui::IsItemHovered())
-                    {
-                        if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
-                        {
-                            adding_circle2 = false;
-                        }
-
-                        if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
-                            adding_circle2 = true;
-
-                        if ( (!adding_circle2 && ImGui::IsMouseClicked(0)) )
-                        {
-                            arrow_points.push_back(mouse_pos_in_image);
-                            adding_circle2 = true;
-                        }
-                    }
-                    break;
-
-                    case NOT_A_DRAWN_OBJECT:
-
-                    if (adding_rect)
-                    {
-                        adding_preview1 = true;
-                        points.push_back(mouse_pos_in_image);
-
-                        if (!ImGui::GetIO().MouseDown[0])
-                            adding_rect = adding_preview1 = false;
-                    }
-
-                    if (ImGui::IsItemHovered())
-                    {
-                        if ( (((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1) )  && (!points.empty()))) && !ImGui::IsMouseDragging() )
-                        {
-                            adding_rect = false;
-                            adding_preview1 = false;
-                            points.pop_back();
-                            points.pop_back();
-                        }
-                        if ( (!adding_rect && ImGui::IsMouseClicked(0)) )
-                        {
-                            points.push_back(mouse_pos_in_image);
-                            adding_rect = true;
-                        }
-                    }
-                    // clip lines and objects within the canvas (if we resize it, etc.)
-                    draw_list->PushClipRect(ImVec2(0.0f, 0.0f), pTextCanvas->image_pos + subview_size);
-
-                    for (int i = 0; i < points.Size - 1; i += 2)
-                    {
-                        // be sure the area is enough big to be drawn
-                        if ((abs(points[i].x-points[i+1].x) > 2) && (abs(points[i].y-points[i+1].y)> 2))
-                        {
-                            draw_list->AddRect(ImVec2(pTextCanvas->image_pos.x + points[i].x, pTextCanvas->image_pos.y + points[i].y),
-                                               ImVec2(pTextCanvas->image_pos.x + points[i+1].x, pTextCanvas->image_pos.y + points[i+1].y), color, 0.0f, ~0 ,outline_thickness);
-                            topLeft     = points[i];
-                            bottomRight = points[i+1];
-                        }
-                        else
-                        {
-                            // in this case, draw nothing in the lense
-                            topLeft     = ImVec2(0.0f,0.0f);
-                            bottomRight = ImVec2(ZOOM_WIDTH_MIN, ZOOM_HEIGHT_MIN);
-                        }
-                    }
-                    draw_list->PopClipRect();
-
-                    reorder_points(p_topLeft, p_bottomRight);
-
-                    if (adding_preview1)
-                        points.pop_back();
-
-                    break;
-
-                    case TEXT_OBJECT:
-                    default:
-                    break;
-                }
-
-                ///////////////////////////////////////////////////////////////////////////////////////////////
-                //                                           DRAW ALL
-                ///////////////////////////////////////////////////////////////////////////////////////////////
-
-                // clip lines and objects within the canvas (if we resize it, etc.)
-                draw_list->PushClipRect(ImVec2(0.0f, 0.0f), pTextCanvas->image_pos + subview_size);
-
-                for (unsigned int i = 0; i < delayTabDrawnObjects.size(); i++)
-                {
-                    {
-                        switch(delayTabDrawnObjects[i].anObjectType)
-                        {
-                            case EMPTY_RECTANGLE:
-                            // already stored
-                            draw_list->AddRect( pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0],
-                                                pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1],
-                                                delayTabDrawnObjects[i].objBackgroundColor, 0.0f, ~0 , delayTabDrawnObjects[i].thickness);
-                            break;
-
-                            case EMPTY_ELLIPSE:
-
-                            P1P4 = sqrtf( ( delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
-                                            draw_list->AddCircle(ImVec2(pTextCanvas->image_pos.x + delayTabDrawnObjects[i].objectPoints[0].x, pTextCanvas->image_pos.y + delayTabDrawnObjects[i].objectPoints[1].y),
-                                            P1P4,
-                                            delayTabDrawnObjects[i].objBackgroundColor, 32, delayTabDrawnObjects[i].thickness);
-                            break;
-
-                            case FILLED_RECTANGLE:
-
-                            draw_list->AddRectFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], delayTabDrawnObjects[i].objBackgroundColor);
-                            break;
-
-                            case FILLED_ELLIPSE:
-
-                            P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
-                            draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], P1P4, delayTabDrawnObjects[i].objBackgroundColor, 32);
-                            break;
-
-                            case SIMPLE_LINE:
-
-                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], delayTabDrawnObjects[i].objBackgroundColor, delayTabDrawnObjects[i].thickness);
-                            break;
-
-                            case SIMPLE_ARROW:
-
-                            draw_list->AddLine(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0], pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], delayTabDrawnObjects[i].objBackgroundColor, delayTabDrawnObjects[i].thickness);
-                            P1P4 = sqrtf( (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y) );
-
-                            if (P1P4 > 1.5f * arrowLength)
-                            {
-                                ImVec2 pointC(  delayTabDrawnObjects[i].objectPoints[1].x - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4,
-                                                delayTabDrawnObjects[i].objectPoints[1].y - (arrowLength * (delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4);
-                                ImVec2 pointD(  pointC.x + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
-                                                pointC.y - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
-                                ImVec2 pointE(  pointC.x - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].y - delayTabDrawnObjects[i].objectPoints[0].y))/P1P4,
-                                                pointC.y + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[1].x - delayTabDrawnObjects[i].objectPoints[0].x))/P1P4);
-
-                                draw_list->PathClear();
-                                draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
-                                draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[1].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[1].y + pTextCanvas->image_pos.y));
-                                draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                draw_list->PathStroke(delayTabDrawnObjects[i].objBackgroundColor, false, delayTabDrawnObjects[i].thickness);
-                            }
-                            break;
-
-                            case RANDOM_ARROW:
-
-                            for (int j = 2 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
-                            {
-                                    //draw a bezier curve
-                                    draw_list->AddBezierCurve(   pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[0],  //P1 == start
-                                                                 pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[1], // P2 == CP1
-                                                                 pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[2], // P3 == CP2
-                                                                 pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[3], // P4 == end
-                                                                 delayTabDrawnObjects[i].objBackgroundColor, delayTabDrawnObjects[i].thickness, 64); // drawing parameters
-                            }
-
-                            P1P4 = sqrtf((delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[0].x)*(delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[0].x) + (delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[0].y)*(delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[0].y) );
-
-                            if (P1P4 > 1.5f * arrowLength)
-                            {
-                                ImVec2 pointC(  delayTabDrawnObjects[i].objectPoints[3].x - (arrowLength * (delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[2].x))/P1P4,
-                                                delayTabDrawnObjects[i].objectPoints[3].y - (arrowLength * (delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[2].y))/P1P4);
-                                ImVec2 pointD(  pointC.x + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[2].y))/P1P4,
-                                                pointC.y - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[2].x))/P1P4);
-                                ImVec2 pointE(  pointC.x - (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].y - delayTabDrawnObjects[i].objectPoints[2].y))/P1P4,
-                                                pointC.y + (arrowWidth*(delayTabDrawnObjects[i].objectPoints[3].x - delayTabDrawnObjects[i].objectPoints[2].x))/P1P4);
-
-                                draw_list->PathClear();
-                                draw_list->PathLineTo(ImVec2(pointD.x + pTextCanvas->image_pos.x, pointD.y + pTextCanvas->image_pos.y));
-                                draw_list->PathLineTo(ImVec2(delayTabDrawnObjects[i].objectPoints[3].x + pTextCanvas->image_pos.x, delayTabDrawnObjects[i].objectPoints[3].y + pTextCanvas->image_pos.y));
-                                draw_list->PathLineTo(ImVec2(pointE.x + pTextCanvas->image_pos.x, pointE.y + pTextCanvas->image_pos.y));
-                                draw_list->PathStroke(delayTabDrawnObjects[i].objBackgroundColor, false, delayTabDrawnObjects[i].thickness);
-
-                            }
-                            break;
-
-                            case RANDOM_LINE :
-                            for (unsigned int i = 0 ; i < delayTabDrawnObjects.size(); i++)
-                            {
-                                for (int j = 0 ; j < delayTabDrawnObjects[i].objectPoints.size() ; j++)
-                                {
-                                    if (delayTabDrawnObjects[i].anObjectType == RANDOM_LINE)
-                                         draw_list->AddCircleFilled(pTextCanvas->image_pos + delayTabDrawnObjects[i].objectPoints[j], delayTabDrawnObjects[i].thickness, delayTabDrawnObjects[i].objBackgroundColor, 8);
-                                }
-
-                            }
-                            break;
-
-                            default:
-                            break;
-                        }
-                    }
-                }
-                draw_list->PopClipRect();
+                p_delayTabCanvas->preview(p_delayTabCanvas->aDrawnObject.anObjectType, color, w, ratio, outline_thickness);
+                p_delayTabCanvas->draw();
 
 // END CANVAS
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 // MAGNIFIER
-                // MAGNIFIER todo : always available
+                current_delayTab_drawing_task = magnifier.start(w, ratio);
+                magnifier.update(pb_zoom_available, b_paused, backgroundTextureId);
 
-                // zoom value
-                static     float aZoom = 1.0f;
-                /*static*/ float W = bottomRight.x - topLeft.x;
-                /*static*/ float H = bottomRight.y - topLeft.y;
-
-                // minimal dimensions for the zoom (else, we can't close it)
-                if (W < 260.0f)
-                    W = ZOOM_WIDTH_MIN;
-
-                if (H < 260.0f)
-                    H = ZOOM_HEIGHT_MIN;
-
-                ImVec2 center((bottomRight.x + topLeft.x)/2.0f + LEFT_IMAGE_BORDER, (bottomRight.y + topLeft.y)/2.0f);
-                ImVec2 delta( W/(2.0f*aZoom), H/(2.0f*aZoom));
-                ImVec2 uv0 = ImVec2((center.x - delta.x)/w, (center.y - delta.y)/(w*ratio));
-                ImVec2 uv1 = ImVec2((center.x + delta.x)/w, (center.y + delta.y)/(w*ratio));
-
-                if ((b_zoom_available) && (!b_paused))
-                {
-                    current_delayTab_drawing_task = DRAWING_ZOOMED_AREA;
-                    selectedObject = NOT_A_DRAWN_OBJECT;
-                    ImGui::SetNextWindowFocus();
-                    ImGuiWindowFlags zoomWinFlags = 0;
-                    zoomWinFlags |= ImGuiWindowFlags_NoSavedSettings;
-
-                    if (adding_rect)
-                        ImGui::SetNextWindowSize(ImVec2(W + 18.0f, H + 70.0f));
-
-                    ImGui::Begin( ICON_FA_SEARCH ZOOM_WINDOW);
-                    {
-                        // resizable window
-                        ImGui::Image(reinterpret_cast<void * >(backgroundTextureId),
-                                     ImVec2(ImGui::GetWindowWidth() - 18.0f, ImGui::GetWindowHeight() - 70.0f),
-                                     uv0,uv1, ImColor(255,255,255,255), ImColor(255,255,255,255));
-
-                        ImGui::Text(ZOOM_VALUE); ImGui::SameLine();
-                        ImGui::PushItemWidth(125);
-                        ImGui::SliderFloat("##ghost", &aZoom, 1.0f, 4.0f, "##%.1f");
-                        ImGui::PopItemWidth(); ImGui::SameLine();
-
-                        if (ImGui::Button(CLOSE_BUTTON))
-                        {
-                            // in this case, draw nothing in the lense
-                            ImGui::SetWindowSize(ImVec2(ZOOM_WIDTH_MIN, ZOOM_HEIGHT_MIN));
-                            b_zoom_available = false;
-                            p_aDrawnObject->anObjectType = NOT_A_DRAWN_OBJECT;
-                        }
-                    }
-                    ImGui::End();
 // END MAGNIFIER
 
-                }
                 ImGui::SameLine();
                 ImGui::Spacing();
 
@@ -3031,9 +2548,9 @@ int main(int argc, char * argv[])
                     if (ImGui::IsItemClicked(0))
                     {
                         std::cout << "Loupe activée" << std::endl;
-                        std::cout << "(before) p_aDrawnObject->anObjectType : " << p_aDrawnObject->anObjectType << std::endl;
-                        p_aDrawnObject->anObjectType = NOT_A_DRAWN_OBJECT;
-                        std::cout << "(after) p_aDrawnObject->anObjectType : " << p_aDrawnObject->anObjectType << std::endl;
+                        std::cout << "(before) p_aDrawnObject->anObjectType : " << p_delayTabCanvas->aDrawnObject.anObjectType << std::endl;
+                        p_delayTabCanvas->aDrawnObject.anObjectType = NOT_A_DRAWN_OBJECT;
+                        std::cout << "(after) p_aDrawnObject->anObjectType : " << p_delayTabCanvas->aDrawnObject.anObjectType << std::endl;
                     }
 
                     ImGui::PushItemWidth(80.0f);
@@ -3158,172 +2675,148 @@ int main(int argc, char * argv[])
             ImGui::Text(ANNOTATIONS_CHILD_WINDOW);
 
 //  CANVAS IN VIDEO
-                static bool b_create_canvas = false;
+            static bool b_canvas_show = false;
 
-                ImGui::AlignTextToFramePadding(); ImGui::SameLine();
+            ImGui::AlignTextToFramePadding(); ImGui::SameLine();
 
-                ToggleButton(ANNOTATE_THE_VIDEO, &b_create_canvas);
+            ToggleButton(ANNOTATE_THE_VIDEO, &b_canvas_show);
 
-                if (b_create_canvas)
+            if (b_canvas_show)
+            {
+                // FIXME : replace magic
+                int iconWidth   = 32;
+                int iconHeight  = 32;
+                int frame_padding = 4;
+
+                static float object_thickness = 2.5f;
+                static ImVec4 bcol = ImVec4( 0.3f, 0.4f, 1.0f, 0.5);
+                // LATER USE static ImVec4 ocol = ImVec4( 0.4f, 0.4f, 0.4f, 0.5);
+
+                if (p_delayTabCanvas->currentlyDrawnObjects.size() > 0)
                 {
-                    // FIXME
-                    int iconWidth   = 32;
-                    int iconHeight  = 32;
-                    int frame_padding = 4;
+                    ImGui::SameLine();
 
-/////////////////////////////////////////////////////////////////////////
+                    if (ImGui::Button(DELETE_ALL_BUTTON))
+                        ImGui::OpenPopup(PA_CLEAN_ALL_Q);
 
-                    static bool alpha_half_preview = true ;
-                    static bool drag_and_drop = true;
-                    static bool options_menu = true;
-                    static float object_thickness = 2.5f;
-                    static ImVec4 bcol = ImVec4( 0.3f, 0.4f, 1.0f, 0.5);
-                    // LATER USE static ImVec4 ocol = ImVec4( 0.4f, 0.4f, 0.4f, 0.5);
-
-                    if (p_delayTabDrawnObjects->size() > 0)
+                    if (ImGui::BeginPopupModal(PA_CLEAN_ALL_Q, NULL, ImGuiWindowFlags_AlwaysAutoResize))
                     {
+                        ImGui::Text(ALL_ANNOTATIONS_WILL_BE_CANCELED_Q);
+
+                        if (ImGui::Button(CONFIRM_BUTTON, ImVec2(120,0)))
+                        {
+                            while (!(p_delayTabCanvas->currentlyDrawnObjects.empty()))
+                            {
+                                p_delayTabCanvas->currentlyDrawnObjects.pop_back();
+                            }
+
+                            ImGui::CloseCurrentPopup();
+
+                        }
                         ImGui::SameLine();
 
-                        if (ImGui::Button(DELETE_ALL_BUTTON))
-                            ImGui::OpenPopup("Tout effacer ?");
-
-                        if (ImGui::BeginPopupModal("Tout effacer ?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+                        if (ImGui::Button(CANCEL_BUTTON, ImVec2(120,0)))
                         {
-                            ImGui::Text(ALL_ANNOTATIONS_WILL_BE_CANCELED_Q);
-
-                            if (ImGui::Button(CONFIRM_BUTTON, ImVec2(120,0)))
-                            {
-                                while (!(p_delayTabDrawnObjects->empty()))
-                                {
-                                    p_delayTabDrawnObjects->pop_back();
-                                }
-                                ImGui::CloseCurrentPopup();
-                            }
-                            ImGui::SameLine();
-
-                            if (ImGui::Button(CANCEL_BUTTON, ImVec2(120,0)))
-                            {
-                                ImGui::CloseCurrentPopup();
-                            }
-                            ImGui::EndPopup();
+                            ImGui::CloseCurrentPopup();
                         }
 
-                        ImGui::SameLine();
-
-                        if (ImGui::Button(UNDO_BUTTON)) // || cancel_last_action)
-                        {
-                            p_delayTabDrawnObjects->pop_back();
-                        }
+                        ImGui::EndPopup();
                     }
 
-                    createCanvasObjectsImagesTexIds();
+                    ImGui::SameLine();
 
-                    for (int i = 0 ; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
+                    if (ImGui::Button(UNDO_BUTTON)) // || cancel_last_action)
                     {
-                        ImGui::ImageButton( reinterpret_cast<void * >(canvasObjectImageTexId[i]), ImVec2(iconWidth, iconHeight),
-                                            ImVec2(0,0), ImVec2(1,1), frame_padding, ImColor(0,0,0,255));
-                        ImGui::PushID(i);
-                        if (ImGui::IsItemClicked(0))
-                            selectedObject = i;
-                        ImGui::PopID();
-                        ImGui::SameLine();
-                    }
-
-                    if (selectedObject != TEXT_OBJECT)
-                    {
-                        ImGuiColorEditFlags misc_flags = /*(hdr ? ImGuiColorEditFlags_HDR : 0) |*/ (drag_and_drop ? 0 : ImGuiColorEditFlags_NoDragDrop) | ImGuiColorEditFlags_AlphaPreviewHalf | (options_menu ? 0 : ImGuiColorEditFlags_NoOptions);
-                        misc_flags |= ImGuiColorEditFlags_NoInputs;
-
-                        ImGui::NewLine();
-                        ImGui::Text(DRAWN_OBJECT_COLOR);
-                        ImGui::SameLine();
-                        ImGui::PushItemWidth(30);
-                        ImGui::ColorEdit4("  ", &bcol.x, misc_flags);
-                        ImGui::PopItemWidth();
-/*
-    LATER USE
-                        ImGui::SameLine();
-
-                        ImGui::Text(DRAWN_OBJECT_OUTLINE_COLOR);
-                        ImGui::SameLine();
-                        ImGui::PushItemWidth(30);
-                        ImGui::ColorEdit4(" ", &ocol.x, misc_flags);
-                        ImGui::PopItemWidth();
-*/
-                        ImGui::SameLine();
-
-                        ImGui::Text(DRAWN_OBJECT_LINE_THICKNESS);
-                        ImGui::SameLine();
-                        ImGui::PushItemWidth(150);
-                        ImGui::SliderFloat(" ", &object_thickness, 0.5, 20, "%.1f\n" );
-                        ImGui::PopItemWidth();
-
-                        p_aDrawnObject->objBackgroundColor =  ImColor(bcol.x, bcol.y, bcol.z, bcol.w);
-                        p_aDrawnObject->thickness = object_thickness;
-                        // LATER USE p_aDrawnObject->objOutlineColor    =  ImColor(ocol.x, ocol.y, ocol.z, ocol.w);
-
-                        ImGui::Checkbox(HALF_ALPHA_PREVIEW, &alpha_half_preview); ImGui::SameLine();
-                        ImGui::Checkbox(WITH_DRAG_AND_DROP, &drag_and_drop); ImGui::SameLine();
-                        ImGui::Checkbox(WITH_OPTIONS_MENU, &options_menu);//ImGui::SameLine() ; HelpMarker(RIGHT_CLICK_FOR_INDIVIDUAL_COLOR_WIDGET_OPTIONS);
-                    }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// FIXME : call the canvas() from there !
-
-                    ImGui::NewLine();
-
-                    switch (selectedObject)
-                    {
-                        case TEXT_OBJECT:
-                            pTextCanvas->pTextObject->b_displayable = text_in_video_helper(pTextCanvas);
-                            current_delayTab_drawing_task = DRAWING_TEXT; 
-                        break;
-
-                        case FILLED_RECTANGLE:
-                            ImGui::NewLine();
-                            //addFilledObjectParameters(); //  type = FILLED_RECTANGLE, filled_color, outline color
-                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
-                        break;
-
-                        case EMPTY_RECTANGLE:
-                            ImGui::NewLine();
-                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
-                        break;
-
-                        case FILLED_ELLIPSE:
-                            ImGui::NewLine();
-                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
-                        break;
-
-                        case EMPTY_ELLIPSE:
-                            ImGui::NewLine();
-                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
-                        break;
-
-                        case RANDOM_LINE:
-                            ImGui::NewLine();
-                            current_delayTab_drawing_task = FREEHAND_DRAWING; 
-                        break;
-
-                        case RANDOM_ARROW:
-                            ImGui::NewLine();
-                            current_delayTab_drawing_task = FREEHAND_DRAWING; 
-                        break;
-
-                        case SIMPLE_ARROW:
-                            ImGui::NewLine();
-                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
-                        break;
-
-                        case SIMPLE_LINE:
-                          ImGui::NewLine();
-                            current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
-                        break;
-
-                        default:
-                          break;
+                        p_delayTabCanvas->currentlyDrawnObjects.pop_back();
                     }
                 }
+
+                p_delayTabCanvas->createCanvasObjectsImagesTexIds();
+
+
+                for (int i = 0 ; i < CANVAS_OBJECTS_TYPES_MAX ; i++)
+                {
+                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.06f, 0.53f, 0.98f, 1.00f));
+                    ImGui::PushID(i);
+                    ImGui::ImageButton( reinterpret_cast<void * >(p_delayTabCanvas->canvasObjectImageTexId[i]), ImVec2(iconWidth, iconHeight),
+                                        ImVec2(0,0), ImVec2(1,1), frame_padding, ImColor(0,0,0,255));
+
+                    if (ImGui::IsItemClicked(0))
+                    {
+                        selectedObject = i;
+                    }
+
+                    ImGui::PopID();
+                    ImGui::PopStyleColor();
+                    ImGui::SameLine();
+                }
+
+                if (selectedObject > TEXT_OBJECT)
+                {
+                    ImGuiColorEditFlags misc_flags = ImGuiColorEditFlags_AlphaPreviewHalf;
+                    misc_flags |= ImGuiColorEditFlags_NoInputs;
+
+                    ImGui::NewLine();
+                    ImGui::Text(DRAWN_OBJECT_COLOR);
+                    ImGui::SameLine();
+                    ImGui::PushItemWidth(30);
+                    ImGui::ColorEdit4("  ", &bcol.x, misc_flags);
+                    ImGui::PopItemWidth();
+                    ImGui::SameLine();
+
+                    ImGui::Text(DRAWN_OBJECT_LINE_THICKNESS);
+                    ImGui::SameLine();
+                    ImGui::PushItemWidth(150);
+                    ImGui::SliderFloat(" ", &object_thickness, 0.5, 20, "%.1f\n" );
+                    ImGui::PopItemWidth();
+
+                    p_delayTabCanvas->aDrawnObject.objBackgroundColor =  ImColor(bcol.x, bcol.y, bcol.z, bcol.w);
+                    p_delayTabCanvas->aDrawnObject.thickness = object_thickness;
+                    p_delayTabCanvas->aDrawnObject.arrowLength = 5 * object_thickness;
+                    p_delayTabCanvas->aDrawnObject.arrowWidth = 3 * object_thickness;
+                    // LATER USE p_aDrawnObject->objOutlineColor    =  ImColor(ocol.x, ocol.y, ocol.z, ocol.w);
+                }
+
+                ImGui::NewLine();
+
+                switch (selectedObject)
+                {
+                    case TEXT_OBJECT:
+                        pTextCanvas->pTextObject->b_displayable = text_in_video_helper(pTextCanvas);
+                        current_delayTab_drawing_task = DRAWING_TEXT;
+                    break;
+
+                    case SELECT_CURSOR:
+                        ImGui::NewLine();
+                        current_delayTab_drawing_task = NOT_A_DRAWN_OBJECT;
+                    break;
+
+                    case FILLED_CIRCLE:
+                    case EMPTY_RECTANGLE:
+                    case EMPTY_CIRCLE:
+                    case FILLED_ELLIPSE:
+                    case EMPTY_ELLIPSE:
+                    case SIMPLE_ARROW:
+                    case SIMPLE_LINE:
+                    case FILLED_RECTANGLE:
+                        current_delayTab_drawing_task = DRAWING_PRIMITIVE; 
+                        ImGui::NewLine();
+                    break;
+
+                    case RANDOM_LINE:
+                        ImGui::NewLine();
+                        current_delayTab_drawing_task = FREEHAND_DRAWING; 
+                    break;
+
+                    case RANDOM_ARROW:
+                        ImGui::NewLine();
+                        current_delayTab_drawing_task = FREEHAND_DRAWING; 
+                    break;
+
+                    default:
+                    break;
+                }
+            }
 
 // END CANVAS IN VIDEO
 
@@ -4691,7 +4184,7 @@ int main(int argc, char * argv[])
         if (backgroundTextureId4 != 0)
             glDeleteTextures(1, &backgroundTextureId4);
 
-        cleanCanvasObjectsImagesTexIds();
+        p_delayTabCanvas->cleanCanvasObjectsImagesTexIds();
 
         //unneeded if vsync is active
         #ifndef USE_VSYNC
@@ -4724,6 +4217,9 @@ int main(int argc, char * argv[])
 
     if (!captureDev.USBFrame.empty())
         captureDev.USBFrame.release();
+
+    magnifier.~Magnifier();
+    p_delayTabCanvas->~Canvas();
 
     cap2.release();
     aClipReader.Close();
