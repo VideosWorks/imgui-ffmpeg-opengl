@@ -516,7 +516,7 @@ int main(int argc, char * argv[])
 
     SDL_Window * window = nullptr;
 
-    window = SDL_CreateWindow("miniDart",
+    window = SDL_CreateWindow(APPLICATION_NAME,
                               SDL_WINDOWPOS_UNDEFINED,
                               SDL_WINDOWPOS_UNDEFINED,
                               WINDOW_WIDTH,
