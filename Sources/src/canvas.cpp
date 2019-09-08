@@ -973,17 +973,21 @@ bool md::Canvas::insideFilledRectangle(ImVec2 mousePos, ImVector <ImVec2> Points
 {
     bool toReturn = false;
 
+    float Xmax = ImMax(Points[0].x, Points[1].x);
+    float Xmin = ImMin(Points[0].x, Points[1].x);
+    float Ymax = ImMax(Points[0].y, Points[1].y);
+    float Ymin = ImMin(Points[0].y, Points[1].y);
+
     if (fabs((Points[0].x - Points[1].x)*(Points[0].y - Points[1].y)) < EPSILON )
         return intersectSegment(mousePos, Points[0], Points[1]);
 
-    if (insidePolygon(mousePos, Points))
-        toReturn = true;
-    else
+    if ((mousePos.x < Xmin) || (mousePos.x > Xmax) || (mousePos.y < Ymin)|| (mousePos.y > Ymax))
         toReturn = false;
+    else
+        toReturn = true;
 
     return toReturn;
 }
-
 
 bool md::Canvas::intersectEmptyRectangle(ImVec2 mousePos, ImVector <ImVec2> Rect_ext, ImVector <ImVec2> Rect_int)
 {
