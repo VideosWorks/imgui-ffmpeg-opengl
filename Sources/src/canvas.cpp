@@ -331,7 +331,7 @@ void md::Canvas::update(ImVec2 mousePos)
                 break;
 
                 case SIMPLE_LINE:
-                    currentlyDrawnObjects[i].hovered = intersectSegment(mousePos, currentlyDrawnObjects[i].objectPoints[0], currentlyDrawnObjects[i].objectPoints[0]);
+                    currentlyDrawnObjects[i].hovered = intersectSegment(mousePos, currentlyDrawnObjects[i].objectPoints[0], currentlyDrawnObjects[i].objectPoints[1]);
                 break;
 
                 default:
