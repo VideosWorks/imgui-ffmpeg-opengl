@@ -728,7 +728,7 @@ int md::Canvas::draw()
                         p_drawList->PathLineTo(ImVec2(pointD.x + mp_TextCanvas->image_pos.x, pointD.y + mp_TextCanvas->image_pos.y));
                         p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].objectPoints[1].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].objectPoints[1].y + mp_TextCanvas->image_pos.y));
                         p_drawList->PathLineTo(ImVec2(pointE.x + mp_TextCanvas->image_pos.x, pointE.y + mp_TextCanvas->image_pos.y));
-                        p_drawList->PathStroke(currentlyDrawnObjects[i].objBackgroundColor, false, currentlyDrawnObjects[i].thickness);
+                        p_drawList->PathStroke(getBackgroundColor(i), false, currentlyDrawnObjects[i].thickness);
                     }
                 break;
 
