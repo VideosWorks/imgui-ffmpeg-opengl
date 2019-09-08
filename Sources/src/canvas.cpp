@@ -993,8 +993,8 @@ bool md::Canvas::intersectEmptyRectangle(ImVec2 mousePos, ImVector <ImVec2> Rect
 {
     bool toReturn = false;
 
-    if (fabs((Rect_ext[0].x - Rect_ext[1].x)*(Rect_ext[0].y - Rect_ext[1].y)) < EPSILON )
-        return intersectSegment(mousePos, Rect_ext[0], Rect_ext[1]);
+//    if (fabs((Rect_ext[0].x - Rect_ext[1].x)*(Rect_ext[0].y - Rect_ext[1].y)) < EPSILON )
+//        return intersectSegment(mousePos, Rect_ext[0], Rect_ext[1]);
 
     if (insidePolygon(mousePos, Rect_ext) && !(insidePolygon(mousePos, Rect_int)))
 
