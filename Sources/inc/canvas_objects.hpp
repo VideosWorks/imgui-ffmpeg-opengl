@@ -1,8 +1,7 @@
 /*
  * canvas_objects.hpp
  * Copyright Eric Bachard  2019 August 1st
- * License : GPL v2
- * See: http://www.gnu.org/licenses/gpl-2.0.html
+ * License MIT
  *
  */
 
@@ -95,6 +94,9 @@ typedef struct DrawnObject
     bool         record;
     bool         has_outline;
 
+    ImVector <ImVec2>  arrowPolygon; // inside helpers
+    ImVector <ImVec2>  Rect_ext; // inside helpers
+    ImVector <ImVec2>  Rect_int; // inside helpers
     ImVector <ImVec2>  hullPoints; // inside helpers
     ImVector <ImVec2>  objectPoints;  // depends on the case
     ImU32  objBackgroundColor;
