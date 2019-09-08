@@ -686,7 +686,7 @@ int md::Canvas::draw()
                                                 getBackgroundColor(i),
                                                 currentlyDrawnObjects[i].rotation,
                                                 32);
-                    break;
+                break;
 
                 case SIMPLE_LINE:
                     p_drawList->AddLine(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
