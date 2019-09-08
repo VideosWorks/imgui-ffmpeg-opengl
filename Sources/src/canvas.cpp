@@ -594,6 +594,9 @@ void md::Canvas::catchPrimitivesPoints(void)
 
              currentlyDrawnObjects.push_back(aDrawnObject);
              aDrawnObject.objectPoints.clear();
+             aDrawnObject.Rect_ext.clear();
+             aDrawnObject.Rect_int.clear();
+             aDrawnObject.arrowPolygon.clear();
         }
  
     } /* adding_rect2 */
