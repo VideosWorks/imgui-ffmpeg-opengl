@@ -278,17 +278,60 @@ void md::Canvas::updateSelectedArea(ImVector <ImVec2> zoom_area_points, ImU32 co
 }
 
 
-void md::Canvas::update()
-{
 
-}
 
 bool  md::Canvas::addObject()
 {
     return true;
 }
 
+void md::Canvas::update(ImVec2 mousePos)
+{
+    for (unsigned int i = 0; i < currentlyDrawnObjects.size(); i++)
+    {
+        {
+            switch(currentlyDrawnObjects[i].anObjectType)
+            {
+                case FILLED_RECTANGLE:
+                    currentlyDrawnObjects[i].hovered = insideFilledRectangle(mousePos, currentlyDrawnObjects[i].objectPoints);
+                break;
 
+                case FILLED_CIRCLE:
+                    currentlyDrawnObjects[i].hovered = insideCircle(mousePos, currentlyDrawnObjects[i].objectPoints[0], currentlyDrawnObjects[i].R2_out );
+                break;
+
+                case FILLED_ELLIPSE:
+                break;
+
+                case EMPTY_RECTANGLE:
+                break;
+
+                case EMPTY_CIRCLE:
+                    currentlyDrawnObjects[i].hovered = intersectEmptyCircle(mousePos,
+                                                                            currentlyDrawnObjects[i].objectPoints[0],
+                                                                            currentlyDrawnObjects[i].R2_in,
+                                                                            currentlyDrawnObjects[i].R2_out);
+                break;
+
+                case EMPTY_ELLIPSE:
+                break;
+
+                case RANDOM_ARROW:
+                break;
+
+                case SIMPLE_ARROW:
+                break;
+
+                case SIMPLE_LINE:
+                    currentlyDrawnObjects[i].hovered = intersectSegment(mousePos, currentlyDrawnObjects[i].objectPoints[0], currentlyDrawnObjects[i].objectPoints[0]);
+                break;
+
+                default:
+                break;
+            }
+        }
+    }
+}
 
 void  md::Canvas::setMousePosValid(int w, float ratio)
 {
