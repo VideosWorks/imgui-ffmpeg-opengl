@@ -351,6 +351,19 @@ void  md::Canvas::setMousePosValid(int w, float ratio)
 }
 
 
+ImU32 md::Canvas::getBackgroundColor(int i)
+{
+    ImU32 toReturn;
+    if (currentlyDrawnObjects[i].hovered == true)
+    {
+        toReturn = IM_COL32(128, 128,128,128);
+    }
+    else
+        toReturn = currentlyDrawnObjects[i].objBackgroundColor;
+
+    return toReturn;
+}
+
 void md::Canvas::catchPrimitivesPoints(void)
 {
     if (adding_rect2)
