@@ -892,7 +892,8 @@ bool md::Canvas::intersectSegment(ImVec2 mousePos, ImVec2 p_A, ImVec2 p_B)
     if ( (mousePosIsPoint(mousePos, p_A) || (mousePosIsPoint(mousePos,p_B))) )
         return true;
 
-    if ( ((p_A.x - mousePos.x)*( p_B.y - p_A.y) - (p_A.y - mousePos.y)*(p_B.x - p_A.x)) <= EPSILON )
+    if ( (((p_A.x - mousePos.x)*( p_B.y - p_A.y) - (p_A.y - mousePos.y)*(p_B.x - p_A.x)) <= EPSILON)
+         && ((mousePos.x - p_A.x)*(mousePos.x - p_B.x) + (mousePos .y - p_A.y)*(mousePos.y - p_B.y)  < 0) )
         toReturn = true;
     else
         toReturn = false;
