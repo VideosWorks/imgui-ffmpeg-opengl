@@ -598,10 +598,11 @@ int md::Canvas::draw()
                 break;
 
                 case EMPTY_CIRCLE:
-                                    p_drawList->AddCircle(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                                    currentlyDrawnObjects[i].P1P4,
-                                    getBackgroundColor(i),
-                                    32, currentlyDrawnObjects[i].thickness);
+                                    p_drawList->AddCircle(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
+                                                                 mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
+                                                          currentlyDrawnObjects[i].P1P4,
+                                                          getBackgroundColor(i),
+                                                          32, currentlyDrawnObjects[i].thickness);
                 break;
 
                 case FILLED_RECTANGLE:
@@ -804,7 +805,7 @@ bool md::Canvas::moveObjectTo(unsigned int positionInStack, int choice)
 
 bool md::Canvas::insideCircle(ImVec2 mousePos, ImVec2 center, float R2)
 {
-   if ( ((mousePos.x - center.x)*(mousePos.x - center.x)*(mousePos.y - center.y)*(mousePos.y - center.y)) <= R2 )
+   if ( ((mousePos.x - center.x)*(mousePos.x - center.x) + (mousePos.y - center.y)*(mousePos.y - center.y)) <= R2 )
        return true;
    else
        return false;
