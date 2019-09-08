@@ -547,8 +547,42 @@ void md::Canvas::catchPrimitivesPoints(void)
                 }
                 break;
 
+                case EMPTY_RECTANGLE:
+                {
+                    reorder_points(&aDrawnObject.objectPoints[0], &aDrawnObject.objectPoints[1]);
+
+                    aDrawnObject.Rect_ext.push_back(ImVec2( aDrawnObject.objectPoints[0].x - (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[0].y - (aDrawnObject.thickness /2.0f)));
+                    aDrawnObject.Rect_ext.push_back(ImVec2( aDrawnObject.objectPoints[1].x + (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[0].y - (aDrawnObject.thickness /2.0f)));
+                    aDrawnObject.Rect_ext.push_back(ImVec2( aDrawnObject.objectPoints[1].x + (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[1].y + (aDrawnObject.thickness /2.0f)));
+                    aDrawnObject.Rect_ext.push_back(ImVec2( aDrawnObject.objectPoints[0].x - (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[1].y + (aDrawnObject.thickness /2.0f)));
+
+                    aDrawnObject.Rect_int.push_back(ImVec2( aDrawnObject.objectPoints[0].x + (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[0].y + (aDrawnObject.thickness /2.0f)));
+                    aDrawnObject.Rect_int.push_back(ImVec2( aDrawnObject.objectPoints[1].x - (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[0].y + (aDrawnObject.thickness /2.0f)));
+                    aDrawnObject.Rect_int.push_back(ImVec2( aDrawnObject.objectPoints[1].x - (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[1].y - (aDrawnObject.thickness /2.0f)));
+                    aDrawnObject.Rect_int.push_back(ImVec2( aDrawnObject.objectPoints[0].x + (aDrawnObject.thickness /2.0f),
+                                                            aDrawnObject.objectPoints[1].y - (aDrawnObject.thickness /2.0f)));
+                }
+                break;
+
                 case SIMPLE_ARROW:
                 {
+
+                    aDrawnObject.arrowPolygon.push_back(ImVec2(  aDrawnObject.objectPoints[1].x - (aDrawnObject.arrowLength * (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/aDrawnObject.P1P4,
+                                         aDrawnObject.objectPoints[1].y - (aDrawnObject.arrowLength * (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/aDrawnObject.P1P4));
+
+                    aDrawnObject.arrowPolygon.push_back(ImVec2(  aDrawnObject.arrowPolygon[0].x + (aDrawnObject.arrowWidth*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/aDrawnObject.P1P4,
+                                         aDrawnObject.arrowPolygon[0].y - (aDrawnObject.arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/aDrawnObject.P1P4));
+
+                    aDrawnObject.arrowPolygon.push_back(ImVec2(  aDrawnObject.arrowPolygon[0].x - (aDrawnObject.arrowWidth*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y))/aDrawnObject.P1P4,
+                                         aDrawnObject.arrowPolygon[0].y + (aDrawnObject.arrowWidth*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x))/aDrawnObject.P1P4));
+
                     aDrawnObject.P1P4 = sqrtf(  (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
                                               + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
                 }
