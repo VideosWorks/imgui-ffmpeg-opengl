@@ -490,12 +490,38 @@ void md::Canvas::catchPrimitivesPoints(void)
                 }
                 break;
 
-                case EMPTY_CIRCLE:
+               case EMPTY_CIRCLE:
+                {
+                    aDrawnObject.P1P4 = sqrtf(  (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
+                                              + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
+
+                    float Rext = aDrawnObject.P1P4 + (aDrawnObject.thickness / 2.0f);
+                    float Rint = aDrawnObject.P1P4 - (aDrawnObject.thickness / 2.0f);
+                    aDrawnObject.R2_in = Rint * Rint;
+                    aDrawnObject.R2_out = Rext * Rext;
+
+                    std::cout << "aDrawnObject.objectPoints[0].x : " << aDrawnObject.objectPoints[0].x << "\n";
+                    std::cout << "aDrawnObject.objectPoints[0].y : " << aDrawnObject.objectPoints[0].y << "\n";
+                    std::cout << "Rint                           : " << Rint << "\n";
+                    std::cout << "aDrawnObject.P1P4              : " << aDrawnObject.P1P4 << "\n";
+                    std::cout << "Rext                           : " << Rext << "\n";
+                    std::cout << "aDrawnObject.R2_in             : " << aDrawnObject.R2_in << "\n";
+                    std::cout << "aDrawnObject.R2_out            : " << aDrawnObject.R2_out << "\n";
+
+                }
+                break;
+
                 case FILLED_CIRCLE:
                 {
                     aDrawnObject.R2_out = (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
-                                        + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y);
+                                              + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y);
                     aDrawnObject.P1P4 = sqrtf(aDrawnObject.R2_out);
+
+                    std::cout << "aDrawnObject.objectPoints[0].x : " << aDrawnObject.objectPoints[0].x << "\n";
+                    std::cout << "aDrawnObject.objectPoints[0].y : " << aDrawnObject.objectPoints[0].y << "\n";
+                    std::cout << "aDrawnObject.R2_out : " << aDrawnObject.R2_out << "\n";
+                    std::cout << "aDrawnObject.P1P4   : " << aDrawnObject.P1P4 << "\n";
+
                 }
                 break;
 
