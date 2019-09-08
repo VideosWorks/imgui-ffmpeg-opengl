@@ -914,16 +914,17 @@ bool md::Canvas::mousePosIsPoint (ImVec2 mousePos, ImVec2 point)
 }
 
 
-bool md::Canvas::insideSimpleArrow(ImVec2 mousePos, ImVector<ImVec2> polygon)
+bool md::Canvas::insideSimpleArrow(ImVec2 mousePos, ImVector<ImVec2> polygon, ImVector<ImVec2> arrowPolygon)
 {
     bool toReturn = false;
-    ImVector <ImVec2> arrowPolygon;
-    arrowPolygon[0] = polygon[1];
-    arrowPolygon[1] = polygon[2];
-    arrowPolygon[2] = polygon[3];
+    //if (intersectSegment(mousePos, polygon[0], polygon[1]) ||   insidePolygon(mousePos, arrowPolygon))
 
-    if (intersectSegment(mousePos, polygon[0], polygon[3]) || insidePolygon(mousePos, arrowPolygon))
+    if (   intersectSegment(mousePos, polygon[0], polygon[1])
+        || intersectSegment(mousePos, polygon[1], arrowPolygon[1])
+        || intersectSegment(mousePos, polygon[1], arrowPolygon[2]))
+    {
         toReturn = true;
+    }
     else
         toReturn = false;
 
