@@ -708,6 +708,15 @@ int md::Canvas::draw()
 
                     if (currentlyDrawnObjects[i].P1P4 > 1.5f * currentlyDrawnObjects[i].arrowLength)
                     {
+
+                     /* FIXME : OPTIMIZE
+                        p_drawList->PathClear();
+                        p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].arrowPolygon[1].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].arrowPolygon[1].y + mp_TextCanvas->image_pos.y));
+                        p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].objectPoints[1].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].objectPoints[1].y + mp_TextCanvas->image_pos.y));
+                        p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].arrowPolygon[2].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].arrowPolygon[2].y + mp_TextCanvas->image_pos.y));
+                        p_drawList->PathStroke(currentlyDrawnObjects[i].objBackgroundColor, false, currentlyDrawnObjects[i].thickness);
+                      */
+
                         ImVec2 pointC(  currentlyDrawnObjects[i].objectPoints[1].x - (currentlyDrawnObjects[i].arrowLength * (currentlyDrawnObjects[i].objectPoints[1].x - currentlyDrawnObjects[i].objectPoints[0].x))/currentlyDrawnObjects[i].P1P4,
                                         currentlyDrawnObjects[i].objectPoints[1].y - (currentlyDrawnObjects[i].arrowLength * (currentlyDrawnObjects[i].objectPoints[1].y - currentlyDrawnObjects[i].objectPoints[0].y))/currentlyDrawnObjects[i].P1P4);
                         ImVec2 pointD(  pointC.x + (currentlyDrawnObjects[i].arrowWidth*(currentlyDrawnObjects[i].objectPoints[1].y - currentlyDrawnObjects[i].objectPoints[0].y))/currentlyDrawnObjects[i].P1P4,
