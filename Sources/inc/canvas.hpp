@@ -69,7 +69,7 @@ class Canvas
         bool           intersectSegment(ImVec2 /* mousePos */, ImVec2 /* Point_A */ , ImVec2  /* Point_B */);
         bool           mousePosIsPoint(ImVec2 /* mousePos */, ImVec2 /* aGivenPoint */);
 
-        bool           insideSimpleArrow(ImVec2, ImVector<ImVec2>);
+        bool           insideSimpleArrow(ImVec2, ImVector<ImVec2>, ImVector<ImVec2>);
         bool           insidePolygon(ImVec2, ImVector<ImVec2>);
 
         //             only horizontal rectangle are drawn
