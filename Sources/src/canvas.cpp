@@ -449,6 +449,13 @@ void md::Canvas::catchPrimitivesPoints(void)
 
                 case EMPTY_CIRCLE:
                 case FILLED_CIRCLE:
+                {
+                    aDrawnObject.R2_out = (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
+                                        + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y);
+                    aDrawnObject.P1P4 = sqrtf(aDrawnObject.R2_out);
+                }
+                break;
+
                 case SIMPLE_ARROW:
                 {
                     aDrawnObject.P1P4 = sqrtf(  (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
@@ -712,9 +719,9 @@ bool md::Canvas::moveObjectTo(unsigned int positionInStack, int choice)
     return true;
 }
 
-bool md::Canvas::insideCircle(ImVec2 mousePos, ImVec2 center, float R)
+bool md::Canvas::insideCircle(ImVec2 mousePos, ImVec2 center, float R2)
 {
-   if ( ((mousePos.x - center.x)*(mousePos.y - center.y)*(mousePos.x - center.x)*(mousePos.y - center.y)) <= R*R )
+   if ( ((mousePos.x - center.x)*(mousePos.x - center.x)*(mousePos.y - center.y)*(mousePos.y - center.y)) <= R2 )
        return true;
    else
        return false;
