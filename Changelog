@@ -1,8 +1,24 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+
+2019 September 8th
+
+FIXED : EmptyRectangle object hovered does not work
+FIXED : FilledRectangle object hovered does not work
+FIXED : SimpleArrow object hovered does not work
+FIXED : SimpleLine object hovered does not work
+FIXED : use getBackgroundColor() in md::Canvas::draw()
+FIXED : wrong coordinates for the circle in md::Canvas::catchPrimitives()
+FIXED : implement getBackgroundColor()
+FIXED : implement md::Canvas::update()
+FIXED : take care about thickness correctly (when mouse hovering empty circle)
+FIXED : FilledCircle object hovered does not work
+FIXED : EmptyCircle object hovered does not work
+
 2019 September 6th
 
+ADDED : hovered, selected
 FIXED : add the blue button
 CLEANUP : removed useless comments in the code.
 FIXED : using new canvas, now decoupled from the main loop. Far more easy to maintain
