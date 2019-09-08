@@ -591,7 +591,7 @@ int md::Canvas::draw()
                 case EMPTY_RECTANGLE:
                     p_drawList->AddRect(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                         ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                                        currentlyDrawnObjects[i].objBackgroundColor,
+                                        getBackgroundColor(i),
                                         0.0f,
                                         ~0,
                                         currentlyDrawnObjects[i].thickness);
@@ -600,7 +600,8 @@ int md::Canvas::draw()
                 case EMPTY_CIRCLE:
                                     p_drawList->AddCircle(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
                                     currentlyDrawnObjects[i].P1P4,
-                                    currentlyDrawnObjects[i].objBackgroundColor, 32, currentlyDrawnObjects[i].thickness);
+                                    getBackgroundColor(i),
+                                    32, currentlyDrawnObjects[i].thickness);
                 break;
 
                 case FILLED_RECTANGLE:
@@ -608,14 +609,14 @@ int md::Canvas::draw()
                                                      mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                               ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
                                                      mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                                              currentlyDrawnObjects[i].objBackgroundColor);
+                                              getBackgroundColor(i));
                 break;
 
                 case FILLED_CIRCLE:
                     p_drawList->AddCircleFilled(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
                                                        mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                                 currentlyDrawnObjects[i].P1P4,
-                                                currentlyDrawnObjects[i].objBackgroundColor,
+                                                getBackgroundColor(i),
                                                 32);
                 break;
 
@@ -624,7 +625,7 @@ int md::Canvas::draw()
                                                   mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                           currentlyDrawnObjects[i].radius_x,
                                           currentlyDrawnObjects[i].radius_y,
-                                          currentlyDrawnObjects[i].objBackgroundColor,
+                                          getBackgroundColor(i),
                                           currentlyDrawnObjects[i].rotation,
                                           32,
                                           currentlyDrawnObjects[i].thickness);
@@ -635,7 +636,7 @@ int md::Canvas::draw()
                                                         mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                                 currentlyDrawnObjects[i].radius_x,
                                                 currentlyDrawnObjects[i].radius_y,
-                                                currentlyDrawnObjects[i].objBackgroundColor,
+                                                getBackgroundColor(i),
                                                 currentlyDrawnObjects[i].rotation,
                                                 32);
                     break;
@@ -646,7 +647,7 @@ int md::Canvas::draw()
                                                mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                         ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
                                                mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                                        currentlyDrawnObjects[i].objBackgroundColor,
+                                        getBackgroundColor(i),
                                         currentlyDrawnObjects[i].thickness);
                 break;
 
@@ -656,7 +657,7 @@ int md::Canvas::draw()
                                                mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                         ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
                                                mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                                        currentlyDrawnObjects[i].objBackgroundColor,
+                                        getBackgroundColor(i),
                                         currentlyDrawnObjects[i].thickness);
 
                     if (currentlyDrawnObjects[i].P1P4 > 1.5f * currentlyDrawnObjects[i].arrowLength)
@@ -687,7 +688,7 @@ int md::Canvas::draw()
                                                              mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[2].y), // P3 == CP2
                                                       ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[3].x,
                                                              mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[3].y), // P4 == end
-                                                      currentlyDrawnObjects[i].objBackgroundColor,
+                                                      getBackgroundColor(i),
                                                       currentlyDrawnObjects[i].thickness,
                                                       64);
                     }
@@ -719,7 +720,7 @@ int md::Canvas::draw()
                                 p_drawList->AddCircleFilled(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[j].x,
                                                                    mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[j].y),
                                                             currentlyDrawnObjects[i].thickness,
-                                                            currentlyDrawnObjects[i].objBackgroundColor,
+                                                            getBackgroundColor(i),
                                                             8);
                         }
 
