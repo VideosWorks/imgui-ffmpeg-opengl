@@ -1538,6 +1538,13 @@ int main(int argc, char * argv[])
                 p_delayTabCanvas->preview(p_delayTabCanvas->aDrawnObject.anObjectType, color, w, ratio, outline_thickness);
                 p_delayTabCanvas->draw();
 
+                // check cursor position, inside some objetc ? if so : set the object state, and set the colors
+                ImVec2 mousePosition = ImVec2(ImGui::GetIO().MousePos.x - p_delayTabCanvas->mp_TextCanvas->image_pos.x,
+                                              ImGui::GetIO().MousePos.y - p_delayTabCanvas->mp_TextCanvas->image_pos.y);
+
+                p_delayTabCanvas->update(mousePosition);
+
+
 // END CANVAS
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
