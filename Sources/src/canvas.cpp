@@ -512,7 +512,7 @@ void md::Canvas::catchPrimitivesPoints(void)
                     float Rint = aDrawnObject.P1P4 - (aDrawnObject.thickness / 2.0f);
                     aDrawnObject.R2_in = Rint * Rint;
                     aDrawnObject.R2_out = Rext * Rext;
-
+#ifdef DEBUG
                     std::cout << "aDrawnObject.objectPoints[0].x : " << aDrawnObject.objectPoints[0].x << "\n";
                     std::cout << "aDrawnObject.objectPoints[0].y : " << aDrawnObject.objectPoints[0].y << "\n";
                     std::cout << "Rint                           : " << Rint << "\n";
@@ -520,7 +520,7 @@ void md::Canvas::catchPrimitivesPoints(void)
                     std::cout << "Rext                           : " << Rext << "\n";
                     std::cout << "aDrawnObject.R2_in             : " << aDrawnObject.R2_in << "\n";
                     std::cout << "aDrawnObject.R2_out            : " << aDrawnObject.R2_out << "\n";
-
+#endif
                 }
                 break;
 
@@ -530,11 +530,12 @@ void md::Canvas::catchPrimitivesPoints(void)
                                               + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y);
                     aDrawnObject.P1P4 = sqrtf(aDrawnObject.R2_out);
 
+#ifdef DEBUG
                     std::cout << "aDrawnObject.objectPoints[0].x : " << aDrawnObject.objectPoints[0].x << "\n";
                     std::cout << "aDrawnObject.objectPoints[0].y : " << aDrawnObject.objectPoints[0].y << "\n";
                     std::cout << "aDrawnObject.R2_out : " << aDrawnObject.R2_out << "\n";
                     std::cout << "aDrawnObject.P1P4   : " << aDrawnObject.P1P4 << "\n";
-
+#endif
                 }
                 break;
 
@@ -588,6 +589,14 @@ int md::Canvas::draw()
         {
             switch(currentlyDrawnObjects[i].anObjectType)
             {
+                case FILLED_RECTANGLE:
+                    p_drawList->AddRectFilled(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
+                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
+                                              ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
+                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
+                                              getBackgroundColor(i));
+                break;
+
                 case EMPTY_RECTANGLE:
                     p_drawList->AddRect(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                         ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
@@ -603,14 +612,6 @@ int md::Canvas::draw()
                                                           currentlyDrawnObjects[i].P1P4,
                                                           getBackgroundColor(i),
                                                           32, currentlyDrawnObjects[i].thickness);
-                break;
-
-                case FILLED_RECTANGLE:
-                    p_drawList->AddRectFilled(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
-                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
-                                              ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
-                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                                              getBackgroundColor(i));
                 break;
 
                 case FILLED_CIRCLE:
@@ -641,7 +642,6 @@ int md::Canvas::draw()
                                                 currentlyDrawnObjects[i].rotation,
                                                 32);
                     break;
-
 
                 case SIMPLE_LINE:
                     p_drawList->AddLine(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
