@@ -399,7 +399,7 @@ void md::Canvas::catchPrimitivesPoints(void)
 
                 case EMPTY_CIRCLE:
                     ImGui::GetOverlayDrawList()->AddCircle(ImVec2(mp_TextCanvas->image_pos.x + aDrawnObject.objectPoints[0].x,
-                                                                  mp_TextCanvas->image_pos.y + aDrawnObject.objectPoints[1].y),
+                                                                  mp_TextCanvas->image_pos.y + aDrawnObject.objectPoints[0].y),
                                                            aDrawnObject.P1P4,
                                                            aDrawnObject.objBackgroundColor, 32, aDrawnObject.thickness);
                 break;
