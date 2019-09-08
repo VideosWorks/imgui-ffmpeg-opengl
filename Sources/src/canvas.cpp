@@ -796,9 +796,9 @@ bool md::Canvas::insideCircle(ImVec2 mousePos, ImVec2 center, float R2)
        return false;
 }
 
-bool md::Canvas::intersectEmptyCircle(ImVec2 mousePos, ImVec2 center, float R_in, float R_out)
+bool md::Canvas::intersectEmptyCircle(ImVec2 mousePos, ImVec2 center, float R2_in, float R2_out)
 {
-    if (insideCircle(mousePos, center, R_out) && (!insideCircle(mousePos, center, R_in)))
+    if (insideCircle(mousePos, center, R2_out) && (!insideCircle(mousePos, center, R2_in)))
         return true;
     else
         return false;
