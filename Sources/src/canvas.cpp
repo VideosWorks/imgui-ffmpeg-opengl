@@ -327,6 +327,7 @@ void md::Canvas::update(ImVec2 mousePos)
                 break;
 
                 case SIMPLE_ARROW:
+                    currentlyDrawnObjects[i].hovered = insideSimpleArrow(mousePos, currentlyDrawnObjects[i].objectPoints, currentlyDrawnObjects[i].arrowPolygon);
                 break;
 
                 case SIMPLE_LINE:
