@@ -305,6 +305,12 @@ void md::Canvas::update(ImVec2 mousePos)
                 break;
 
                 case EMPTY_RECTANGLE:
+                    //WORKS OK TOO
+                    //currentlyDrawnObjects[i].hovered =
+                            //insidePolygon(mousePos, currentlyDrawnObjects[i].Rect_ext) && !insidePolygon(mousePos, currentlyDrawnObjects[i].Rect_int);
+
+                    currentlyDrawnObjects[i].hovered =
+                            intersectEmptyRectangle(mousePos, currentlyDrawnObjects[i].Rect_ext, currentlyDrawnObjects[i].Rect_int );
                 break;
 
                 case EMPTY_CIRCLE:
