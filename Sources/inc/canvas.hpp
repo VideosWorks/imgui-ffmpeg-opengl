@@ -33,7 +33,7 @@ class Canvas
         ~Canvas();
 
         bool           init();
-        void           update();
+        void           update(ImVec2);
 
         bool           addObject();
         bool           adding_circle;
@@ -84,6 +84,8 @@ class Canvas
 
         void           setSelected(unsigned int, bool);
         inline unsigned int   getCurrentActiveDrawnObjectIndex(void) { return currentActiveDrawnObjectIndex ; }
+
+        ImU32          getBackgroundColor(int);
 
         void           catchPrimitivesPoints(void);
         int            show();
