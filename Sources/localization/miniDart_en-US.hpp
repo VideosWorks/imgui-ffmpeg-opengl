@@ -14,7 +14,7 @@
 #define WINDOWS_PATH_SEPARATOR               "\\"
 #define OUTPUT_FILENAME_PREFIX               "MyVideo"
 
-#define APPLICATION_NAME                     "miniDart"
+#define APPLICATION_NAME                     "miniDart 0.9.6.2"
 #define TIME_DISPLAY                         "Time : "
 #define RECORD_DISPLAY                       "REC"
 #define DELAY_DISPLAY                        "Delay : "
