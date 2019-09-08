@@ -4218,9 +4218,6 @@ int main(int argc, char * argv[])
     if (!captureDev.USBFrame.empty())
         captureDev.USBFrame.release();
 
-    magnifier.~Magnifier();
-    p_delayTabCanvas->~Canvas();
-
     cap2.release();
     aClipReader.Close();
     pClipReader = 0;
