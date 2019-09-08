@@ -7,6 +7,7 @@
 
 #include "canvas.hpp"
 #include "helpers.h"
+#include "imgui_helpers.h"
 
 typedef enum MoveToChoice
 {
