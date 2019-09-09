@@ -63,7 +63,8 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 **Derniers ajouts (version 0.9.6.1)**
 
 **Atelier analyse**:
-
+- [ ] On peut selectionner et supprimer un objet qui a été dessiné (flèche, trait, rectangle etc), ou changer sa couleur, le déplacer etc
+- [x] Amélioration de la loupe (zoom x2 par défaut), fenêtre améliorée.
 - [x] Nouvelles couleurs pour certains boutons + amélioration de l'interface (respect de la charte graphique)
 - [x] Stabilisation de l'image (webcam seulement). Vient de ffmpeg (deshake filter, master 4.2.x, Linux seulement pour l'instant)
 - [x] **grosse amélioration des performances** (meilleure optimisation du Canvas)
@@ -267,6 +268,8 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 **Recent changes in the 0.9.6 version (Windows only). For the Linux version, please read the compilation insctructions **
 
 **Analysis workshop** :
+- [ ] One can select and remove a drawn object (arrow, line and so on), change its color, move it, and so on
+- [ ] Improved magnifier : now x2 zoom by default, in an improved and separated window
 - [x] **Canvas** : one can draw on top of the images : usual primitives are available (rectangle, empty of filled), lines, arrows + free hand drawing.
 - [x] To improve the user experience, "Undo or Delete all" the vector of drawns objects has been added.
 - [x] **Video Incrustation** : one can insert a video incrustation containing a simple text (fully customizable) in the current image (reading or recording).
