@@ -168,8 +168,8 @@ DEPS = $^
 # commented : not available
 # uncomment : add opencv crop (broken)
 
-SDL2_FLAGS = -lSDL2_image-2.0 -lSDL2_ttf
 SDL2_FLAGS += $(shell sdl2-config --cflags --libs)
+SDL2_FLAGS += -lSDL2_ttf
 SDL2_FLAGS_STATIC = -lSDL2_image-2.0 -lSDL2_ttf $(shell sdl2-config --cflags --static-libs)
 
 GTK+-3.0_FLAGS += $(shell pkg-config --cflags --libs gtk+-3.0)
