@@ -63,7 +63,7 @@ J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux q
 **Derniers ajouts (version 0.9.6.1)**
 
 **Atelier analyse**:
-- [ ] (en cours) afficher correctement les fenêtre avec les écrans Haute Définition (HI_DPI ready)
+- [ ] (en cours) afficher correctement les fenêtres avec les écrans Haute Définition (HI_DPI ready)
 - [ ] On peut selectionner et supprimer un objet qui a été dessiné (flèche, trait, rectangle etc), ou changer sa couleur, le déplacer etc
 - [x] Amélioration de la loupe (zoom x2 par défaut), fenêtre améliorée.
 - [x] Nouvelles couleurs pour certains boutons + amélioration de l'interface (respect de la charte graphique)
