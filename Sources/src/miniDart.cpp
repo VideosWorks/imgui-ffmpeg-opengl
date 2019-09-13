@@ -168,6 +168,26 @@ static int image_format = DEFAULT_IMAGE_FORMAT; // IMAGE_FORMAT_720P
 static int old_image_format = image_format;
 static char defaultPath[PATH_MAX];
 
+//HIGHDPI for ALL !
+// taken from https://nlguillemot.wordpress.com/2016/12/11/high-dpi-rendering/
+#define USE_HIGH_DPI
+#if defined(USE_HIGH_DPI)
+
+// Linux working value
+const float kSysDefaultDpi = 150.0f;
+
+static void MySDL_GetDisplayDPI(int displayIndex, float* dpi, float* defaultDpi)
+{
+    // FIXME : explain how it works
+    if (SDL_GetDisplayDPI(displayIndex, NULL, dpi, NULL) != 0)
+        if (dpi) *dpi = kSysDefaultDpi; // Failed to get DPI, so just return the default value.
+
+    if (defaultDpi)
+        *defaultDpi = kSysDefaultDpi;
+}
+#endif  /* USE_HIGH_DPI  */
+
+
 #define EXPOSURE_FEATURE
 
 #ifdef EXPOSURE_FEATURE
@@ -220,6 +240,7 @@ static void inc_color(void)
     if (aValue == 9)
         aValue = 1;
 }
+
 
 // Application::Application()  // CTor
 static ClipReader * pClipReader = nullptr;
@@ -516,12 +537,36 @@ int main(int argc, char * argv[])
 
     SDL_Window * window = nullptr;
 
-    window = SDL_CreateWindow(APPLICATION_NAME,
+// HIGH DPI FOR ALL !
+
+    int local_w = 0;
+    int local_h = 0;
+
+    SDL_GL_GetDrawableSize(window, &local_w, &local_h);
+    std::cout << " drawable area is " << local_w << " x " << local_h << std::endl;
+
+    int windowDpiScaledWidth, windowDpiScaledHeight;
+    int windowDpiUnscaledWidth = WINDOW_WIDTH;
+    int windowDpiUnscaledHeight = WINDOW_HEIGHT;
+    float dpi, defaultDpi;
+
+    MySDL_GetDisplayDPI(0, &dpi, &defaultDpi);
+
+    windowDpiScaledWidth = int(windowDpiUnscaledWidth * dpi / defaultDpi);
+    windowDpiScaledHeight = int(windowDpiUnscaledHeight * dpi / defaultDpi);
+
+    std::cerr << "dpi                   : " << dpi << std::endl;
+    std::cerr << "defaultDpi            : " << defaultDpi << std::endl;
+
+    std::cerr << "windowDpiScaledWidth  : " << windowDpiScaledWidth << std::endl;
+    std::cerr << "windowDpiScaledHeight : " << windowDpiScaledHeight << std::endl;
+
+    window = SDL_CreateWindow(MINIDART_VERSION_NUMBER,
                               SDL_WINDOWPOS_UNDEFINED,
                               SDL_WINDOWPOS_UNDEFINED,
-                              WINDOW_WIDTH,
-                              WINDOW_HEIGHT,
-                              SDL_WINDOW_OPENGL|SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
+                              windowDpiScaledWidth,
+                              windowDpiScaledHeight,
+                              SDL_WINDOW_OPENGL|SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE|SDL_WINDOW_ALLOW_HIGHDPI);
 
     // check whether the SDL2 window exists
     if (window == nullptr)
@@ -592,6 +637,9 @@ int main(int argc, char * argv[])
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
+
+    // HiDpi rescaling
+    io.FontGlobalScale = dpi/defaultDpi;
 
     std::cout << "io =  " << &io << std::endl;
 
@@ -1340,11 +1388,12 @@ int main(int argc, char * argv[])
         if (menu)         mD_window_flags |= ImGuiWindowFlags_MenuBar;
 
         // some geometry
-        ImVec2 windowSize(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - 23.0f);
+        ImVec2 windowSize(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y - (23.0f *dpi / defaultDpi));
         ImGui::SetNextWindowSize(windowSize);
 
         ImVec2 main_viewport_pos = ImGui::GetMainViewport()->Pos;
-        ImGui::SetNextWindowPos(ImVec2(main_viewport_pos.x,main_viewport_pos.y + 23.0f));
+        ImGui::SetNextWindowPos(ImVec2(main_viewport_pos.x,main_viewport_pos.y + (23.0f *dpi / defaultDpi)));
+
 
         if (ImGui::Begin(APPLICATION_VERSION_STRING, &open, mD_window_flags))
         {
@@ -2691,9 +2740,9 @@ int main(int argc, char * argv[])
             if (b_canvas_show)
             {
                 // FIXME : replace magic
-                int iconWidth   = 32;
-                int iconHeight  = 32;
-                int frame_padding = 4;
+                int iconWidth     = (int)(32 * dpi)/defaultDpi;
+                int iconHeight    = (int)(32 * dpi)/defaultDpi;
+                int frame_padding = (int)( 4 * dpi)/defaultDpi;
 
                 static float object_thickness = 2.5f;
                 static ImVec4 bcol = ImVec4( 0.3f, 0.4f, 1.0f, 0.5);
