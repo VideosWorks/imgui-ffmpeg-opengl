@@ -6,6 +6,7 @@ Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 REGRESSION : windows content needs a "resize" at launch, to avoid shrinked UI
 TODO : improve the layout for ALL tabs (means NO LONGER use integers, but % of drawable area instead)
 
+FIXED : freetype use makes miniDart crash on Windows.
 FIXED : delay geometry, on Linux and Windows : HiDPI seems to work
 FIXED : canvas icon size too small // HiDPI
 FIXED : static OpenCV for Windows build is alive again ! Rebuilding everything, to avoid chaotic issues
