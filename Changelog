@@ -11,7 +11,10 @@ FIXED : canvas icon size too small // HiDPI
 FIXED : static OpenCV for Windows build is alive again ! Rebuilding everything, to avoid chaotic issues
 FIXED : InnoSetup too small : winecfg solved the issue, modifying the font size
 FIXED : thread issue. Toolchain needs some changes, because only posix thread work for recent mingw versions.
-Important link : https://stackoverflow.com/questions/15718904/mingw-and-stdthread?rq=1
+
+The solution comes from : https://sourceforge.net/p/mingw-w64/discussion/723798/thread/c267c1f080/?limit=25
+Other important link : https://stackoverflow.com/questions/15718904/mingw-and-stdthread?rq=1
+
 
 The fix (toolchain cmakefile) :
 set(TOOLCHAIN_PREFIX x86_64-w64-mingw32)
