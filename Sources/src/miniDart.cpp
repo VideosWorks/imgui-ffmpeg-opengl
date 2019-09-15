@@ -1547,7 +1547,7 @@ int main(int argc, char * argv[])
 
             ImGui::BeginGroup();  // DEBUT1
             {
-                ImGui::Dummy (ImVec2(80.0f, 0.0f)); ImGui::SameLine();
+                ImGui::Dummy (ImVec2(40.0f, 0.0f)); ImGui::SameLine();
                 //------------------------------------------------
                 ImGui::BeginChild("child1", ImVec2(w + 40.0f, h), true);
 // CHILD1 : DRAW THE FRAME displayed_image OR DRAW DEFAULT  BACKGROUND 
@@ -1860,7 +1860,8 @@ int main(int argc, char * argv[])
 
             ImGui::SameLine(); ImGui::Dummy (ImVec2(40.0f, 0.0f)); ImGui::SameLine();
 
-            ImGui::BeginChild("child2", ImVec2(WEBCAM_PARAMETERS_AREA_WIDTH, h), true);
+            ImGui::BeginChild("child2", ImVec2(WEBCAM_PARAMETERS_AREA_WIDTH * dpi/defaultDpi, h), true);
+            //ImGui::BeginChild("child2", ImVec2(WEBCAM_PARAMETERS_AREA_WIDTH, h), true);
 
             /*  Chronomètre, choix de la webcam etc */
             ImGui::BeginGroup();
