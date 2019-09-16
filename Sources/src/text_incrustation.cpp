@@ -36,6 +36,19 @@
 //#define CANVAS_DEBUG
 //#endif
 
+static void HelpMarker(const char* desc)
+{
+    ImGui::TextDisabled("(?)");
+    if (ImGui::IsItemHovered())
+    {
+        ImGui::BeginTooltip();
+        ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+        ImGui::TextUnformatted(desc);
+        ImGui::PopTextWrapPos();
+        ImGui::EndTooltip();
+    }
+}
+
 extern bool b_inserting_text;
 static bool toReturn = true;
 
@@ -81,7 +94,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
     ImGui::Text(FONTSIZE);
 
     ImGui::SameLine();
-    ImGui::PushItemWidth(150);
+    ImGui::PushItemWidth(100);
     ImGui::SliderInt("###do not display", &ttf_font_size, MIN_FONT_SIZE,MAX_FONT_SIZE);
 
     if (old_ttf_font_size != ttf_font_size)
@@ -237,12 +250,10 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
     // Boite de saisie
     static char comment[COMMENT_SIZE_MAX] = "";
 
-    ImGui::Text(USE_RIGHT_CLICK_TO_TYPE_A_TEXT_OR_CHANGE_IT);
-
     char buf_comment[2*COMMENT_SIZE_MAX]; sprintf(buf_comment, TEXT_AND_STRING, comment);
     // FIXME
     ImGui::PushID(COMMENT);
-    ImGui::Button(buf_comment);
+    HelpMarker(USE_RIGHT_CLICK_TO_TYPE_A_TEXT_OR_CHANGE_IT); ImGui:: SameLine(); ImGui::Button(buf_comment);
 
     if (ImGui::BeginPopupContextItem(COMMENT))
     {
