@@ -1,0 +1,217 @@
+This document tracks the ffmpeg version used in miniDart.
+
+Copyright Eric Bachard  18th september 2019
+
+As explained in the Redame, miniDart uses vanilla, and most up to date possible ffmpeg version, under LGPL License (see below)
+
+
+2019 september 18th 
+
+
+WINDOWS VERSION 
+
+configure : 
+
+me@some_machine ~/Devel/minidart/CROSS_COMPILATION/ffmpeg $ cat my_configure_cross_windows.txt 
+
+#!/bin/bash
+
+FREETYPE_CFLAGS="-I/usr/local/cross-tools/x86_64-w64-mingw32/include/freetype2" \
+FREETYPE_LIBS="-I/usr/local/cross-tools/x86_64-w64-mingw32/lib -lfreetype" \
+
+# unused
+#WIN_ARCH=x86_64
+#CC=${WIN_ARCH}-w64-mingw32-gcc-posix
+#PKG_CONFIG_PATH=`/usr/local/cross-tools/x86_64-w64-mingw32/lib/pkgconfig/ pkg-config --cflags --libs freetype2` \
+
+PKG_CONFIG_PATH="/usr/local/cross-tools/x86_64-w64-mingw32/lib/pkgconfig/ pkg-config" ./configure \
+    --prefix=/usr/local/cross-tools/x86_64-w64-mingw32/ \
+    --arch=x86_64 \
+    --target-os=mingw32 \
+    --cross-prefix=x86_64-w64-mingw32-  \
+    --enable-swresample \
+    --enable-opengl
+
+
+Result :
+
+...
+
+Enabled indevs:
+dshow                   gdigrab                 lavfi                   vfwcap
+
+Enabled outdevs:
+opengl
+
+
+me@some_machine /usr/local/cross-tools/x86_64-w64-mingw32/bin $ wine64 ./ffmpeg.exe -version
+
+000f:fixme:service:scmdatabase_autostart_services Auto-start service L"MountMgr" failed to start: 2
+000f:fixme:service:scmdatabase_autostart_services Auto-start service L"WineBus" failed to start: 2
+0009:fixme:kerberos:kerberos_SpInstanceInit 65536,0x7f80159f4680,(nil): stub
+ffmpeg version N-94960-g53d31e91c5 Copyright (c) 2000-2019 the FFmpeg developers
+built with gcc 7.3-win32 (GCC) 20180312
+configuration: --prefix=/usr/local/cross-tools/x86_64-w64-mingw32/ --arch=x86_64 --target-os=mingw32 --cross-prefix=x86_64-w64-mingw32- --enable-swresample --enable-opengl
+libavutil      56. 35.100 / 56. 35.100
+libavcodec     58. 57.100 / 58. 57.100
+libavformat    58. 32.104 / 58. 32.104
+libavdevice    58.  9.100 / 58.  9.100
+libavfilter     7. 58.102 /  7. 58.102
+libswscale      5.  6.100 /  5.  6.100
+libswresample   3.  6.100 /  3.  6.100
+
+
+LINUX VERSION 
+
+ffmpeg version is 53d31e91c5  / origin/master
+
+From https://git.ffmpeg.org/ffmpeg
+   cb8d6a4e3e..53d31e91c5  master     -> origin/master
+Updating cb8d6a4e3e..53d31e91c5
+
+configure : 
+
+me@some_machine ~/Devel/minidart/CROSS_COMPILATION/ffmpeg $ cat my_configure.txt 
+#!/bin/bash
+
+./configure  \
+             --enable-pthreads \
+             --enable-shared \
+             --enable-pic    \
+             --enable-opengl \
+             --enable-libpulse \
+             --enable-openal \
+             --enable-filter=deshake \
+             --enable-filter=opencl \
+             --enable-libmodplug \
+             --enable-libgme \
+             --enable-libv4l2 \
+             --enable-libopenjpeg \
+             --enable-vaapi \
+             --enable-openssl \
+             --enable-libdav1d \
+             --enable-libwavpack \
+             --enable-libdrm
+
+
+configure returns : 
+
+...
+
+Enabled indevs:
+alsa                    kmsgrab                 openal                  pulse                   xcbgrab
+fbdev                   lavfi                   oss                     v4l2
+
+Enabled outdevs:
+alsa                    opengl                  pulse                   v4l2
+fbdev                   oss                     sdl2
+
+License: LGPL version 2.1 or later
+config.asm is unchanged
+libavutil/avconfig.h is unchanged
+libavfilter/filter_list.c is unchanged
+libavcodec/codec_list.c is unchanged
+libavcodec/parser_list.c is unchanged
+libavcodec/bsf_list.c is unchanged
+libavformat/demuxer_list.c is unchanged
+libavformat/muxer_list.c is unchanged
+libavdevice/indev_list.c is unchanged
+libavdevice/outdev_list.c is unchanged
+libavformat/protocol_list.c is unchanged
+ffbuild/config.sh is unchanged
+
+(make -j6)
+
+At the end, "ffmpeg -version" returns :
+
+me@some_machine ~/Devel/minidart/CROSS_COMPILATION/ffmpeg $ ffmpeg -version
+ffmpeg version N-94906-gcb8d6a4e3e Copyright (c) 2000-2019 the FFmpeg developers
+built with gcc 7 (Ubuntu 7.4.0-1ubuntu1~18.04.1)
+configuration: --enable-pthreads --enable-shared --enable-pic --enable-opengl --enable-libpulse --enable-openal --enable-filter=deshake --enable-filter=opencl --enable-libmodplug --enable-libgme --enable-libv4l2 --enable-libopenjpeg --enable-vaapi --enable-openssl --enable-libdav1d --enable-libwavpack --enable-libdrm
+libavutil      56. 35.100 / 56. 35.100
+libavcodec     58. 56.101 / 58. 56.101
+libavformat    58. 32.104 / 58. 32.104
+libavdevice    58.  9.100 / 58.  9.100
+libavfilter     7. 58.102 /  7. 58.102
+libswscale      5.  6.100 /  5.  6.100
+libswresample   3.  6.100 /  3.  6.100
+
+(all the libs miniDart will be linked with)
+
+
+Further information : upgrade log 
+
+me@some_machine ~/Devel/minidart/CROSS_COMPILATION/ffmpeg $ git pull
+remote: Counting objects: 261, done.
+remote: Compressing objects: 100% (261/261), done.
+remote: Total 261 (delta 208), reused 0 (delta 0)
+Receiving objects: 100% (261/261), 74.88 KiB | 543.00 KiB/s, done.
+Resolving deltas: 100% (208/208), completed with 68 local objects.
+From https://git.ffmpeg.org/ffmpeg
+   cb8d6a4e3e..53d31e91c5  master     -> origin/master
+Updating cb8d6a4e3e..53d31e91c5
+Fast-forward
+ Changelog                           |   1 +
+ doc/decoders.texi                   |   6 +-
+ doc/examples/decode_audio.c         |   7 +-
+ doc/filters.texi                    | 100 ++++++++++------
+ doc/general.texi                    |   1 +
+ doc/muxers.texi                     |   4 +-
+ fftools/ffmpeg_opt.c                |   6 +-
+ libavcodec/Makefile                 |   1 +
+ libavcodec/allcodecs.c              |   3 +-
+ libavcodec/avcodec.h                |   1 +
+ libavcodec/cfhd.c                   |   8 +-
+ libavcodec/codec_desc.c             |   6 +
+ libavcodec/g729_parser.c            |   5 +-
+ libavcodec/g729dec.c                |  21 +++-
+ libavcodec/gdv.c                    |   3 +-
+ libavcodec/hevcdec.c                |   5 +-
+ libavcodec/libdav1d.c               |   5 +-
+ libavcodec/mips/h264dsp_msa.c       |   9 +-
+ libavcodec/mips/h264qpel_msa.c      |  64 +++++-----
+ libavcodec/mips/hevc_lpf_sao_msa.c  |  70 +++++------
+ libavcodec/mips/hevcpred_msa.c      |  30 ++---
+ libavcodec/mips/hpeldsp_msa.c       |  66 +++++++----
+ libavcodec/mips/me_cmp_msa.c        |   8 +-
+ libavcodec/mips/qpeldsp_msa.c       |  84 ++++++-------
+ libavcodec/mips/vp8_mc_msa.c        |   4 +-
+ libavcodec/mips/vp9_idct_msa.c      |   3 +-
+ libavcodec/mips/vp9_lpf_msa.c       |   3 +-
+ libavcodec/mips/vp9_mc_msa.c        |  16 +--
+ libavcodec/mpeg4videodec.c          |   2 +-
+ libavcodec/ttaenc.c                 |   2 +-
+ libavcodec/utils.c                  |   3 +
+ libavcodec/v4l2_buffers.c           |   8 ++
+ libavcodec/v4l2_m2m_enc.c           |   2 +
+ libavcodec/version.h                |   4 +-
+ libavcodec/videotoolbox.c           |  10 +-
+ libavcodec/videotoolboxenc.c        |  22 +++-
+ libavfilter/af_headphone.c          |   2 +-
+ libavfilter/v360.h                  |  36 ++++++
+ libavfilter/vf_avgblur.c            |   1 -
+ libavfilter/vf_ciescope.c           |   4 -
+ libavfilter/vf_shuffleplanes.c      |   1 -
+ libavfilter/vf_stereo3d.c           |  13 +-
+ libavfilter/vf_v360.c               | 514 ++++++++++++++++++++++++++++++++++++++++++++++++++------------------------------
+ libavfilter/window_func.h           |   2 +-
+ libavfilter/x86/vf_v360.asm         |  67 +++++++++++
+ libavfilter/x86/vf_v360_init.c      |  12 ++
+ libavformat/cdxl.c                  |   3 +-
+ libavformat/hcom.c                  |   2 +-
+ libavformat/matroskadec.c           |   4 +-
+ libavformat/mov.c                   |   9 +-
+ libavformat/mpegts.c                |   1 +
+ libavformat/riff.c                  |   1 +
+ libavformat/rmdec.c                 |   4 +-
+ libavformat/vividas.c               |   4 +-
+ libavutil/mips/generic_macros_msa.h |  80 +++++--------
+ tools/target_dec_fuzzer.c           |   3 +
+ 56 files changed, 858 insertions(+), 498 deletions(-)
+
+
+#""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Last step : full OpenCV 3.4.0 compilation, to be linked with the ffmpeg version below.
+
+# end of log
