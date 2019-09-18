@@ -191,7 +191,7 @@ Atelier GB :
 Informations techniques:
 
 Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windows 64 bits. Les APIs utilisées sont:
-* **SDL2 2.0.10** ( http://libsdl.org/) pour le fenêtrage et la remarquable portabilité Linux -> Windows ; (version 2.0.9 pour Windows, 2.0.8 Linux)
+* **SDL2 2.0.10** ( http://libsdl.org/) pour le fenêtrage et la remarquable portabilité Linux -> Windows ; (version 2.0.9 pour Windows, 2.0.10 Linux)
 * **OpenGL** (https://www.khronos.org/opengl/) pour le rendu ;
 * **Dear ImGui (branche docking basée sur la version 1.72b)** (https://github.com/ocornut/imgui) pour l'interface utilisateur et les performances graphiques (merci à **Omar Cornut** pour cette UI géniale) ;
 * **OpenCV 3.4.0** (https://opencv.org/) : gestion des webcams, traitement des frames, annotations (chronomètre, enregistrement) ;
