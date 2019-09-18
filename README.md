@@ -197,7 +197,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * **OpenCV 3.4.0** (https://opencv.org/) : gestion des webcams, traitement des frames, annotations (chronomètre, enregistrement) ;
 * **mdPlayer** (https://framagit.org/ericb/mdplayer ): pour le son dans les vidéos (lecture ET -bientôt- enregistrement aussi pour le son).
 * **DirectShow** et **DirectX** ( sous Windows) , v4l2 + gstreamer (sous Linux) : acquisition vidéo ;
-* **FFMPEG (version exacte exact N-94960-g53d31e91c5 (4.1.x), Windows et Linux)** (http://ffmpeg.org/) ouverture, analyse, export de fichiers vidéos (divx, avi etc) ;
+* **FFMPEG (version exacte N-94960-g53d31e91c5 (4.1.x), Windows et Linux)** (http://ffmpeg.org/) ouverture, analyse, export de fichiers vidéos (divx, avi etc) ;
 * **mingw-w64** (https://mingw-w64.org/doku.php) cross-compilation de la version Windows ;
 * **InnoSetup** (http://www.jrsoftware.org/) pour le packaging Windows ;
 * **wine64** (https://www.winehq.org/) pour les tests de la version Windows sous Linux;
