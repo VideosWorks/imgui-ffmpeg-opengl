@@ -382,7 +382,7 @@ Technical informations:
 
 This software is written on Linux, and cross-compiled to run on 64-bit Windows. The APIs used are:
 
-* **SDL2 2.0.9** ( http://libsdl.org/ ) for windowing and remarkable portability Linux -> Windows;
+* **SDL2 2.0.10** ( http://libsdl.org/ ) for windowing and remarkable portability Linux -> Windows;
 * **OpenGL** ( https://www.khronos.org/opengl/ ) for rendering;
 * **Dear ImGui** using docking branch, based on the 1.72b version  ( https://github.com/ocornut/imgui ) for user interface and graphics performance (thanks to **Omar Cornut** for this awesome UI);
 * **OpenCV 3.4.0** ( https://opencv.org/ ): management of webcams, processing of frames, annotations (stopwatch, recording);
