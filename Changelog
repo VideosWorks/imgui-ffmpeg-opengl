@@ -1,6 +1,19 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+
+2019 September 18th
+
+FIXED : (Windows version) now using ffmpeg version N-94960-g53d31e91c5 from master
+FIXED : clean OpenCV 3.4.0 build, relinked to curent ffmpeg
+FIXED : missong libiconv.dll + some pther mingw dependencies
+
+Tested simplemedia player (implementing simplified ffplay as C++ classes). Works well, no thread issue on Linux.
+REGRESSION : Linux thread issue ... (quit video causing a deadlock, don't know why, was perfectly working, and tested > 100 times before)
+Only track : upgraded LinuxMint 16.4 to LinuxMint 19.2 :-/
+Tested : new boost, several gcc / g++ thread options. No way. WIP
+
+
 2019 September 15th
 
 REGRESSION : windows content needs a "resize" at launch, to avoid shrinked UI
