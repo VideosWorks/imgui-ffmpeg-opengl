@@ -77,15 +77,13 @@ typedef struct DrawnObject
     float        R2_out;      // (extern radius)^2
 
     // ellipse properties must be calculated just after preview
-    float        Xmax;
-    float        Xmin;
-    float        Ymax;
-    float        Ymin;
     ImVec2       F1;          // ellipse focus point 1
     ImVec2       F2;          //         focus point 2
+    float        long_axis;    // ellipse long axis
     float        radius_x;    // ellipse x radius
     float        radius_y;    // ellipse y radius
     float        rotation;    // rotation angle (CTRL key + MouseDrag)
+
 
     float        arrowLength;
     float        arrowWidth;
