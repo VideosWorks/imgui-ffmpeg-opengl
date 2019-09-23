@@ -2760,7 +2760,9 @@ int main(int argc, char * argv[])
                     {
                         ImGui::Text(ALL_ANNOTATIONS_WILL_BE_CANCELED_Q);
 
-                        if (ImGui::Button(CONFIRM_BUTTON, ImVec2(120,0)))
+                        ImGui::Dummy(ImVec2(100.0f, 0.0f)); ImGui::SameLine();
+
+                        if (ImGui::Button(CONFIRM_BUTTON, ImVec2(150,0 * dpi/defaultDpi)))
                         {
                             while (!(p_delayTabCanvas->currentlyDrawnObjects.empty()))
                             {
@@ -2772,7 +2774,7 @@ int main(int argc, char * argv[])
                         }
                         ImGui::SameLine();
 
-                        if (ImGui::Button(CANCEL_BUTTON, ImVec2(120,0)))
+                        if (ImGui::Button(CANCEL_BUTTON, ImVec2(150,0 * dpi/defaultDpi)))
                         {
                             ImGui::CloseCurrentPopup();
                         }
