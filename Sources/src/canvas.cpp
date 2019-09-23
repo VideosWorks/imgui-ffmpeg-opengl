@@ -302,6 +302,10 @@ void md::Canvas::update(ImVec2 mousePos)
                 break;
 
                 case FILLED_ELLIPSE:
+                    currentlyDrawnObjects[i].hovered = insideEllipse(mousePos,
+                                                                     currentlyDrawnObjects[i].long_axis,
+                                                                     currentlyDrawnObjects[i].F1,
+                                                                     currentlyDrawnObjects[i].F2);
                 break;
 
                 case EMPTY_RECTANGLE:
@@ -321,6 +325,11 @@ void md::Canvas::update(ImVec2 mousePos)
                 break;
 
                 case EMPTY_ELLIPSE:
+                    currentlyDrawnObjects[i].hovered = intersectEmptyEllipse(mousePos,
+                                                                             currentlyDrawnObjects[i].long_axis,
+                                                                             currentlyDrawnObjects[i].F1,
+                                                                             currentlyDrawnObjects[i].F2,
+                                                                             currentlyDrawnObjects[i].thickness);
                 break;
 
                 case RANDOM_ARROW:
@@ -493,25 +502,64 @@ void md::Canvas::catchPrimitivesPoints(void)
                 case FILLED_ELLIPSE:
                 case EMPTY_ELLIPSE:
                 {
-                    aDrawnObject.Xmax = aDrawnObject.objectPoints[0].x + ImMax(aDrawnObject.radius_x, aDrawnObject.radius_y);
-                    aDrawnObject.Xmin = aDrawnObject.objectPoints[0].x - ImMax(aDrawnObject.radius_x, aDrawnObject.radius_y);
-                    aDrawnObject.Ymax = aDrawnObject.objectPoints[0].y + ImMax(aDrawnObject.radius_x, aDrawnObject.radius_y);
-                    aDrawnObject.Ymin = aDrawnObject.objectPoints[0].y - ImMax(aDrawnObject.radius_x, aDrawnObject.radius_y);
+                    float radius_x = aDrawnObject.radius_x;
+                    float radius_y = aDrawnObject.radius_y;
 
-                    float e = 1 - (    (ImMin(aDrawnObject.radius_x, aDrawnObject.radius_y)*(ImMin(aDrawnObject.radius_x, aDrawnObject.radius_y)))
-                                     / (ImMax(aDrawnObject.radius_x, aDrawnObject.radius_y)*(ImMax(aDrawnObject.radius_x, aDrawnObject.radius_y))) );
+                    if (radius_x < 0)
+                        radius_x = -radius_x;
 
-                    float xA = aDrawnObject.radius_x * cos(aDrawnObject.rotation);
-                    float yA = aDrawnObject.radius_y * sin(aDrawnObject.rotation);
+                    if (radius_y < 0)
+                        radius_y = -radius_y;
 
-                    aDrawnObject.F1.x = aDrawnObject.objectPoints[0].x + (e *( aDrawnObject.objectPoints[0].x - xA));
-                    aDrawnObject.F1.y = aDrawnObject.objectPoints[0].y + (e *( aDrawnObject.objectPoints[0].x - yA));
-                    aDrawnObject.F2.x = aDrawnObject.objectPoints[0].x - (e *( aDrawnObject.objectPoints[0].x - xA));
-                    aDrawnObject.F2.y = aDrawnObject.objectPoints[0].y - (e *( aDrawnObject.objectPoints[0].x - xA));
+                    aDrawnObject.long_axis = ImMax(radius_x, radius_y);
+
+                    float short_axis = ImMin(radius_x, radius_y);
+                    float e = sqrtf (1 - ((short_axis * short_axis )/(aDrawnObject.long_axis * aDrawnObject.long_axis)) );
+                    float xF = e * aDrawnObject.long_axis * cos(M_PI * aDrawnObject.rotation / 180.0f);
+                    float yF = e * aDrawnObject.long_axis * sin(M_PI * aDrawnObject.rotation / 180.0f);
+
+                    // What follows is done in all cases
+                    aDrawnObject.F1.x = aDrawnObject.objectPoints[0].x;
+                    aDrawnObject.F1.y = aDrawnObject.objectPoints[0].y;
+                    aDrawnObject.F2.x = aDrawnObject.F1.x;
+                    aDrawnObject.F2.y = aDrawnObject.F1.y;
+
+                    // Now, we need to calculate F1 and F2 coordinates
+                    if (radius_x > radius_y)
+                    {
+                        aDrawnObject.F1.x += xF;
+                        aDrawnObject.F1.y += yF;
+                        aDrawnObject.F2.x -= xF;
+                        aDrawnObject.F2.y -= yF;
+                    }
+
+                    if (radius_x < radius_y)
+                    {
+                        aDrawnObject.F1.x += yF;
+                        aDrawnObject.F1.y += xF;
+                        aDrawnObject.F2.x -= yF;
+                        aDrawnObject.F2.y -= xF;
+                    }
+
+                    std::cout << "xF         = " << xF << "\n";
+                    std::cout << "yF         = " << yF << "\n";
+                    std::cout << "e          = " << e << "\n";
+                    std::cout << "long_axis  = " << aDrawnObject.long_axis << "\n";
+                    std::cout << "short_axis = " << short_axis << "\n";
+
+
+                    std::cout << "aDrawnObject.rotation : " << aDrawnObject.rotation << "\n";
+                    std::cout << "aDrawnObject.objectPoints[0].x : " << aDrawnObject.objectPoints[0].x << "\n";
+                    std::cout << "aDrawnObject.objectPoints[0].y : " << aDrawnObject.objectPoints[0].y << "\n";
+
+                    std::cout << "aDrawnObject.F1.x : " << aDrawnObject.F1.x << "\n";
+                    std::cout << "aDrawnObject.F1.y : " << aDrawnObject.F1.y << "\n";
+                    std::cout << "aDrawnObject.F2.x : " << aDrawnObject.F2.x << "\n";
+                    std::cout << "aDrawnObject.F2.y : " << aDrawnObject.F2.y << "\n";
                 }
                 break;
 
-               case EMPTY_CIRCLE:
+                case EMPTY_CIRCLE:
                 {
                     aDrawnObject.P1P4 = sqrtf(  (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
                                               + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
@@ -624,7 +672,6 @@ void md::Canvas::catchPrimitivesPoints(void)
 
 int md::Canvas::draw()
 {
-
     ImDrawList * p_drawList = ImGui::GetWindowDrawList();
     ImVec2 subview_size = mp_TextCanvas->image_size;
     p_drawList->PushClipRect(ImVec2(0.0f, 0.0f), ImVec2(mp_TextCanvas->image_pos.x + subview_size.x, mp_TextCanvas->image_pos.y + subview_size.y) );
@@ -1005,16 +1052,12 @@ bool md::Canvas::intersectEmptyRectangle(ImVec2 mousePos, ImVector <ImVec2> Rect
     return toReturn;
 }
 
-bool md::Canvas::insideEllipse(ImVec2 mousePos, float long_axis, float Xmin, float Xmax, float Ymin, float Ymax, ImVec2 F1, ImVec2 F2)
+bool md::Canvas::insideEllipse(ImVec2 mousePos, float long_axis, ImVec2 F1, ImVec2 F2)
 {
     bool toReturn = false;
 
-    // yet a "far close" approach, to avoid burning too much of CPU
-    if ( (mousePos.x < (Xmin)) || (mousePos.x > Xmax) || (mousePos.y > Ymax) || (mousePos.y < (Ymin)))
-        return false;
-
-    float F1P = sqrtf( ((mousePos.x - F1.x)*(mousePos.x - F1.x)) + ((mousePos.x - F1.x)*(mousePos.x - F1.x)) );
-    float PF2 = sqrtf( ((mousePos.x - F1.x)*(mousePos.x - F1.x)) + ((mousePos.x - F1.x)*(mousePos.x - F1.x)) );
+    float F1P = sqrtf( ((mousePos.x - F1.x)*(mousePos.x - F1.x)) + ((mousePos.y - F1.y)*(mousePos.y - F1.y)) );
+    float PF2 = sqrtf( ((mousePos.x - F2.x)*(mousePos.x - F2.x)) + ((mousePos.y - F2.y)*(mousePos.y - F2.y)) );
 
     if ((F1P + PF2) <= (2*long_axis))
         toReturn = true;
@@ -1025,25 +1068,17 @@ bool md::Canvas::insideEllipse(ImVec2 mousePos, float long_axis, float Xmin, flo
 }
 
 
-bool md::Canvas::intersectEmptyEllipse(ImVec2 mousePos, float long_axis, float Xmin, float Xmax, float Ymin, float Ymax, ImVec2 F1, ImVec2 F2, float thickness)
+bool md::Canvas::intersectEmptyEllipse(ImVec2 mousePos, float long_axis, ImVec2 F1, ImVec2 F2, float thickness)
 {
     bool toReturn = false;
 
-    // yet a "far close" approach, to avoid burning too much of CPU
-    if ( (mousePos.x < (Xmin)) || (mousePos.x > Xmax) || (mousePos.y > Ymax) || (mousePos.y < (Ymin)))
-        return false;
-
-    float F1P = sqrtf( ((mousePos.x - F1.x)*(mousePos.x - F1.x)) + ((mousePos.x - F1.x)*(mousePos.x - F1.x)) );
-    float PF2 = sqrtf( ((mousePos.x - F1.x)*(mousePos.x - F1.x)) + ((mousePos.x - F1.x)*(mousePos.x - F1.x)) );
-
-    if (((F1P + PF2) < (2*long_axis + thickness)) && !((F1P + PF2) < (2*long_axis - thickness)))
+    if (insideEllipse( mousePos, long_axis + thickness, F1, F2) && !(insideEllipse(mousePos, long_axis - thickness, F1, F2)))
         toReturn = true;
     else
         toReturn = false;
 
     return toReturn;
 }
-
 
 
 void md::Canvas::setSelected(unsigned int position, bool isSelected)
