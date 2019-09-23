@@ -1350,6 +1350,8 @@ void ImDrawListSplitter::Merge(ImDrawList* draw_list)
     }
     draw_list->_IdxWritePtr = idx_write;
     draw_list->UpdateClipRect(); // We call this instead of AddDrawCmd(), so that empty channels won't produce an extra draw call.
+    // https://github.com/ocornut/imgui/commit/098591fe4c95dd4939d0c6e30d18f6b1ff49e49d
+    draw_list->UpdateTextureID();
     _Count = 1;
 }
 
