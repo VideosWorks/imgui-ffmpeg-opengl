@@ -541,6 +541,7 @@ void md::Canvas::catchPrimitivesPoints(void)
                         aDrawnObject.F2.y -= xF;
                     }
 
+#ifdef DEBUG
                     std::cout << "xF         = " << xF << "\n";
                     std::cout << "yF         = " << yF << "\n";
                     std::cout << "e          = " << e << "\n";
@@ -556,6 +557,7 @@ void md::Canvas::catchPrimitivesPoints(void)
                     std::cout << "aDrawnObject.F1.y : " << aDrawnObject.F1.y << "\n";
                     std::cout << "aDrawnObject.F2.x : " << aDrawnObject.F2.x << "\n";
                     std::cout << "aDrawnObject.F2.y : " << aDrawnObject.F2.y << "\n";
+#endif
                 }
                 break;
 
