@@ -272,7 +272,7 @@ to install the right graphic card drivers. Seen a lot of times with people stuck
 **Analysis workshop** :
 - [ ] (work in progress) Be HighDPI ready
 - [ ] One can select and remove a drawn object (arrow, line and so on), change its color, move it, and so on
-- [ ] One can put an object on top or at the bottom of all drawn objects, or even put it one level higher ou lower in the drawn objects list
+- [ ] One can put an object on top or at the bottom of all drawn objects, or even move it one level up ou lower in the drawn objects list
 - [ ] Improved magnifier : now x2 zoom by default, in an improved and separated window
 - [x] **Canvas** : one can draw on top of the images : usual primitives are available (rectangle, empty of filled), lines, arrows + free hand drawing.
 - [x] To improve the user experience, "Undo or Delete all" the vector of drawns objects has been added.
