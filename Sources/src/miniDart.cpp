@@ -1574,7 +1574,6 @@ int main(int argc, char * argv[])
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 // CHILD11 : NOW DRAW OVER THE FRAME
-
                 //------------------------------------------------
                 ImGui::BeginChild("child1");
 
@@ -1592,15 +1591,12 @@ int main(int argc, char * argv[])
                                               ImGui::GetIO().MousePos.y - p_delayTabCanvas->mp_TextCanvas->image_pos.y);
 
                 p_delayTabCanvas->update(mousePosition);
-
-
 // END CANVAS
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
 // MAGNIFIER
                 current_delayTab_drawing_task = magnifier.start(w, ratio);
                 magnifier.update(pb_zoom_available, b_paused, backgroundTextureId);
-
 // END MAGNIFIER
 
                 ImGui::SameLine();
