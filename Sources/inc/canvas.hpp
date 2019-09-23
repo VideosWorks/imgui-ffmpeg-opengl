@@ -76,8 +76,8 @@ class Canvas
         bool           insideFilledRectangle(ImVec2, ImVector<ImVec2>);
         bool           intersectEmptyRectangle(ImVec2, ImVector<ImVec2>, ImVector<ImVec2>);
 
-        bool           insideEllipse(ImVec2, float, float, float, float, float, ImVec2, ImVec2); // includes empty ellipse
-        bool           intersectEmptyEllipse(ImVec2, float, float, float, float, float, ImVec2, ImVec2, float /* thickness */);
+        bool           insideEllipse(ImVec2, float, ImVec2, ImVec2); // includes empty ellipse
+        bool           intersectEmptyEllipse(ImVec2, float, ImVec2, ImVec2, float /* thickness */);
 
         bool           insideCurve(ImVec2, ImVector<ImVec2>);
         bool           insideArrow(ImVec2, ImVector<ImVec2>);
