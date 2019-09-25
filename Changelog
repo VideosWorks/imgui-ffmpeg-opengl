@@ -1,6 +1,12 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2019  Software created the 1st AUGUST 2016
 
+2019 September 25th
+
+
+FIXED : HelpMarker is not usable everytwhere
+FIXED : the UI must be resized after launch // HiDpi topic
+
 2019 September 23rd
 
 FIXED : Filled Ellipse object hovered does not work
