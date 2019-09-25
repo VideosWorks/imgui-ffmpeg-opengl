@@ -7,6 +7,7 @@
 
 #include <imgui.h>
 #include <imgui_stdlib.h>
+#include "imgui_helpers.h"
 #include <application.hpp>
 #include "text_incrustation.hpp"
 #include "fonts.hpp"
@@ -35,19 +36,6 @@
 //#ifndef CANVAS_DEBUG
 //#define CANVAS_DEBUG
 //#endif
-
-static void HelpMarker(const char* desc)
-{
-    ImGui::TextDisabled("(?)");
-    if (ImGui::IsItemHovered())
-    {
-        ImGui::BeginTooltip();
-        ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-        ImGui::TextUnformatted(desc);
-        ImGui::PopTextWrapPos();
-        ImGui::EndTooltip();
-    }
-}
 
 extern bool b_inserting_text;
 static bool toReturn = true;
