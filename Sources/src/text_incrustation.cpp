@@ -248,10 +248,11 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
     if (ImGui::BeginPopupContextItem(COMMENT))
     {
         b_inserting_text = true;
-////!!
+
+        // FIXME : HiDpi
         ImGui::PushItemWidth(300);
         ImGui::InputText(INSERT, comment, IM_ARRAYSIZE(comment));
-////!!
+
 
         ImGui::PopItemWidth();
 
@@ -268,13 +269,9 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
 
     bool b_can_insert_text = (strlen(comment) > 0) ? true : false;
 
-//    ImGui::Text(" (clic droit pour modifier)");
-
     static float b = 1.0f; // 0.6f
     static float c = 0.5f; // 1.0f
     static int i = 3;
-
-//    ImGui::SameLine(); 
 
     if (ImGui::Button(SUPPRESS_THE_TEXT))
     {
@@ -364,12 +361,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
 
     if (ImGui::BeginPopupModal(ADDITIONAL_PARAMETERS, NULL, ImGuiWindowFlags_AlwaysAutoResize))
     {
-        // paramètres avancés (qu'on peut réinitialiser)
-
-
-///////////////////////////////////////////////////////////////////////////////
-
-        // Couleur de la police de caractères  // blanche par défaut
+        // Font color
         static const int font_default_red_comp   = 255;
         static const int font_default_green_comp = 255;
         static const int font_default_blue_comp  = 255;
@@ -397,10 +389,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
             b_refresh = true;
         }
 
-///////////////////////////////////////////////////////////////////////////////
-
-        // Ligne de base de la police de caractères (pour l'ajuster au cadre)
-
+        // Font baseline, used to adjust the area to the colored frame
         static const int default_ttf_font_baseline = DEFAULT_TEXT_INCRUSTATION_BASELINE;
         static       int         ttf_font_baseline = default_ttf_font_baseline;
         static       int     old_ttf_font_baseline = ttf_font_baseline;
@@ -415,13 +404,10 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
             b_refresh = true;
         }
 
-///////////////////////////////////////////////////////////////////////////////
-
-        // dessiner la ligne de base du texte ?  // défaut : NON
+        // default is NOT draw the baseline
         static const bool b_default_draw_text_baseline = false;
         static       bool         b_draw_text_baseline = b_default_draw_text_baseline;
         static       bool     old_b_draw_text_baseline = b_draw_text_baseline;
-
 
         ImGui::Checkbox(DRAW_THE_BASELINE_Q, &b_draw_text_baseline);
 
@@ -433,9 +419,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
             b_refresh = true;
         }
 
-///////////////////////////////////////////////////////////////////////////////
-
-        // Couleur de la ligne de base du texte
+        // Baseline color
         static const int text_baseline_default_red_comp   = 0;
         static const int text_baseline_default_green_comp = 0;
         static const int text_baseline_default_blue_comp  = 0;
@@ -450,7 +434,6 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
 
         if (b_draw_text_baseline)
         {
-            // Choix du cadre contenant le texte  // noir par défaut
             ImGui::Text(BOUNDING_BOX_COLOR);
             ImGui::SliderInt(BB_RED_COMP_COLOR, &text_baseline_red_comp, 0,255);
             ImGui::SliderInt(BB_GREEN_COMP_COLOR, &text_baseline_green_comp, 0,255);
@@ -466,9 +449,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
             b_refresh = true;
         }
 
-///////////////////////////////////////////////////////////////////////////////
-
-        // Couleur du fond
+        // Background color
         static const int box_background_default_red_comp   = 0;
         static const int box_background_default_green_comp = 0;
         static const int box_background_default_blue_comp  = 0;
@@ -483,7 +464,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
 
         if (b_draw_box)
         {
-            // Couleur de remplissage du fond  // noir par défaut
+            // background bounding box color  // default color is black
             ImGui::Text(BACKGROUND_INCRUSTATION_COLOR);
             ImGui::SliderInt(BACKGROUND_RED_COMP_COLOR, &box_background_red_comp, 0,255);
             ImGui::SliderInt(BACKGROUND_GREEN_COMP_COLOR, &box_background_green_comp, 0,255);
@@ -499,14 +480,12 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
             b_refresh = true;
         }
 
-///////////////////////////////////////////////////////////////////////////////
-
-        // dessiner le tour du rectangle coloré ? // défaut : NON
+        // draw the bounding box outline ? (default : no)
         static const bool b_default_draw_box_outline  = false;
         static       bool         b_draw_box_outline  = b_default_draw_box_outline;
         static       bool     old_b_draw_box_outline  = b_draw_box_outline;
 
-        // Couleur du cadre autour de la police
+        // bounding box outline color
         static const int box_outline_default_green_comp = 0;
         static const int box_outline_default_blue_comp  = 0;
         static const int box_outline_default_red_comp   = 0;
@@ -523,7 +502,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
 
         if (b_draw_box_outline)
         {
-            // Couleur du bord du cadre contenant le texte  // noir par défaut
+            // Outline color
             ImGui::Text(OUTLINE_COLOR);
             ImGui::SliderInt(OUTLINE_RED_COMP_COLOR, &box_outline_red_comp, 0,255);
             ImGui::SliderInt(OUTLINE_GREEN_COMP_COLOR, &box_outline_green_comp, 0,255);
@@ -548,10 +527,7 @@ bool text_in_video_helper(md::TextCanvas * pTextCanvas)
 
             b_refresh = true;
         }
-///////////////////////////////////////////////////////////////////////////////
 
-
-        //  ImGui::Dummy(ImVec2(150.0, 0.0)); ImGui::SameLine();
         if (ImGui::Button(BACK_TO_DEFAULT_VALUES))
         {
             comment_duration = default_comment_duration;
