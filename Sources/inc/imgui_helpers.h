@@ -14,6 +14,8 @@ void reorder_points( ImVec2 *, ImVec2 *);
 
 double sqr(double);
 
-double length(ImVec2 * p1, ImVec2 * p2);
+double length(ImVec2 *, ImVec2 *);
+
+void HelpMarker(const char*);
 
 #endif /* __IMGUI_HELPERS_H */
