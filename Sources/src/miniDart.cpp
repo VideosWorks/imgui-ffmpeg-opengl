@@ -569,13 +569,13 @@ int main(int argc, char * argv[])
                               windowDpiScaledHeight,
                               SDL_WINDOW_OPENGL|SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE|SDL_WINDOW_ALLOW_HIGHDPI);
 
-    SDL_GetWindowSize(window, &currentWidth, &currentHeight);
-
     // check whether the SDL2 window exists
     if (window == nullptr)
         sdl_application_abort("Problem creating the SDL window.\n");
     else
         std::cout << "SDL2 Window created " << std::endl;
+
+    SDL_GetWindowSize(window, &currentWidth, &currentHeight);
 
     std::cout <<  "SDL_VERSION_ATLEAST(2,0,9) " << SDL_VERSION_ATLEAST(2,0,9) <<  std::endl;
     std::cout <<  "SDL_VERSION_ATLEAST(2,0,8) " << SDL_VERSION_ATLEAST(2,0,8) <<  std::endl;
