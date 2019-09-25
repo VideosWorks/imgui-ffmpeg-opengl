@@ -542,6 +542,7 @@ int main(int argc, char * argv[])
     int local_w = 0;
     int local_h = 0;
 
+
     SDL_GL_GetDrawableSize(window, &local_w, &local_h);
     std::cout << " drawable area is " << local_w << " x " << local_h << std::endl;
 
@@ -567,6 +568,8 @@ int main(int argc, char * argv[])
                               windowDpiScaledWidth,
                               windowDpiScaledHeight,
                               SDL_WINDOW_OPENGL|SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE|SDL_WINDOW_ALLOW_HIGHDPI);
+
+    SDL_GetWindowSize(window, &currentWidth, &currentHeight);
 
     // check whether the SDL2 window exists
     if (window == nullptr)
