@@ -25,8 +25,10 @@
 
 #define COMMENT_SIZE_MAX 1024
 
+// FIXME : HiDpi immediately breaks that
 #define X_MAX 1440
 #define Y_MAX 1080
+
 #define MAX_FONT_BASELINE 30
 #define MIN_FONT_SIZE   6
 #define MAX_FONT_SIZE  80
