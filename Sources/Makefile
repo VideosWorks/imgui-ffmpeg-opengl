@@ -4,7 +4,7 @@
 # This makefile is under GPL v2 license
 # see : http://www.gnu.org/licenses/gpl-2.0.html
 
-
+#undef MY_LOCALE and you'll obtain an english version (not complete, thanks'n advance for any help  ;-) )
 MY_LOCALE = french
 
 #GCC_VERSION = -7
