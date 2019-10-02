@@ -1510,7 +1510,7 @@ int main(int argc, char * argv[])
         }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-        ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None|ImGuiTabBarFlags_Reorderable;
+        ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None|ImGuiTabBarFlags_Reorderable|ImGuiTabBarFlags_NoTooltip;
 
         if(ImGui::BeginTabBar(TABBAR_NAME,tab_bar_flags))
         {
