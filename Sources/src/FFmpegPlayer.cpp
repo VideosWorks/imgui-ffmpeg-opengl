@@ -75,7 +75,6 @@ static cv::Mat picture;
 static bool cvMat_initialized = false;
 static uint8_t *out_data[4];
 static int out_linesize[4];
-static struct SwsContext *convert_ctx = NULL;
 
 // costly, but allows to convert the AVFrame (most of the time YUV420p) into cv::Mat (BGR24 in this case)
 static cv::Mat avframe_to_cvmat(AVFrame *frame)
@@ -87,16 +86,15 @@ static cv::Mat avframe_to_cvmat(AVFrame *frame)
     // cv::Mat understands BGR24 by default
     int out_w = frame->width;
     int out_h = frame->height;
-//// SOON, next version
-////    std::vector<uint8_t> imgbuf(out_h * out_w * 4 + 16);
+
+    //// SOON, next version
+    ////    std::vector<uint8_t> imgbuf(out_h * out_w * 4 + 16);
     enum AVPixelFormat out_pix_fmt = AV_PIX_FMT_BGR24;
 
     // only once, to save cycles
     if (!cvMat_initialized) {
-
-//SOON, next version to come, will create .mp4 or avi using ffmpeg, not the buggy OpenCV
-////        picture = cv::Mat(out_h, out_w, CV_8UC4, imgbuf.data(), out_w * 4);
-
+        //SOON, next version to come, will create .mp4 or avi using ffmpeg, not the buggy OpenCV
+        ////        picture = cv::Mat(out_h, out_w, CV_8UC4, imgbuf.data(), out_w * 4);
         picture = cv::Mat(out_h, out_w, CV_8UC3);
         cvMat_initialized = true;
     }
@@ -104,12 +102,12 @@ static cv::Mat avframe_to_cvmat(AVFrame *frame)
     av_image_fill_arrays(out_data, out_linesize, picture.data, out_pix_fmt, out_w, out_h, 1);// 16);
 
     // sws_getCachedContext() ?
-    convert_ctx = sws_getContext(in_w, in_h, in_pix_fmt, out_w, out_h, out_pix_fmt, SWS_FAST_BILINEAR, NULL, NULL, NULL);
+    is->img_convert_ctx = sws_getContext(in_w, in_h, in_pix_fmt, out_w, out_h, out_pix_fmt, SWS_FAST_BILINEAR, NULL, NULL, NULL);
 
-    if(convert_ctx != nullptr)
+    if(is->img_convert_ctx != nullptr)
     {
-        sws_scale(convert_ctx, frame->data, frame->linesize, 0, out_h, out_data, out_linesize);
-        sws_freeContext(convert_ctx);
+        sws_scale(is->img_convert_ctx, frame->data, frame->linesize, 0, out_h, out_data, out_linesize);
+        sws_freeContext(is->img_convert_ctx);
     }
     else
     {
@@ -122,30 +120,28 @@ static cv::Mat avframe_to_cvmat(AVFrame *frame)
 
 void stream_component_close(VideoState * is, int stream_index)
 {
-    if (is)
+    AVFormatContext *ic = is->ic;
+    AVCodecParameters *codecpar;
+
+    if (stream_index < 0 || (unsigned int)stream_index >= ic->nb_streams)
+        return;
+
+    codecpar = ic->streams[stream_index]->codecpar;
+
+    switch (codecpar->codec_type)
     {
-        AVFormatContext *ic = is->ic;
-        AVCodecParameters *codecpar;
+        case AVMEDIA_TYPE_AUDIO:
+            SDL_CloseAudioDevice(audio_dev);
+            packet_queue_abort(&is->audioq);
 
-        if (stream_index < 0 || (unsigned int)stream_index >= ic->nb_streams)
-            return;
+        break;
 
-        codecpar = ic->streams[stream_index]->codecpar;
+        case AVMEDIA_TYPE_VIDEO:
+            packet_queue_abort(&is->videoq);
+        break;
 
-        switch (codecpar->codec_type)
-        {
-            case AVMEDIA_TYPE_AUDIO:
-                packet_queue_abort(&is->audioq);
-                SDL_CloseAudioDevice(audio_dev);
-            break;
-
-            case AVMEDIA_TYPE_VIDEO:
-                packet_queue_abort(&is->videoq);
-            break;
-
-            default:
-            break;
-        }
+        default:
+        break;
     }
 }
 
@@ -829,7 +825,8 @@ void video_refresh(void *arg, double *remaining_time)
             vp = frame_queue_peek(&is->pictq);
 
             last_duration = vp->pts - lastvp->pts;
-           if(last_duration <= 0 || last_duration >= 1.0)
+
+            if(last_duration <= 0 || last_duration >= 1.0)
                 last_duration = lastvp->pts;
 
             delay_av = compute_target_delay(last_duration, is, vp->pts);
@@ -873,7 +870,7 @@ int main2(char * filename) {
 #if LIBAVFORMAT_VERSION_INT < AV_VERSION_INT(58, 9, 100)
     av_register_all();
 #endif
-    SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
+    SDL_Init(SDL_INIT_EVERYTHING);
 
     avformat_network_init();
 
@@ -932,7 +929,9 @@ fail:
 
         // free all pictures 
         frame_queue_destroy(&is->pictq);
-        sws_freeContext(is->img_convert_ctx);
+
+        if (is->img_convert_ctx != nullptr)
+            sws_freeContext(is->img_convert_ctx);
 
         is->filename = nullptr;
 
@@ -1072,7 +1071,7 @@ int audio_decode_frame(VideoState * is, uint8_t *audio_buf, int buf_size, double
 
 void packet_queue_destroy(PacketQueue *q)
 {
-    //packet_queue_flush(q);
+    packet_queue_flush(q);
     SDL_DestroyMutex(q->mutex);
     SDL_DestroyCond(q->cond);
 }
@@ -1115,7 +1114,6 @@ void packet_queue_flush(PacketQueue *q) {
         av_freep(&pkt);
     }
 
-    cout<<endl;
     q->last_pkt = NULL;
     q->first_pkt = NULL;
     q->nb_packets = 0;
