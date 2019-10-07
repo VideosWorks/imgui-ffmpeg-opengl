@@ -94,7 +94,7 @@ namespace md  // miniDart alias
         cv::Ptr<cv::freetype::FreeType2> ft2;
         cv::Point     textOrg;
         cv::Point     delta; // allows to move (means animate) the text
-        cv::Point     box_points[1][4];
+        cv::Point     box_points[2][4];
         cv::Scalar    fontColor;
         cv::Scalar    outlineColor;
         cv::Scalar    backgroundColor;
