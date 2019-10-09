@@ -37,13 +37,13 @@ int openFileDialog(char *filename)
         NFD::UniquePath outPath;
 
         // define filters for the dialog
-        nfdfilteritem_t filterItem[1] = { { "Video files", "avi,mp4,mpg,ts,MTS,wmv" } };
+        nfdfilteritem_t filterItem[1] = { { "Video files", "avi,mp4,mpg,ts,MTS,wmv,mkv" } };
 
         nfdresult_t result = NFD::OpenDialog(outPath, filterItem, 1);
     #else
         nfdchar_t *outPath = NULL;
         // Filters means extensions (at least on Linux)
-        nfdresult_t result = NFD_OpenDialog( "avi,mp4,mpg,ts,MTS,wmv", NULL, &outPath );
+        nfdresult_t result = NFD_OpenDialog( "avi,mp4,mpg,ts,MTS,wmv,mkv", NULL, &outPath );
     #endif
 
     if ( result == NFD_OKAY )
@@ -72,7 +72,7 @@ int openFileDialog(char *filename)
 #else
     /* this is Windows File Picker */
     // https://stackoverflow.com/questions/1524356/c-deprecated-conversion-from-string-constant-to-char
-    return openFileDialog(filename, (char *)"All\0All\0*.avi\0*.avi\0*.ts\0*.ts\0*.MTS\0*.MTS\0*.mp4\0*.mp4\0*.mpg\0*.mpg\0*.wmv\0*.wmv\0*.*\0");
+    return openFileDialog(filename, (char *)"All\0All\0*.avi\0*.avi\0*.ts\0*.ts\0*.MTS\0*.MTS\0*.mp4\0*.mp4\0*.mpg\0*.mpg\0*.wmv\0*.wmv\0*.mkv\0*.mkv\0*.*\0");
 #endif
 }
 
