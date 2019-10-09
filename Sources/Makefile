@@ -48,9 +48,24 @@ CXX_OPT_LEVEL = -O3 -march=native -mtune=native
 
 CXX_STD = -std=c++11
 
+# testing purpose : modern and C++ nativefiledialog version
+TEST_NFD_EXT=testing_NFD_EXT
+
+ifeq (${TEST_NFD_EXT}, testing_NFD_EXT)
+
+    NFD_INC = $(INCLUDE_3RD_PARTY_BASE)/nativefiledialog-extended
+    EXTRA_OS_FLAGS += -DTEST_NFD_EXT
+else
+    NFD_INC = $(INCLUDE_3RD_PARTY_BASE)/nativefiledialogs
+endif
+
+
 ##################################
 # LINUX HOST BUILD CONFIGURATION #
 ##################################
+
+
+
 
 ##!###CC_OPT_LEVEL  += -march=native -mtune=native
 ##!###CXX_OPT_LEVEL += -march=native -mtune=native
@@ -58,7 +73,7 @@ CXX_STD = -std=c++11
 FFMPEG_FLAGS = $(shell pkg-config --cflags --libs libavutil libavformat libavcodec libavfilter libswscale libswresample)
 #FFMPEG_FLAGS = $(shell pkg-config --cflags --libs libavutil libavdevice libavformat libavcodec libavfilter libswscale libswresample)
 
-LINUX_FLAGS = -D__Linux 
+LINUX_FLAGS = -D__Linux -fsanitize=undefined
 #EXTRA_OS_FLAGS += -DNOT_RELEASE_VERSION
 EXTRA_OS_FLAGS += -DFPS_FEATURE_ENABLED
 OS_FLAGS += ${EXTRA_OS_FLAGS} -D__Linux -DNATIVE_BUILD
@@ -113,7 +128,8 @@ GL3W_INC = $(INCLUDE_3RD_PARTY_BASE)/imgui/gl3w
 TINYXML2_INC = $(INCLUDE_3RD_PARTY_BASE)/tinyxml2/src
 
 STB_INC = $(INCLUDE_3RD_PARTY_BASE)/stb
-NFD_INC = $(INCLUDE_3RD_PARTY_BASE)/nativefiledialogs
+
+
 
 #YUV2RGB_INC = $(INCLUDE_3RD_PARTY_BASE)/yuv2rgb
 
@@ -155,8 +171,14 @@ TINYXML2_FILES = $(shell ls $(3RD_PARTY_BASE)/tinyxml2/src/*.cpp)
 
 FILES += $(IMGUI_FILES) $(GL3W_FILES) $(TINYXML2_FILES)
 
-# C_FILES
-NFD_C_FILES = $(shell ls $(3RD_PARTY_BASE)/nativefiledialogs/*.c)
+ifeq (${TEST_NFD_EXT}, testing_NFD_EXT)
+    NFD_CXX_FILES = $(shell ls $(3RD_PARTY_BASE)/nativefiledialog-extended/*.cpp)
+    #FILES += $(NFD_CXX_FILES)
+else
+    # C_FILES
+    NFD_C_FILES = $(shell ls $(3RD_PARTY_BASE)/nativefiledialogs/*.c)
+endif
+
 
 DEPS = $^
 
@@ -264,20 +286,20 @@ $(OUTBIN) : C_FILES C++_FILES
 
 #C++_FILES : src/*.cpp src/3rdparty/nativefiledialogs/*.cpp src/3rdparty/imgui/*.cpp $(GL3W_FILES) $(TINYXML2_FILES) $(GFX_UI_FILES)
 #C++_FILES : src/*.cpp src/3rdparty/nativefiledialogs/*.cpp src/3rdparty/imgui/*.cpp $(GL3W_FILES)
-C++_FILES : src/*.cpp src/3rdparty/nativefiledialogs/*.cpp $(IMGUI_FILES) $(GL3W_FILES) $(VIDEO_SEEKER_FILES)
+C++_FILES : src/*.cpp $(NFD_CXX_FILES) $(IMGUI_FILES) $(GL3W_FILES) $(VIDEO_SEEKER_FILES)
 	$(CXX) $(INCLUDE_DIR) $(C++FLAGS) -c $(LD_FLAGS) $?
 
-C++_FILES_S : src/*.cpp src/3rdparty/nativefiledialogs/*.cpp $(IMGUI_FILES) $(GL3W_FILES) $(VIDEO_SEEKER_FILES)
+C++_FILES_S : src/*.cpp $(NFD_CXX_FILES) $(IMGUI_FILES) $(GL3W_FILES) $(VIDEO_SEEKER_FILES)
 	$(CXX) -DSTATIC_BUILD $(INCLUDE_DIR) $(C++FLAGS) -c $(LD_FLAGS_STATIC) $?
 
 # src/3rdparty/yuv2rgb/*.c
 
-C_FILES : src/3rdparty/nativefiledialogs/*.c  $(SDL2_FFMPEG_FILES) $(DELAY_FILES)
+C_FILES : $(NFD_C_FILES) $(SDL2_FFMPEG_FILES) $(DELAY_FILES)
 	$(CC) $(CFLAGS) -c $(INCLUDE_DIR) ${GTK+FLAGS} $(CFLAGS) $? $(SDL2_FLAGS)
 
 # src/3rdparty/yuv2rgb/*.c
 
-C_FILES_S : src/3rdparty/nativefiledialogs/*.c  $(SDL2_FFMPEG_FILES) $(DELAY_FILES)
+C_FILES_S : $(NFD_C_FILES) $(SDL2_FFMPEG_FILES) $(DELAY_FILES)
 	$(CC) -DSTATIC_BUILD $(CFLAGS) -c $(INCLUDE_DIR) ${GTK+-2.0_FLAGS_STATIC}  $(CFLAGS) $? $(SDL2_FLAGS)
 
 
