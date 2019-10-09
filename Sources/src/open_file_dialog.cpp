@@ -94,7 +94,7 @@ int openFileDialog(char *filename, char *filters) {
     aVideo.lpstrFile[0] = '\0';
     aVideo.nMaxFile = sizeof( szFile );
     // Looks like the same filter entry must be entered twice, else, nothing works
-    aVideo.lpstrFilter = "All\0*.*\0*.avi\0*.avi\0*.ts\0*.ts\0*.MTS\0*.MTS\0*.mp4\0*.mp4\0*.mpg\0*.mpg\0*.wmv\0*.wmv\0";
+    aVideo.lpstrFilter = "All\0*.*\0*.avi\0*.avi\0*.ts\0*.ts\0*.MTS\0*.MTS\0*.mp4\0*.mp4\0*.mpg\0*.mpg\0*.wmv\0*.wmv\0*.mkv\0*.mkv\0";
     aVideo.nFilterIndex =1;
     aVideo.lpstrFileTitle = NULL ;
     aVideo.nMaxFileTitle = 0 ;
