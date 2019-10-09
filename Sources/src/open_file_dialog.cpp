@@ -12,6 +12,9 @@
 #if defined( NATIVE_BUILD)
 #include <iostream>
 #include "nfd.h"
+    #ifdef TEST_NFD_EXT
+    #include "nfd.hpp"
+    #endif
 #endif
 
 #ifdef _WIN32
@@ -21,10 +24,6 @@
 #include <stdlib.h>
 #endif
 
-#ifdef TEST_NFD_EXT
-#include "nfd.hpp"
-#include <iostream>
-#endif
 
 /* Returns 0 on success, 1 on error (or user hit cancel) */
 int openFileDialog(char *filename)
