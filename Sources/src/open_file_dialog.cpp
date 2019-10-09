@@ -68,7 +68,7 @@ int openFileDialog(char *filename)
         fprintf(stderr,"Error: %s\n", NFD_GetError() );
     #endif
 
-    return 0;
+    return 1;
 #else
     /* this is Windows File Picker */
     // https://stackoverflow.com/questions/1524356/c-deprecated-conversion-from-string-constant-to-char
