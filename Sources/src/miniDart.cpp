@@ -75,7 +75,7 @@ bool b_inserting_text = false; // default value
 
 //int queued;
 
-static int video_init(char *);
+static void video_init(char *);
 
 #ifndef HIGH_DPI_SCREEN
 #define HIGH_DPI_SCREEN
@@ -334,6 +334,7 @@ static int LoadFile(const char * filename, int video_type)
                 video_duration = 0.0f;
                 video_init((char *)filename);
                 position = initialize_position();
+                std::cout << "Video Open : done " << "\n";
             break;
 
             case VIDEO_CLIP:
@@ -2567,7 +2568,7 @@ int main(int argc, char * argv[])
                             do_exit(is);
                         }
                     }
-                } /* current_source == ELL_PHONE */
+                } /* current_source == CELL_PHONE */
                 else if (current_source == FULL_VIDEO)
                 {
                     b_full_video_selected = true;
@@ -2862,10 +2863,6 @@ int main(int argc, char * argv[])
                     break;
 
                     case RANDOM_LINE:
-                        ImGui::NewLine();
-                        current_delayTab_drawing_task = FREEHAND_DRAWING; 
-                    break;
-
                     case RANDOM_ARROW:
                         ImGui::NewLine();
                         current_delayTab_drawing_task = FREEHAND_DRAWING; 
@@ -4328,7 +4325,8 @@ void update(const SDL_Event * p_event)
 
 }
 
-static int video_init(char * filename)
+
+static void video_init(char * filename)
 {
     // OPENCV : convert FFMPEG frame into cv::Mat
     // Link : https://stackoverflow.com/questions/29263090/ffmpeg-avframe-to-opencv-mat-conversion
@@ -4341,8 +4339,6 @@ static int video_init(char * filename)
         b_video_running = true;
 
     fprintf(stdout, "b_video_running = %d (currently in %s) \n", b_video_running, __FUNCTION__);
-
-    return 0;
 }
 
 
