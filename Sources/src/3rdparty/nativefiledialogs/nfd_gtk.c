@@ -15,7 +15,7 @@
 #include "nfd_common.h"
 
 
-const char INIT_FAIL_MSG[] = "gtk_init_check failed to initilaize GTK+";
+const char INIT_FAIL_MSG[] = "gtk_init_check failed to initialize GTK+";
 
 
 static void AddTypeToFilterName( const char *typebuf, char *filterName, size_t bufsize )
