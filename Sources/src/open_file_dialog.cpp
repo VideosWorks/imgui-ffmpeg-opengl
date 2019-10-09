@@ -19,33 +19,59 @@
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
+#endif
 
+#ifdef TEST_NFD_EXT
+#include "nfd.hpp"
+#include <iostream>
 #endif
 
 /* Returns 0 on success, 1 on error (or user hit cancel) */
 int openFileDialog(char *filename)
 {
 #ifdef NATIVE_BUILD
-    nfdchar_t *outPath = NULL;
-    // Filters means extensions (at least on Linux)
-    nfdresult_t result = NFD_OpenDialog( "avi,mp4,mpg,ts,MTS,wmv", NULL, &outPath );
+    #ifdef TEST_NFD_EXT
+        // initialize NFD
+        NFD::Guard nfdGuard;
+
+        // auto-freeing memory
+        NFD::UniquePath outPath;
+
+        // define filters for the dialog
+        nfdfilteritem_t filterItem[1] = { { "Video files", "avi,mp4,mpg,ts,MTS,wmv" } };
+
+        nfdresult_t result = NFD::OpenDialog(outPath, filterItem, 1);
+    #else
+        nfdchar_t *outPath = NULL;
+        // Filters means extensions (at least on Linux)
+        nfdresult_t result = NFD_OpenDialog( "avi,mp4,mpg,ts,MTS,wmv", NULL, &outPath );
+    #endif
 
     if ( result == NFD_OKAY )
     {
-        puts("Success!");
-        puts(outPath);
-        strcpy(filename, outPath);
-        free(outPath);
+        #ifdef TEST_NFD_EXT
+            std::cout << "Success!" << std::endl << outPath.get() << std::endl;
+            strcpy(filename, outPath.get());
+        #else
+            puts("Success!");
+            puts(outPath);
+            strcpy(filename, outPath);
+            free(outPath);
+        #endif
         return 0;
     }
     else if ( result == NFD_CANCEL )
         puts("User pressed cancel.");
     else
+    #ifdef TEST_NFD_EXT
+        std::cout << "Error: " << NFD::GetError() << std::endl;
+    #else
         fprintf(stderr,"Error: %s\n", NFD_GetError() );
+    #endif
 
-    return 1;
+    return 0;
 #else
-    /* Windows File Picker */
+    /* this is Windows File Picker */
     // https://stackoverflow.com/questions/1524356/c-deprecated-conversion-from-string-constant-to-char
     return openFileDialog(filename, (char *)"All\0All\0*.avi\0*.avi\0*.ts\0*.ts\0*.MTS\0*.MTS\0*.mp4\0*.mp4\0*.mpg\0*.mpg\0*.wmv\0*.wmv\0*.*\0");
 #endif
