@@ -9,14 +9,6 @@
 #include "capturedev.hpp"
 #include "application.hpp"
 
-#ifndef NATIVE_BUILD
-    #ifndef HAVE_VIDEOINPUT
-    #define HAVE_VIDEOINPUT
-    #endif
-    #ifndef HAVE_DSHOW
-    #define HAVE_DSHOW
-    #endif
-#endif
 
 CaptureDev::CaptureDev()
 {
@@ -40,31 +32,18 @@ bool CaptureDev::Init(int aDevice)
 
     maDevNumber = aDevice;
 
-#ifdef NATIVE_BUILD
     // Linux
     // FIXME : propose a list of active devices
     // + FIXME : add other possibilities, e.g. using GSTREAMER (cv::CAP_GSTREAMER)
 //    maVideoCap.open(maDevNumber + cv::CAP_GSTREAMER);
     maVideoCap.open(maDevNumber + cv::CAP_V4L2);
-#else
-    // Windows
-    // http://docs.opencv.org/trunk/d0/da7/videoio_overview.html
-    maVideoCap.open(maDevNumber + cv::CAP_DSHOW);
-#endif /* NATIVE_BUILD */
 
     if (!maVideoCap.isOpened() || !bFirstFrameSuccess())
         std::cerr << "***Could not initialize capturing...***" << std::endl;
 
-#if defined(_WIN32) || defined (WIN32)
-    // works only on Windows
-    setFourCC(CV_FOURCC('M','J','P','G'));
-#endif
-
     initializeFrameSize();
 
-#ifdef NATIVE_BUILD
     setCaptureFPS(LINUX_DEFAULT_FRAMERATE);
-#endif
 
     mfCaptureFPS = getCaptureFPS();
 
