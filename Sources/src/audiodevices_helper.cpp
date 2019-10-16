@@ -12,11 +12,6 @@
 #include "imgui.h"
 #include "ffmpeg_player.hpp"
 
-#ifdef _WIN32
-#include <windows.h>
-#include <objbase.h>
-#endif
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_thread.h>
 
