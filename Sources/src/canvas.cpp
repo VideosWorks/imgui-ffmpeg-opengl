@@ -19,6 +19,7 @@ typedef enum MoveToChoice
 } MoveToChoice;
 
 
+// templates inspired from Dear ImGui (MIT license)
 template<typename T> static inline T ImMin(T lhs, T rhs)   { return lhs < rhs ? lhs : rhs; }
 template<typename T> static inline T ImMax(T lhs, T rhs)   { return lhs >= rhs ? lhs : rhs; }
 
