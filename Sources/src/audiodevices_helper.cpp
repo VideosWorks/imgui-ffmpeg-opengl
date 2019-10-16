@@ -75,11 +75,6 @@ namespace md
         wanted_specs.callback = audio_callback;
         wanted_specs.userdata = arg;
 
-        // https://trac.ffmpeg.org/ticket/6891
-        #ifdef _WIN32
-        CoInitialize(NULL);
-        #endif
-
         if (!(audio_dev = SDL_OpenAudioDevice((const char *)currentRecordableAudioDevice.c_str(), 0, &wanted_specs, &specs, SDL_AUDIO_ALLOW_FREQUENCY_CHANGE | SDL_AUDIO_ALLOW_CHANNELS_CHANGE)))
         {
             std::cout << "[audio]could not open audio, error:" << SDL_GetError() << std::endl;
