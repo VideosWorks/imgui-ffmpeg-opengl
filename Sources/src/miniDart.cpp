@@ -278,9 +278,9 @@ static float initialize_position(void)
 #endif
    max_position = origin + video_duration;
 
-   std::cout << "Initialization : origin         =  " << origin                << std::endl;
-   std::cout << "                 max_position   =  " << max_position          << std::endl;
-   std::cout << "                 video_duration =  " << max_position - origin << std::endl;
+   std::cout << "Initialization : origin         =  " << origin                << "\n";
+   std::cout << "                 max_position   =  " << max_position          << "\n";
+   std::cout << "                 video_duration =  " << max_position - origin << "\n";
 
    return (max_position - origin);
 }
@@ -290,7 +290,7 @@ static float position = 0.0f;
 // reader::do_seek(double incr, int pos);
 static void do_seek(double incr, long int pos)
 {
-    std::cout << "Call values ...  incr : " << incr  << " pos : " << pos  << std::endl;
+    std::cout << "Call values ...  incr : " << incr  << " pos : " << pos  << "\n";
 
     if (pos == 0)
     {
@@ -300,18 +300,18 @@ static void do_seek(double incr, long int pos)
     {
 #ifdef MASTER_CLOCK
         pos = get_master_clock(is);
-        std::cout << "get_audio_clock(is) : " << get_master_clock(is) << std::endl;
+        std::cout << "get_audio_clock(is) : " << get_master_clock(is) << "\n";
 #else
         pos = get_audio_clock(is);
-        std::cout << "get_audio_clock(is) : " << get_audio_clock(is) << std::endl;
+        std::cout << "get_audio_clock(is) : " << get_audio_clock(is) << "\n";
 #endif
-        std::cout << " incr : " << incr  << " pos : " << pos  << std::endl;
+        std::cout << " incr : " << incr  << " pos : " << pos  << "\n";
         pos += incr;
 
         if (pos < 0)
             pos = 0.0f;
     }
-    std::cout << "stream_seek prepared :  incr = " << incr  << "  pos =  " << pos  << std::endl;
+    std::cout << "stream_seek prepared :  incr = " << incr  << "  pos =  " << pos  << "\n";
     stream_seek(is, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE), 0);
 }
 
@@ -361,13 +361,13 @@ static int selectFolder(const char * currentPath)
     if (currentPath)
     {
         // do nothing
-        std::cout << "currentPath contient : " << currentPath << std::endl;
+        std::cout << "currentPath contient : " << currentPath << "\n";
         // strcpy(defaultPath, currentPath);
-        std::cout << "defaultPath contient : " << defaultPath << std::endl;
+        std::cout << "defaultPath contient : " << defaultPath << "\n";
     }
     else
     {
-        std::cout << "No filename, please choose one." << std::endl;
+        std::cout << "No filename, please choose one." << "\n";
         /* load the file from GUI */
         //char new_path[PATH_MAX];
         pick_folder(defaultPath) ? fprintf(stderr, "User aborted the open file dialog.\n") : selectFolder(defaultPath);
@@ -395,7 +395,6 @@ int main(int argc, char * argv[])
 {
     // Engine();
     using std::cout;
-    using std::endl;
 
     // VideoWriterg
     cv::VideoWriter oVideoWriter;//create videoWriter object, not initialized yet
@@ -469,7 +468,7 @@ int main(int argc, char * argv[])
     int fdelay = 1.0f;
 
     double fps = captureDev.getCaptureFPS();
-    std::cout << "fps : " << fps << std::endl;
+    std::cout << "fps : " << fps << "\n";
 
     if (fps < 5.0) /* Houston, we have a problem */
         fps = DEFAULT_FRAMERATE;
@@ -502,7 +501,7 @@ int main(int argc, char * argv[])
     // https://discourse.libsdl.org/t/confused-about-what-opengl-context-is-being-used-with-sdl/22860
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        std::cerr << "Failed to initialize SDL: " << SDL_GetError() << std::endl;
+        std::cerr << "Failed to initialize SDL: " << SDL_GetError() << "\n";
         return 1;
     }
 
@@ -545,7 +544,7 @@ int main(int argc, char * argv[])
 
 
     SDL_GL_GetDrawableSize(window, &local_w, &local_h);
-    std::cout << " drawable area is " << local_w << " x " << local_h << std::endl;
+    std::cout << " drawable area is " << local_w << " x " << local_h << "\n";
 
     int windowDpiScaledWidth, windowDpiScaledHeight;
     int windowDpiUnscaledWidth = WINDOW_WIDTH;
@@ -557,11 +556,11 @@ int main(int argc, char * argv[])
     windowDpiScaledWidth = int(windowDpiUnscaledWidth * dpi / defaultDpi);
     windowDpiScaledHeight = int(windowDpiUnscaledHeight * dpi / defaultDpi);
 
-    std::cerr << "dpi                   : " << dpi << std::endl;
-    std::cerr << "defaultDpi            : " << defaultDpi << std::endl;
+    std::cerr << "dpi                   : " << dpi << "\n";
+    std::cerr << "defaultDpi            : " << defaultDpi << "\n";
 
-    std::cerr << "windowDpiScaledWidth  : " << windowDpiScaledWidth << std::endl;
-    std::cerr << "windowDpiScaledHeight : " << windowDpiScaledHeight << std::endl;
+    std::cerr << "windowDpiScaledWidth  : " << windowDpiScaledWidth << "\n";
+    std::cerr << "windowDpiScaledHeight : " << windowDpiScaledHeight << "\n";
 
     window = SDL_CreateWindow(MINIDART_VERSION_NUMBER,
                               SDL_WINDOWPOS_UNDEFINED,
@@ -574,20 +573,20 @@ int main(int argc, char * argv[])
     if (window == nullptr)
         sdl_application_abort("Problem creating the SDL window.\n");
     else
-        std::cout << "SDL2 Window created " << std::endl;
+        std::cout << "SDL2 Window created " << "\n";
 
     SDL_GetWindowSize(window, &currentWidth, &currentHeight);
 
-    std::cout <<  "SDL_VERSION_ATLEAST(2,0,9) " << SDL_VERSION_ATLEAST(2,0,9) <<  std::endl;
-    std::cout <<  "SDL_VERSION_ATLEAST(2,0,8) " << SDL_VERSION_ATLEAST(2,0,8) <<  std::endl;
-    std::cout <<  "SDL_VERSION_ATLEAST(2,0,7) " << SDL_VERSION_ATLEAST(2,0,7) <<  std::endl;
-    std::cout << "SDL_HAS_CAPTURE_AND_GLOBAL_MOUSE    SDL_VERSION_ATLEAST(2,0,4) = " << SDL_VERSION_ATLEAST(2,0,4) << std::endl;
-    std::cout << "SDL_HAS_WINDOW_ALPHA                SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << std::endl;
-    std::cout << "SDL_HAS_ALWAYS_ON_TOP               SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << std::endl;
-    std::cout << "SDL_HAS_USABLE_DISPLAY_BOUNDS       SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << std::endl;
-    std::cout << "SDL_HAS_PER_MONITOR_DPI             SDL_VERSION_ATLEAST(2,0,4) = " << SDL_VERSION_ATLEAST(2,0,4) << std::endl;
-    std::cout << "SDL_HAS_VULKAN                      SDL_VERSION_ATLEAST(2,0,6) = " << SDL_VERSION_ATLEAST(2,0,6) << std::endl;
-    std::cout << "SDL_HAS_MOUSE_FOCUS_CLICKTHROUGH    SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << std::endl;
+    std::cout <<  "SDL_VERSION_ATLEAST(2,0,9) " << SDL_VERSION_ATLEAST(2,0,9) <<  "\n";
+    std::cout <<  "SDL_VERSION_ATLEAST(2,0,8) " << SDL_VERSION_ATLEAST(2,0,8) <<  "\n";
+    std::cout <<  "SDL_VERSION_ATLEAST(2,0,7) " << SDL_VERSION_ATLEAST(2,0,7) <<  "\n";
+    std::cout << "SDL_HAS_CAPTURE_AND_GLOBAL_MOUSE    SDL_VERSION_ATLEAST(2,0,4) = " << SDL_VERSION_ATLEAST(2,0,4) << "\n";
+    std::cout << "SDL_HAS_WINDOW_ALPHA                SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << "\n";
+    std::cout << "SDL_HAS_ALWAYS_ON_TOP               SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << "\n";
+    std::cout << "SDL_HAS_USABLE_DISPLAY_BOUNDS       SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << "\n";
+    std::cout << "SDL_HAS_PER_MONITOR_DPI             SDL_VERSION_ATLEAST(2,0,4) = " << SDL_VERSION_ATLEAST(2,0,4) << "\n";
+    std::cout << "SDL_HAS_VULKAN                      SDL_VERSION_ATLEAST(2,0,6) = " << SDL_VERSION_ATLEAST(2,0,6) << "\n";
+    std::cout << "SDL_HAS_MOUSE_FOCUS_CLICKTHROUGH    SDL_VERSION_ATLEAST(2,0,5) = " << SDL_VERSION_ATLEAST(2,0,5) << "\n";
 
     SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
     //  seems to work very well. Just an issue : how to handle the window and move it ? (ALT + is suboptimal)
@@ -622,7 +621,7 @@ int main(int argc, char * argv[])
         fprintf(stdout, "Audio device (with recording capability) %d: %s\n", i, SDL_GetAudioDeviceName(i, 1));
     }
 
-    std::cout << "Found " << md::getSDLRecordableAudioDeviceNames() << " recordable audio devices." << std::endl;
+    std::cout << "Found " << md::getSDLRecordableAudioDeviceNames() << " recordable audio devices." << "\n";
 
     //Get capture device count
     int nbrRecordingDeviceCount = SDL_GetNumAudioDevices(SDL_TRUE);
@@ -645,7 +644,7 @@ int main(int argc, char * argv[])
     // HiDpi rescaling
     io.FontGlobalScale = dpi/defaultDpi;
 
-    std::cout << "io =  " << &io << std::endl;
+    std::cout << "io =  " << &io << "\n";
 
     // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Multi-ViewPorts
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-ViewPorts
@@ -654,11 +653,11 @@ int main(int argc, char * argv[])
 
     ImGui::StyleColorsLightGreen();  // back to this theme as default
 
-    std::cout << "style =  " << &style << std::endl;
+    std::cout << "style =  " << &style << "\n";
 
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
-        std::cout << "Viewport enabled " << std::endl;
+        std::cout << "Viewport enabled " << "\n";
         style.WindowRounding = 0.0f;
     }
 
@@ -795,9 +794,9 @@ int main(int argc, char * argv[])
                                         b_audio_paused = !b_audio_paused;
                                         SDL_PauseAudioDevice(audio_dev, b_audio_paused);
 
-                                        std::cout << "b_audio_paused =  " << b_audio_paused << std::endl;
-                                        std::cout << "position -origin : " << position - origin << std::endl;
-                                        std::cout << "video_duration - 0.2f : " << video_duration - 0.2f << std::endl;
+                                        std::cout << "b_audio_paused =  " << b_audio_paused << "\n";
+                                        std::cout << "position -origin : " << position - origin << "\n";
+                                        std::cout << "video_duration - 0.2f : " << video_duration - 0.2f << "\n";
                                 }
                                 break;
 
@@ -945,7 +944,7 @@ int main(int argc, char * argv[])
                         {
                             if ((event.key.keysym.mod) && (!b_inserting_text))
                             {
-                                cout<<"do exit"<<endl;
+                                cout<<"do exit"<<"\n";
                                 b_video_running = false;
                                 do_exit(is);
                             }
@@ -1054,7 +1053,7 @@ int main(int argc, char * argv[])
                         frame2 = pCaptureDev.USBFrame.clone();
 #endif
                         if (!bSuccess2)
-                            std::cerr << "Pb with pCap2->read(pCaptureDev.USBFrame)" << std::endl;
+                            std::cerr << "Pb with pCap2->read(pCaptureDev.USBFrame)" << "\n";
                     }
                 }
             }
@@ -1081,7 +1080,7 @@ int main(int argc, char * argv[])
                     {
                         while(frame2.empty())
                         {
-                            std::cout << "waiting for frame ..." << std::endl;
+                            std::cout << "waiting for frame ..." << "\n";
                             index++; // avoids a dead lock, and allows missing frames
 
                             if (index > 300)
@@ -1271,12 +1270,12 @@ int main(int argc, char * argv[])
                                            );
 
                 if ( !oVideoWriter.isOpened() ) //if not initialize the VideoWriter successfully, exit the program
-                    cout << "ERROR: Failed to initialize video writing" << endl;
+                    cout << "ERROR: Failed to initialize video writing" << "\n";
                 else
                 {
-                    std::cout << "New Recording Started at " <<  outFPS << " images / second" << std::endl;
+                    std::cout << "New Recording Started at " <<  outFPS << " images / second" << "\n";
                     b_startNewRecording = false;
-                    cout<<"New video file created MyVideo"+intToString(inc)+myContainer<<endl;
+                    cout<<"New video file created MyVideo"+intToString(inc)+myContainer<<"\n";
                     inc++;
                 }
             }
@@ -1696,9 +1695,9 @@ int main(int argc, char * argv[])
                         incr = 0.0f;
                         position = 0.0f;
                         //position = origin;
-                        std::cout << "incr   : "   << incr     << std::endl;
-                        std::cout << "position : " << position << std::endl;
-                        std::cout << "origin : "   << origin   << std::endl;
+                        std::cout << "incr   : "   << incr     << "\n";
+                        std::cout << "position : " << position << "\n";
+                        std::cout << "origin : "   << origin   << "\n";
                         do_seek(incr, (long int)origin);
 
 //                        position = origin;
@@ -1778,10 +1777,10 @@ int main(int argc, char * argv[])
 
                         if ((counter % 30) == 0 )
                         {
-                            std::cout << "origin              = " << origin << std::endl;
-                            std::cout << "mp4_origin          = " << mp4_origin << std::endl;
-                            std::cout << "position            = " << position << std::endl;
-                            std::cout << "get_audio_clock(is) = " << get_audio_clock(is) << std::endl;
+                            std::cout << "origin              = " << origin << "\n";
+                            std::cout << "mp4_origin          = " << mp4_origin << "\n";
+                            std::cout << "position            = " << position << "\n";
+                            std::cout << "get_audio_clock(is) = " << get_audio_clock(is) << "\n";
                             counter = 0;
                         }
                         counter++;
@@ -1814,9 +1813,9 @@ int main(int argc, char * argv[])
                     if (!ImGui::IsItemActive() && !ImGui::IsItemEdited() && !ImGui::IsItemClicked() && b_changing_value && !ImGui::IsMouseDragging())
                     {
                         {
-                            std::cout << "origin              = " << origin << std::endl;
-                            std::cout << "position            = " << position << std::endl;
-                            std::cout << "get_audio_clock(is) = " << get_audio_clock(is) << std::endl;
+                            std::cout << "origin              = " << origin << "\n";
+                            std::cout << "position            = " << position << "\n";
+                            std::cout << "get_audio_clock(is) = " << get_audio_clock(is) << "\n";
 #ifdef MASTER_CLOCK
                             incr =  position - get_master_clock(is) - 0.2f;
 #else
@@ -1825,9 +1824,9 @@ int main(int argc, char * argv[])
                             do_seek(incr, -1);
 //                            SDL_Delay(50);
 
-                            std::cout << "origin              = " << origin << std::endl;
-                            std::cout << "position            = " << position << std::endl;
-                            std::cout << "get_audio_clock(is) = " << get_audio_clock(is) << std::endl;
+                            std::cout << "origin              = " << origin << "\n";
+                            std::cout << "position            = " << position << "\n";
+                            std::cout << "get_audio_clock(is) = " << get_audio_clock(is) << "\n";
 
 //                            b_audio_paused = false;
 //                            SDL_PauseAudioDevice(audio_dev, b_audio_paused);
@@ -1878,7 +1877,7 @@ int main(int argc, char * argv[])
                 if ((ImGui::Button("  " ICON_FA_FOLDER_OPEN_O CURRENT_WORKING_DIRECTORY_BUTTON)) && (!b_paused))
                 {
                     selectFolder(currentPath);
-                    std::cout << "currentPath : " << currentPath << std::endl;
+                    std::cout << "currentPath : " << currentPath << "\n";
                 }
 
                 if (b_paused)
@@ -1912,7 +1911,7 @@ int main(int argc, char * argv[])
                             b_recording_video = true;
                             b_draw_recording_info = true;
                             b_startNewRecording = true;
-                            std::cout << "Enregistrement en cours" << std::endl;
+                            std::cout << "Enregistrement en cours" << "\n";
                             inc_color();
                         }
                     }
@@ -1921,7 +1920,7 @@ int main(int argc, char * argv[])
                         b_recording_video = false;
                         b_draw_recording_info = false;
                         oVideoWriter.release();
-                        std::cout << "Fin d'enregistrement" << std::endl;
+                        std::cout << "Fin d'enregistrement" << "\n";
                     }
                     else if ((!b_recording_checked) && (!b_recording_video))
                     {
@@ -2299,7 +2298,7 @@ int main(int argc, char * argv[])
                             {
                                 capture_dev = old_capture_dev;
                                 image_format = old_image_format;
-                                std::cout << "Capture dev not existing" << std::endl;
+                                std::cout << "Capture dev not existing" << "\n";
                             }
                             else
                             {
@@ -2425,7 +2424,7 @@ int main(int argc, char * argv[])
                         {
                             cap2.set(CV_CAP_PROP_PAN, (double)current_absolute_pan*PAN_STEP);
                             old_absolute_pan = current_absolute_pan;
-                            std::cerr << CURRENT_PAN_VALUE << cap2.get(CV_CAP_PROP_PAN)-0.5 << std::endl;
+                            std::cerr << CURRENT_PAN_VALUE << cap2.get(CV_CAP_PROP_PAN)-0.5 << "\n";
                         }
 
                         ImGui::PushID(TILT_VALUE);
@@ -2438,7 +2437,7 @@ int main(int argc, char * argv[])
                         {
                             cap2.set(CV_CAP_PROP_TILT, (double)current_absolute_tilt*TILT_STEP);
                             old_absolute_tilt = current_absolute_tilt;
-                            std::cerr << CURRENT_TILT_VALUE << cap2.get(CV_CAP_PROP_TILT)-0.5f << std::endl;
+                            std::cerr << CURRENT_TILT_VALUE << cap2.get(CV_CAP_PROP_TILT)-0.5f << "\n";
                         }
 
                         static float current_absolute_zoom = 1.0f;
@@ -2456,7 +2455,7 @@ int main(int argc, char * argv[])
                         {
                             cap2.set(CV_CAP_PROP_ZOOM, (double)current_absolute_zoom*100);
                             old_absolute_zoom = current_absolute_zoom;
-                            std::cerr << CURRENT_ZOOM_VALUE << 4.0f*cap2.get(CV_CAP_PROP_ZOOM)+1.0f << std::endl;
+                            std::cerr << CURRENT_ZOOM_VALUE << 4.0f*cap2.get(CV_CAP_PROP_ZOOM)+1.0f << "\n";
                         }
 
                         if (ImGui::Button(RESET_PAN_AND_TILT_VALUE_BUTTON))
@@ -2466,9 +2465,9 @@ int main(int argc, char * argv[])
                             current_absolute_tilt = 0;
                             current_absolute_pan = 0;
 
-                            std::cerr << "Réinitialisation des valeurs de Pan et Tilt ... " << std::endl;
-                            std::cerr << "Pan actuel : " << cap2.get(CV_CAP_PROP_PAN)-0.5f << std::endl;
-                            std::cerr << "Tilt actuel : " << cap2.get(CV_CAP_PROP_TILT)-0.5f << std::endl;
+                            std::cerr << "Réinitialisation des valeurs de Pan et Tilt ... " << "\n";
+                            std::cerr << "Pan actuel : " << cap2.get(CV_CAP_PROP_PAN)-0.5f << "\n";
+                            std::cerr << "Tilt actuel : " << cap2.get(CV_CAP_PROP_TILT)-0.5f << "\n";
                         }
                     }
 
@@ -2498,7 +2497,7 @@ int main(int argc, char * argv[])
                         ImGui::InputText("##insert", flux_reseau, IM_ARRAYSIZE(flux_reseau));
                         if (ImGui::Button(OK_BUTTON2))
                         {
-                            std::cout << ENTERED_WEBCAM_IP_VALUE <<  flux_reseau << std::endl;
+                            std::cout << ENTERED_WEBCAM_IP_VALUE <<  flux_reseau << "\n";
                             ImGui::CloseCurrentPopup();
                         }
                         ImGui::EndPopup();
@@ -2544,7 +2543,7 @@ int main(int argc, char * argv[])
                         ImGui::InputText(" ", cell_phone_url, IM_ARRAYSIZE(cell_phone_url));
                         if (ImGui::Button(OK_BUTTON2))
                         {
-                            std::cout << "adresse IP du téléphone : " <<  cell_phone_url << std::endl;
+                            std::cout << "adresse IP du téléphone : " <<  cell_phone_url << "\n";
                             ImGui::CloseCurrentPopup();
                         }
                         ImGui::EndPopup();
@@ -2604,10 +2603,10 @@ int main(int argc, char * argv[])
 
                     if (ImGui::IsItemClicked(0))
                     {
-                        std::cout << "Loupe activée" << std::endl;
-                        std::cout << "(before) p_aDrawnObject->anObjectType : " << p_delayTabCanvas->aDrawnObject.anObjectType << std::endl;
+                        std::cout << "Loupe activée" << "\n";
+                        std::cout << "(before) p_aDrawnObject->anObjectType : " << p_delayTabCanvas->aDrawnObject.anObjectType << "\n";
                         p_delayTabCanvas->aDrawnObject.anObjectType = NOT_A_DRAWN_OBJECT;
-                        std::cout << "(after) p_aDrawnObject->anObjectType : " << p_delayTabCanvas->aDrawnObject.anObjectType << std::endl;
+                        std::cout << "(after) p_aDrawnObject->anObjectType : " << p_delayTabCanvas->aDrawnObject.anObjectType << "\n";
                     }
 
                     ImGui::PushItemWidth(80.0f);
@@ -3668,11 +3667,11 @@ int main(int argc, char * argv[])
                         points.push_back(mouse_pos_in_canvas);
                         adding_line = true;
 #ifdef DEBUG
-                        std::cout << "result_of_shoot = " << result_of_shoot << std::endl;
+                        std::cout << "result_of_shoot = " << result_of_shoot << "\n";
                         if (!unTir.empty())
                         {
-                            std::cout << "unTir.Size-1 = " << unTir.Size-1 << std::endl;
-                            std::cout << "unTir[" << unTir.Size-1 << "] = " << unTir[unTir.Size-1] << std::endl;
+                            std::cout << "unTir.Size-1 = " << unTir.Size-1 << "\n";
+                            std::cout << "unTir[" << unTir.Size-1 << "] = " << unTir[unTir.Size-1] << "\n";
                         }
 #endif
                     }
@@ -3790,7 +3789,7 @@ int main(int argc, char * argv[])
 #ifdef DEBUG
                         for (int j = 0 ; j < shooters.Size ; j++)
                         {
-                            std::cout << "shooters.Size > 0 et shooters["<< j<<"] contient :" << shooters[j] << std::endl;
+                            std::cout << "shooters.Size > 0 et shooters["<< j<<"] contient :" << shooters[j] << "\n";
                         }
 #endif
                         switch (result_of_shoot)
@@ -3861,7 +3860,7 @@ int main(int argc, char * argv[])
 #ifdef DEBUG
                     for (int k = 0 ; k < shooters.Size ; k++)
                     {
-                        std::cout << "shooters[" << k << "] = " << shooters[k] << std::endl;
+                        std::cout << "shooters[" << k << "] = " << shooters[k] << "\n";
                     }
 #endif
                     // let's reset the shooter number every time
@@ -4200,7 +4199,7 @@ int main(int argc, char * argv[])
 
         // render the users' stack too
         if (ImGui::GetDrawData() == NULL)
-            std::cout << "ImGui::GetDrawData() is null" << std::endl;
+            std::cout << "ImGui::GetDrawData() is null" << "\n";
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -4252,7 +4251,8 @@ int main(int argc, char * argv[])
         static int counter2 = 0;
         if ((counter2 % 5) == 0)
         {
-            std::cout << "frameTicks =  " << frameTicks << std::endl;
+            std::cout << "frameTicks =  " << frameTicks << "\n";
+
             counter2 = 0;
         }
         counter2++;
