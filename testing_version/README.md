@@ -1,6 +1,6 @@
 
 - English (US) VERSION : current version is 0.9.6 (see en-US folder)
-- VERSION FRANÇAISE : l'archive à télécharger actuellement en test est la **0.9.6**. Elle se trouve dans le répertoire courant
+- VERSION FRANÇAISE : l'archive à télécharger actuellement en test est la **0.9.6.1**. Elle se trouve dans le répertoire courant
 
 
 Pour les derniers changements, voir le contenu de releases notes (en anglais)
