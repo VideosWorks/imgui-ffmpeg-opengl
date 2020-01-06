@@ -210,7 +210,7 @@ Ce logiciel est écrit sous Linux, et cross-compilé pour fonctionner sous Windo
 * (prochainement) **TinyXML2** (https://github.com/leethomason/tinyxml2) pour les tags xml lors de l'analyse et le classement d'une vidéo.
 * (prochainement) **delay** (https://github.com/rom1v/delay), écrit par **Romain Vimont**, qui permet de retarder son + image d'une durée ajustable, mais toujours **synchronisés**. 
 
-**Auteur du logiciel miniDart : Eric Bachard © 2016-2019**
+**Auteur du logiciel miniDart : Eric Bachard © 2016-2020**
 
 
 **ENGLISH VERSION**
@@ -402,6 +402,6 @@ This software is written on Linux, and cross-compiled to run on 64-bit Windows. 
 * (work in progress, to be confirmed) **opencv-ffmpeg** (https://github.com/2vin/opencv-ffmpeg), written by **2vin** : turn OpenCV cv::Mat into mp4 (works very well !)
 * (work in progress, extremely usefull) **mediaMuxer**  (https://github.com/jerett/mediaMuxer), written by **WenJie JIANG**, extremely helpfull to mux audio and video for recording the final video.
 
-**Author of miniDart software: Eric Bachard © 2016-2019**
+**Author of miniDart software: Eric Bachard © 2016-2020**
 
 End english version
