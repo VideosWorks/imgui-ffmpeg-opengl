@@ -49,7 +49,7 @@ CXX_OPT_LEVEL = -O3 -march=native -mtune=native
 CXX_STD = -std=c++11
 
 # testing purpose : modern and C++ nativefiledialog version
-TEST_NFD_EXT=testing_NFD_EXT
+#TEST_NFD_EXT=testing_NFD_EXT
 
 ifeq (${TEST_NFD_EXT}, testing_NFD_EXT)
 
