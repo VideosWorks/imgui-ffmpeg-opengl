@@ -1,6 +1,25 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2020  Software created the 1st AUGUST 2016
 
+2020 March 16th
+
+FIXED the fu... thread issue !!  Was a dead lock + a double free  => back to a working version
+FIXED : some .mkv causing instant crash at load : was ffmpeg issue (libswscale from recent git pull OR 
+the latest Intel Media driver - aka iHD 2.1.0 - not working well together). 
+A simple return to ffmpeg 4.2.2 fixed that (libswscale.so.5.5.100 current version)
+
+
+2019 October 10th
+
+FIXED : 3 warnings when building nfd_gtk.cpp ( assert + comparing signed/unsigned variables)
+FIXED : avoid "std::endl;", now using "\n"; instead
+
+
+2019 October 7th
+
+FIXED : src/draw_text.cpp:72:34: runtime error: index 1 out of bounds for type 'Point_ [1][4]'
+
+
 2019 September 25th
 
 
