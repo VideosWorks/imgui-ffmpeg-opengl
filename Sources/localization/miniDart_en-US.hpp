@@ -5,16 +5,18 @@
  * voir : http://www.gnu.org/licenses/gpl-2.0.html
  */
 
+
 #ifndef miniDart_LOCALIZATION
 #define miniDart_LOCALIZATION
 
-#define APPLICATION_VERSION_STRING "miniDart 0.9.6 2019/08/16 Ablette Agile"
+
+#define APPLICATION_VERSION_STRING "miniDart 0.9.6.3 2020/03/20 Petite truite"
 
 #define UNIX_PATH_SEPARATOR                  "/"
 #define WINDOWS_PATH_SEPARATOR               "\\"
 #define OUTPUT_FILENAME_PREFIX               "MyVideo"
 
-#define APPLICATION_NAME                     "miniDart 0.9.6.2"
+#define APPLICATION_NAME                     "miniDart 0.9.6.3"
 #define TIME_DISPLAY                         "Time : "
 #define RECORD_DISPLAY                       "REC"
 #define DELAY_DISPLAY                        "Delay : "
@@ -116,7 +118,7 @@
 #define IMAGE_SIZE_IN_PIXELS_BUTTON          "Image size in pixels : "
 #define IMAGE_FORMAT_POPUP                   "format_image"
 #define RESET_THE_WEBCAM_BUTTON              "Reset the source"
-#define ZOOM_ENABLE_CHECKBOX                 "Use the magnifier"
+#define ZOOM_ENABLE_CHECKBOX                 " Enable the magnifier"
 #define SELECTED_AREA_COLOR                  "Selected area color"
 #define NETWORK_FLOW                         "#flux_reseau"
 #define FLOW_URL                             "URL of the flow : %s"
@@ -139,9 +141,6 @@
 #define IMAGES_FORMAT_POPUP             "#dimensions"
 
 #define FIGURES_TAB                         "  Figures"
-
-
-#endif /* miniDart_LOCALIZATION */
 
 #define OPEN_A_CLIP_BUTTON                  "Open a video"
 #define CLOSE_THE_CLIP_BUTTON               "CLose the clip"
@@ -170,13 +169,13 @@
 
 #define PRESENTATION_STRING1               "Video analysis software for collective or individual sports coaches \n(handball e.g.), written in C++"
 
-#define LINUX_PRESENTATION_STRING2         "Version : 0.9.6  (Linux Intel x86_64 )"
+#define LINUX_PRESENTATION_STRING2         "Version : 0.9.6.3  (Linux Intel x86_64 )"
 
-#define WINDOWS_PRESENTATION_STRING2       "Version : 0.9.6  (Windows 7+ x86_64 )"
+#define WINDOWS_PRESENTATION_STRING2       "Version : 0.9.6.3  (Windows 7+ x86_64 )"
 
 #define LINK_PRESENTATION_STRING3          "Download : https://framagit.org/ericb/miniDart"
 
-#define AUTHOR_PRESENTATION_STRING4        "Author of the software : Eric Bachard © 2016-2019"
+#define AUTHOR_PRESENTATION_STRING4        "Author of the software : Eric Bachard © 2016-2020"
 
 #define LICENSE_PRESENTATION_STRING5       "License GPL v2+"
 
@@ -524,6 +523,8 @@
 
 #define PREFERENCES_STRING_09                  "  Windows theme"
 
+#define PREFERENCES_STRING_10                  "  Font size##Selector"
+
 #define PREFERED_SHORTCUT_KEY_TEXT             "Prefered key for shortcuts : "
 
 #define ALT_SHORTCUT_TEXT                      " ALT  "
@@ -538,7 +539,7 @@
 
 #define CREDITS_TAB_ITEM                       " Credits"
 
-#define AUTHOR_ID_COPYRIGHT_YEARS              "miniDart author : Eric Bachard © 2016-2019"
+#define AUTHOR_ID_COPYRIGHT_YEARS              "miniDart author : Eric Bachard © 2016-2020"
 
 #define DISPLAY_NUMBER_ID_CLUB_RESULT_IMPACT_CONDITIONS  "Display : Number / Id / Club / Result / Impact / Conditions "
 
@@ -675,4 +676,8 @@
 
 #define CONFIRM_BUTTON                              "Confirm"
 
-#define MINIDART_VERSION_NUMBER                     "0.9.6"
+#define MINIDART_VERSION_NUMBER                     "0.9.6.3"
+
+#define MAGNIFIER_WINDOW_SIZE                       "Window size"
+
+#endif /* miniDart_LOCALIZATION */

@@ -9,13 +9,13 @@
 #ifndef miniDart_LOCALIZATION
 #define miniDart_LOCALIZATION
 
-#define APPLICATION_VERSION_STRING "miniDart 0.9.6 2019/08/16 Ablette Agile"
+#define APPLICATION_VERSION_STRING "miniDart 0.9.6.3 2020/03/20 Petite Truite"
 
 #define UNIX_PATH_SEPARATOR                  "/"
 #define WINDOWS_PATH_SEPARATOR               "\\"
 #define OUTPUT_FILENAME_PREFIX               "MyVideo"
 
-#define APPLICATION_NAME                     "miniDart 0.9.6.2"
+#define APPLICATION_NAME                     "miniDart 0.9.6.3"
 #define TIME_DISPLAY                         "Temps : "
 #define RECORD_DISPLAY                       "REC"
 #define DELAY_DISPLAY                        "Retard : "
@@ -140,8 +140,6 @@
 #define IMAGES_FORMAT_POPUP             "#dimensions"
 
 #define FIGURES_TAB                         "  Statistiques"
-
-#endif /* miniDart_LOCALIZATION */
 
 #define OPEN_A_CLIP_BUTTON                  "Ouvrir un clip"
 #define CLOSE_THE_CLIP_BUTTON               "Fermer le clip"
@@ -524,6 +522,9 @@
 
 #define PREFERENCES_STRING_09                  "  Theme Windows"
 
+#define PREFERENCES_STRING_10                  "  Taille police de caractères##Selector"
+
+
 #define PREFERED_SHORTCUT_KEY_TEXT             "Touche à utiliser pour les raccourcis claviers : "
 
 #define ALT_SHORTCUT_TEXT                      " ALT  "
@@ -677,3 +678,7 @@
 #define CONFIRM_BUTTON                      "Confirmer"
 
 #define MINIDART_VERSION_NUMBER             "0.9.6"
+
+#define MAGNIFIER_WINDOW_SIZE               "Taille fenêtre"
+
+#endif /* miniDart_LOCALIZATION  */
