@@ -1,6 +1,57 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2020  Software created the 1st AUGUST 2016
 
+2020 March 18th
+
+Now using docking branch + my own changes in Dear ImGui.
+
+The base version is docking / 2020/03/17, and git show --summary says :
+
+commit ea0399414cb5da8e45fa090c19b8416058525923 (HEAD -> docking, origin/docking)
+Merge: 1abb02fb b016f1ad
+Author: ocornut <omarcornut@gmail.com>
+Date:   Wed Mar 11 22:30:34 2020 +0100
+
+    Merge branch 'master' into docking
+    
+    # Conflicts:
+    #       imgui.cpp
+
+Fixed the broken Windows build :
+- modified gl3w.c :
+  gl3w.c:29 : reinterpret_cast<void *>(wglGetProAddress(proc))
+  gl3w.c:31 : same issue
+- poll not shipped with MinGW )
+- + some other boring Windows only details
+
+Dear ImGui 1.72 ( exact version : 17202) kept for compatibilty reason.
+
+TODO
+****************
+TO BE FIXED : 2 Regressions 
+- strange nullptr (something is unitialized at launch time).
+  Probably somewhere a p_delayTabCanvas ismissing. Does not appear with the windows version ? 
+- (bizarre ....) got a gwrong value in an enumeration ? Does not appear on Windows as well 
+
+STARTED :
+- continue the code factorization with Engine class
+- improve the layout
+- allow to select a drawn object, move, push-pop-delete it in the current objects stack
+***************
+
+2020 March 17th
+
+Now using docking branch (based on 1.75)
+- synchronized the sources with ImGui docking branch (2020/03/17) 
+- added Ellipses changes (https://github.com/ocornut/imgui/pull/2305)
+- added SliderShrink changes)
+
+Modified the Makefile to now uses all Dear ImGui **unmodified tree**
+
+Included allAPI changes, and using IMGUI_VERSION_NUM to detect ImGui version at build time (> 1.7202 or not)
+
+Tests in progress.
+
 2020 March 16th
 
 FIXED the fu... thread issue !!  Was a dead lock + a double free  => back to a working version
