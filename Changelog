@@ -3,6 +3,8 @@ Copyright Eric Bachard 2016-2020  Software created the 1st AUGUST 2016
 
 2020 March 18th
 
+FIXED : -D__Linux was duplicated after make -j4 command
+
 Now using docking branch + my own changes in Dear ImGui.
 
 The base version is docking / 2020/03/17, and git show --summary says :
@@ -28,10 +30,13 @@ Dear ImGui 1.72 ( exact version : 17202) kept for compatibilty reason.
 
 TODO
 ****************
-TO BE FIXED : 2 Regressions 
+TO BE FIXED : 2 Regressions  (using:  -fsanitize=undefined option at build time)
 - strange nullptr (something is unitialized at launch time).
   Probably somewhere a p_delayTabCanvas is missing. Does not appear with the windows version ? 
-- (bizarre ....) got a wrong value in an enumeration ? Does not appear on Windows as well 
+- (bizarre ....) got a wrong value in an enumeration ?
+
+IMPORTANT : not visible for normal user. Probably some uninitialized values
+
 
 STARTED :
 - continue the code factorization with Engine class
