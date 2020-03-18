@@ -29,7 +29,9 @@ ImGui_Version = 1.72
 
 UNAME_S = $(shell uname -s)
 
-ifneq (${TARGET}, WINDOWS)
+ifeq (${TARGET}, WINDOWS)
+	OS_FLAGS += -DBUILDING_WINDOWS_VERSION
+else
 	OS_FLAGS += -DBUILDING_LINUX_VERSION
 endif
 
@@ -69,18 +71,16 @@ endif
 ##################################
 
 
-
-
 ##!###CC_OPT_LEVEL  += -march=native -mtune=native
 ##!###CXX_OPT_LEVEL += -march=native -mtune=native
 
 FFMPEG_FLAGS = $(shell pkg-config --cflags --libs libavutil libavformat libavcodec libavfilter libswscale libswresample)
 #FFMPEG_FLAGS = $(shell pkg-config --cflags --libs libavutil libavdevice libavformat libavcodec libavfilter libswscale libswresample)
 
-LINUX_FLAGS = -D__Linux -fsanitize=undefined
+#EXTRA_INFO_FLAG = -fsanitize=undefined
 #EXTRA_OS_FLAGS += -DNOT_RELEASE_VERSION
 EXTRA_OS_FLAGS += -DFPS_FEATURE_ENABLED
-OS_FLAGS += ${EXTRA_OS_FLAGS} -D__Linux -DNATIVE_BUILD
+OS_FLAGS += -D__Linux ${EXTRA_OS_FLAGS} ${EXTRA_INFO_FLAG} -DNATIVE_BUILD
 UNAME_S = $(shell uname -s)
 
 #ifeq ( $(UNAME_S), Linux)
