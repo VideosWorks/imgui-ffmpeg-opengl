@@ -30,8 +30,8 @@ TODO
 ****************
 TO BE FIXED : 2 Regressions 
 - strange nullptr (something is unitialized at launch time).
-  Probably somewhere a p_delayTabCanvas ismissing. Does not appear with the windows version ? 
-- (bizarre ....) got a gwrong value in an enumeration ? Does not appear on Windows as well 
+  Probably somewhere a p_delayTabCanvas is missing. Does not appear with the windows version ? 
+- (bizarre ....) got a wrong value in an enumeration ? Does not appear on Windows as well 
 
 STARTED :
 - continue the code factorization with Engine class
@@ -48,7 +48,7 @@ Now using docking branch (based on 1.75)
 
 Modified the Makefile to now uses all Dear ImGui **unmodified tree**
 
-Included allAPI changes, and using IMGUI_VERSION_NUM to detect ImGui version at build time (> 1.7202 or not)
+Included all API changes, and using IMGUI_VERSION_NUM to detect ImGui version at build time (> 1.7202 or not)
 
 Tests in progress.
 
@@ -81,7 +81,7 @@ FIXED : the UI must be resized after launch // HiDpi topic
 
 FIXED : Filled Ellipse object hovered does not work
 FIXED : Empty Ellipse object hovered does not work
-FIXED : canvas popup menu too little (HiDpi)
+FIXED : canvas popup menu too little (High DPI)
 
 
 2019 September 18th
