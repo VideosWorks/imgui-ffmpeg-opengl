@@ -13,6 +13,7 @@
 #define __CANVAS_OBJECTS_HPP
 
 #define    TEXT_OBJECT_IMAGE_PATH             "./images/canvas/image_text.png"
+#define    ANGLE_MEASURE_IMAGE_PATH           "./images/canvas/image_angle_measure.png"
 #define    FILLED_RECTANGLE_IMAGE_PATH        "./images/canvas/image_filled_rectangle.png"
 #define    EMPTY_RECTANGLE_IMAGE_PATH         "./images/canvas/image_empty_rectangle.png"
 #define    FILLED_CIRCLE_IMAGE_PATH           "./images/canvas/image_filled_circle.png"
@@ -26,6 +27,7 @@
 #define    SELECT_CURSOR_IMAGE_PATH           "./images/canvas/image_select_cursor.png"
 
 #define    TEXT_OBJECT_IMAGE_DARK_PATH        "./images/canvas/dark_theme/image_simple_text_dark.png"
+#define    ANGLE_MEASURE_IMAGE_DARK_PATH      "./images/canvas/dark_theme/image_angle_measure_dark.png"
 #define    FILLED_RECTANGLE_IMAGE_DARK_PATH   "./images/canvas/dark_theme/image_filled_rectangle_dark.png"
 #define    EMPTY_RECTANGLE_IMAGE_DARK_PATH    "./images/canvas/dark_theme/image_empty_rectangle_dark.png"
 #define    FILLED_CIRCLE_IMAGE_DARK_PATH      "./images/canvas/dark_theme/image_filled_circle_dark.png"
@@ -51,22 +53,23 @@ typedef enum ObjectType
 {
     SELECT_CURSOR      =   0,
     TEXT_OBJECT        =   1,
-    FILLED_RECTANGLE   =   2,
-    EMPTY_RECTANGLE    =   3,
-    FILLED_CIRCLE      =   4,
-    EMPTY_CIRCLE       =   5,
-    FILLED_ELLIPSE     =   6,
-    EMPTY_ELLIPSE      =   7,
-    RANDOM_LINE        =   8,
-    RANDOM_ARROW       =   9,
-    SIMPLE_ARROW       =  10,
-    SIMPLE_LINE        =  11,
-    IMAGE_OBJECT       =  12,
-    FRAME_OBJECT       =  13,
-    NOT_A_DRAWN_OBJECT = 100
+    ANGLE_MEASURE      =   2,
+    FILLED_RECTANGLE   =   3,
+    EMPTY_RECTANGLE    =   4,
+    FILLED_CIRCLE      =   5,
+    EMPTY_CIRCLE       =   6,
+    FILLED_ELLIPSE     =   7,
+    EMPTY_ELLIPSE      =   8,
+    RANDOM_LINE        =   9,
+    RANDOM_ARROW       =   10,
+    SIMPLE_ARROW       =   11,
+    SIMPLE_LINE        =   12,
+    IMAGE_OBJECT       =   13,
+    FRAME_OBJECT       =   14,
+    NOT_A_DRAWN_OBJECT =  100
 } ObjectType;
 
-#define CANVAS_OBJECTS_TYPES_MAX   12
+#define CANVAS_OBJECTS_TYPES_MAX   13
 
 typedef struct DrawnObject
 {
@@ -83,7 +86,6 @@ typedef struct DrawnObject
     float        radius_x;    // ellipse x radius
     float        radius_y;    // ellipse y radius
     float        rotation;    // rotation angle (CTRL key + MouseDrag)
-
 
     float        arrowLength;
     float        arrowWidth;
