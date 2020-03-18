@@ -272,17 +272,24 @@ static float initialize_position(void);
 static float initialize_position(void)
 {
 #ifdef MASTER_CLOCK
-   origin = get_master_clock(is);
+    origin = get_master_clock(is);
 #else
-   origin = get_audio_clock(is);
+    origin = get_audio_clock(is);
 #endif
-   max_position = origin + video_duration;
 
-   std::cout << "Initialization : origin         =  " << origin                << "\n";
-   std::cout << "                 max_position   =  " << max_position          << "\n";
-   std::cout << "                 video_duration =  " << max_position - origin << "\n";
+    // FIXME : investigate, and verify the best type for pos,
+    // because something dumb occurs there too
+    // 2020/03/15 pb with .swf files
+    if (video_duration < 0)
+        video_duration = - video_duration;
 
-   return (max_position - origin);
+    max_position = origin + video_duration;
+
+    std::cout << "Initialization : origin         =  " << origin                << "\n";
+    std::cout << "                 max_position   =  " << max_position          << "\n";
+    std::cout << "                 video_duration =  " << max_position - origin << "\n";
+
+    return (max_position - origin);
 }
 
 static float position = 0.0f;
@@ -1000,12 +1007,13 @@ int main(int argc, char * argv[])
 */
 ///////////////////////////////////////////////////////////////////
 
+/*  2020/03/17
             // CREATE THE VIDEO RECORDER, WHEN NEEDED
         static ImVec2 topLeft = ImVec2( 0.0f, 0.0f);
         static ImVec2 bottomRight = ImVec2( 0.0f, 0.0f);
         static ImVec2 * p_topLeft = &topLeft;
         static ImVec2 * p_bottomRight = &bottomRight;
-
+*/
         // if (! Application::images_paused)
         if (!b_paused)
         {
@@ -1195,15 +1203,16 @@ int main(int argc, char * argv[])
             if ((b_record_rectangle) && (!displayed_frame.empty()))
             {
                 // we need to define a minimal area, to avoid displaying " ghost rectangles"
-                if ((abs(p_bottomRight->x - p_topLeft->x) > 10) && (abs(p_bottomRight->y - p_topLeft->y) > 10))
+                if (    (abs(p_delayTabCanvas->bottomRight.x - p_delayTabCanvas->topLeft.x) > 10)
+                     && (abs(p_delayTabCanvas->bottomRight.y - p_delayTabCanvas->topLeft.y) > 10))
                 {
                     // 0.82f, 45.0f and 28.0f are "magics" due to a crappy layout.  FIXME
                     static int rBase   = (0.82f * currentWidth) - WEBCAM_PARAMETERS_AREA_WIDTH - 45.0f;
                     static int rWidth  = rBase - 28.0f;
                     static int rHeight = rBase * ratio;
                     cv::rectangle(  displayed_frame,
-                                    cv::Point((p_topLeft->x/rWidth)*displayed_frame.cols,(p_topLeft->y/rHeight)*displayed_frame.rows),
-                                    cv::Point((p_bottomRight->x/rWidth)*displayed_frame.cols, (p_bottomRight->y/rHeight)*displayed_frame.rows),
+                                    cv::Point((p_delayTabCanvas->topLeft.x/rWidth)*displayed_frame.cols,(p_delayTabCanvas->topLeft.y/rHeight)*displayed_frame.rows),
+                                    cv::Point((p_delayTabCanvas->bottomRight.x/rWidth)*displayed_frame.cols, (p_delayTabCanvas->bottomRight.y/rHeight)*displayed_frame.rows),
                                     cv::Scalar(255, 255, 255, 255),
                                     2,
                                     8);
@@ -1793,7 +1802,11 @@ int main(int argc, char * argv[])
                     static bool b_changing_value = false;
 
                     // logical
+#if (IMGUI_VERSION_NUM > 17202)
+                    if ((ImGui::IsItemActive())||(ImGui::IsItemEdited())||ImGui::IsMouseDragging(0)||ImGui::IsItemClicked())
+#else
                     if ((ImGui::IsItemActive())||(ImGui::IsItemEdited())||ImGui::IsMouseDragging()||ImGui::IsItemClicked())
+#endif
                     {
 #ifdef MASTER_CLOCK
                         if (fabs(position - get_master_clock(is)) >= 0.2f)
@@ -1810,7 +1823,11 @@ int main(int argc, char * argv[])
                         SDL_PauseAudioDevice(audio_dev, b_audio_paused);
                     }
 
+#if (IMGUI_VERSION_NUM > 17202)
+                    if (!ImGui::IsItemActive() && !ImGui::IsItemEdited() && !ImGui::IsItemClicked() && b_changing_value && !ImGui::IsMouseDragging(0))
+#else
                     if (!ImGui::IsItemActive() && !ImGui::IsItemEdited() && !ImGui::IsItemClicked() && b_changing_value && !ImGui::IsMouseDragging())
+#endif
                     {
                         {
                             std::cout << "origin              = " << origin << "\n";
@@ -3292,7 +3309,7 @@ int main(int argc, char * argv[])
                         ImGui::CloseCurrentPopup();
 
                     ImGui::NewLine();
-                    ImGui::Text("    Auteur du logiciel miniDart : Eric Bachard © 2016-2019");
+                    ImGui::Text("    "); ImGui::SameLine(); ImGui::Text(AUTHOR_ID_COPYRIGHT_YEARS);
 
                     ImGui::EndPopup();
                 } // BeginPopupModal()
@@ -3477,8 +3494,11 @@ int main(int argc, char * argv[])
         {
             ImGui::BeginGroup(); // Group 2
             {
+#if (IMGUI_VERSION_NUM > 17202)
+                ImGui::SetNextWindowContentSize(ImVec2(620.0f, 0.0f));
+#else
                 ImGui::SetNextWindowContentWidth(620);
-
+#endif
                 ImGui::BeginChild("playground", ImVec2(620,603), true);
                 ImDrawList * draw_list = ImGui::GetWindowDrawList();
 
