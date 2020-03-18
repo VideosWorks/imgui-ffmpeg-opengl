@@ -19,7 +19,6 @@ typedef enum MoveToChoice
 } MoveToChoice;
 
 
-// templates inspired from Dear ImGui (MIT license)
 template<typename T> static inline T ImMin(T lhs, T rhs)   { return lhs < rhs ? lhs : rhs; }
 template<typename T> static inline T ImMax(T lhs, T rhs)   { return lhs >= rhs ? lhs : rhs; }
 
@@ -28,6 +27,7 @@ const std::string canvasObjectImagePath[CANVAS_OBJECTS_TYPES_MAX] =
 {
     SELECT_CURSOR_IMAGE_DARK_PATH,
     TEXT_OBJECT_IMAGE_DARK_PATH,
+    ANGLE_MEASURE_IMAGE_DARK_PATH,
     FILLED_RECTANGLE_IMAGE_DARK_PATH,
     EMPTY_RECTANGLE_IMAGE_DARK_PATH,
     FILLED_CIRCLE_IMAGE_DARK_PATH,
@@ -92,8 +92,10 @@ bool md::Canvas::init()
     iconHeight    = DEFAULT_ICON_HEIGHT;
     frame_padding = DEFAULT_FRAME_PADDING;
     bcol          = ImVec4(0.3f, 0.4f, 1.0f, 0.5f);
+    // ocol       = ImVec4(0.4f, 0.4f, 0.4f, 0.5f);
     return true;
 }
+
 
 void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, float outline_thickness)
 {
@@ -152,12 +154,21 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
 
             if (ImGui::IsItemHovered())
             {
+
+#if (IMGUI_VERSION_NUM > 17202)
+                if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging(0) )
+#else
                 if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
+#endif
                 {
                     adding_circle = false;
                 }
 
-                if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
+#if (IMGUI_VERSION_NUM > 17202)
+                if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging(0) )
+#else
+                if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging() )
+#endif
                     adding_circle = true;
 
                 if ( (!adding_circle && ImGui::IsMouseClicked(0)) )
@@ -202,10 +213,18 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
 
             if (ImGui::IsItemHovered())
             {
+#if (IMGUI_VERSION_NUM > 17202)
+                if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging(0) )
+#else
                 if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
+#endif
                     adding_circle2 = false;
 
-                if ((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging())
+#if (IMGUI_VERSION_NUM > 17202)
+                if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging(0) )
+#else
+                if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && ImGui::IsMouseDragging() )
+#endif
                     adding_circle2 = true;
 
                 if ( (!adding_circle2 && ImGui::IsMouseClicked(0)) )
@@ -216,13 +235,14 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
             }
         break;
 
+            //case TEXT_OBJECT:
         case SELECT_CURSOR:
         case NOT_A_DRAWN_OBJECT:
         {
             if (adding_rect)
             {
                 adding_preview1 = true;
-                zoom_area_points.push_back(mouse_pos_in_image);
+                zoom_area_points.push_back(mouse_pos_in_image); // catch the second point
 
                 if (!ImGui::GetIO().MouseDown[0])
                    adding_rect = adding_preview1 = false;
@@ -231,7 +251,11 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
 
             if (ImGui::IsItemHovered())
             {
+#if (IMGUI_VERSION_NUM > 17202)
+                if ( (((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1) )  && (!zoom_area_points.empty()))) && !ImGui::IsMouseDragging(0) )
+#else
                 if ( (((ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1) )  && (!zoom_area_points.empty()))) && !ImGui::IsMouseDragging() )
+#endif
                 {
                     adding_rect = false;
                     adding_preview1 = false;
@@ -245,6 +269,7 @@ void md::Canvas::preview(int selectedObject, ImU32 color, int w, float ratio, fl
                     adding_rect = true;
                 }
             }
+
             updateSelectedArea(zoom_area_points, color, outline_thickness);
             reorder_points(&topLeft, &bottomRight);
 
@@ -279,13 +304,6 @@ void md::Canvas::updateSelectedArea(ImVector <ImVec2> zoom_area_points, ImU32 co
     }
 }
 
-
-
-
-bool  md::Canvas::addObject()
-{
-    return true;
-}
 
 void md::Canvas::update(ImVec2 mousePos)
 {
@@ -351,6 +369,13 @@ void md::Canvas::update(ImVec2 mousePos)
     }
 }
 
+bool  md::Canvas::addObject()
+{
+    return true;
+}
+
+
+
 void  md::Canvas::setMousePosValid(int w, float ratio)
 {
     mouse_pos_in_image = ImVec2(ImGui::GetIO().MousePos.x - mp_TextCanvas->image_pos.x,  (ImGui::GetIO().MousePos.y - mp_TextCanvas->image_pos.y));
@@ -374,7 +399,7 @@ ImU32 md::Canvas::getBackgroundColor(int i)
     ImU32 toReturn;
     if (currentlyDrawnObjects[i].hovered == true)
     {
-        toReturn = IM_COL32(128, 128,128,128);
+        toReturn = IM_COL32(128, 128,128,128);//IM_COL32_WHITE;
     }
     else
         toReturn = currentlyDrawnObjects[i].objBackgroundColor;
@@ -382,16 +407,19 @@ ImU32 md::Canvas::getBackgroundColor(int i)
     return toReturn;
 }
 
+
+
 void md::Canvas::catchPrimitivesPoints(void)
 {
     if (adding_rect2)
     {
         adding_preview2 = true;
+
         aDrawnObject.objectPoints.push_back(mouse_pos_in_image);
 
         aDrawnObject.P1P4 = sqrtf(  (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
                                   + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y) );
-
+        // preview
         if (!aDrawnObject.objectPoints.empty())
         {
             switch(aDrawnObject.anObjectType)
@@ -488,7 +516,7 @@ void md::Canvas::catchPrimitivesPoints(void)
                 default:
                 break;
             }
-        }
+        } // end preview
 
         if (!ImGui::GetIO().MouseDown[0])
         {
@@ -519,13 +547,11 @@ void md::Canvas::catchPrimitivesPoints(void)
                     float xF = e * aDrawnObject.long_axis * cos(M_PI * aDrawnObject.rotation / 180.0f);
                     float yF = e * aDrawnObject.long_axis * sin(M_PI * aDrawnObject.rotation / 180.0f);
 
-                    // What follows is done in all cases
                     aDrawnObject.F1.x = aDrawnObject.objectPoints[0].x;
                     aDrawnObject.F1.y = aDrawnObject.objectPoints[0].y;
                     aDrawnObject.F2.x = aDrawnObject.F1.x;
                     aDrawnObject.F2.y = aDrawnObject.F1.y;
 
-                    // Now, we need to calculate F1 and F2 coordinates
                     if (radius_x > radius_y)
                     {
                         aDrawnObject.F1.x += xF;
@@ -542,7 +568,6 @@ void md::Canvas::catchPrimitivesPoints(void)
                         aDrawnObject.F2.y -= xF;
                     }
 
-#ifdef DEBUG
                     std::cout << "xF         = " << xF << "\n";
                     std::cout << "yF         = " << yF << "\n";
                     std::cout << "e          = " << e << "\n";
@@ -558,7 +583,6 @@ void md::Canvas::catchPrimitivesPoints(void)
                     std::cout << "aDrawnObject.F1.y : " << aDrawnObject.F1.y << "\n";
                     std::cout << "aDrawnObject.F2.x : " << aDrawnObject.F2.x << "\n";
                     std::cout << "aDrawnObject.F2.y : " << aDrawnObject.F2.y << "\n";
-#endif
                 }
                 break;
 
@@ -571,15 +595,6 @@ void md::Canvas::catchPrimitivesPoints(void)
                     float Rint = aDrawnObject.P1P4 - (aDrawnObject.thickness / 2.0f);
                     aDrawnObject.R2_in = Rint * Rint;
                     aDrawnObject.R2_out = Rext * Rext;
-#ifdef DEBUG
-                    std::cout << "aDrawnObject.objectPoints[0].x : " << aDrawnObject.objectPoints[0].x << "\n";
-                    std::cout << "aDrawnObject.objectPoints[0].y : " << aDrawnObject.objectPoints[0].y << "\n";
-                    std::cout << "Rint                           : " << Rint << "\n";
-                    std::cout << "aDrawnObject.P1P4              : " << aDrawnObject.P1P4 << "\n";
-                    std::cout << "Rext                           : " << Rext << "\n";
-                    std::cout << "aDrawnObject.R2_in             : " << aDrawnObject.R2_in << "\n";
-                    std::cout << "aDrawnObject.R2_out            : " << aDrawnObject.R2_out << "\n";
-#endif
                 }
                 break;
 
@@ -588,13 +603,6 @@ void md::Canvas::catchPrimitivesPoints(void)
                     aDrawnObject.R2_out = (aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)*(aDrawnObject.objectPoints[1].x - aDrawnObject.objectPoints[0].x)
                                               + (aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y)*(aDrawnObject.objectPoints[1].y - aDrawnObject.objectPoints[0].y);
                     aDrawnObject.P1P4 = sqrtf(aDrawnObject.R2_out);
-
-#ifdef DEBUG
-                    std::cout << "aDrawnObject.objectPoints[0].x : " << aDrawnObject.objectPoints[0].x << "\n";
-                    std::cout << "aDrawnObject.objectPoints[0].y : " << aDrawnObject.objectPoints[0].y << "\n";
-                    std::cout << "aDrawnObject.R2_out : " << aDrawnObject.R2_out << "\n";
-                    std::cout << "aDrawnObject.P1P4   : " << aDrawnObject.P1P4 << "\n";
-#endif
                 }
                 break;
 
@@ -644,6 +652,7 @@ void md::Canvas::catchPrimitivesPoints(void)
              }
 
              currentlyDrawnObjects.push_back(aDrawnObject);
+
              aDrawnObject.objectPoints.clear();
              aDrawnObject.Rect_ext.clear();
              aDrawnObject.Rect_int.clear();
@@ -654,7 +663,11 @@ void md::Canvas::catchPrimitivesPoints(void)
 
     if (ImGui::IsItemHovered())
     {
+#if (IMGUI_VERSION_NUM > 17202)
+        if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging(0) )
+#else
         if ( (ImGui::IsMouseClicked(0)||ImGui::IsMouseClicked(1)) && !ImGui::IsMouseDragging() )
+#endif
         {
             adding_rect2 = adding_preview2 = false;
         }
@@ -676,7 +689,10 @@ void md::Canvas::catchPrimitivesPoints(void)
 int md::Canvas::draw()
 {
     ImDrawList * p_drawList = ImGui::GetWindowDrawList();
+
+    //ImVec2 subview_size = ImGui::GetContentRegionAvail();
     ImVec2 subview_size = mp_TextCanvas->image_size;
+
     p_drawList->PushClipRect(ImVec2(0.0f, 0.0f), ImVec2(mp_TextCanvas->image_pos.x + subview_size.x, mp_TextCanvas->image_pos.y + subview_size.y) );
 
     for (unsigned int i = 0; i < currentlyDrawnObjects.size(); i++)
@@ -684,15 +700,8 @@ int md::Canvas::draw()
         {
             switch(currentlyDrawnObjects[i].anObjectType)
             {
-                case FILLED_RECTANGLE:
-                    p_drawList->AddRectFilled(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
-                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
-                                              ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
-                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
-                                              getBackgroundColor(i));
-                break;
-
                 case EMPTY_RECTANGLE:
+                    // already stored
                     p_drawList->AddRect(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
                                         ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x, mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
                                         getBackgroundColor(i),
@@ -704,9 +713,17 @@ int md::Canvas::draw()
                 case EMPTY_CIRCLE:
                                     p_drawList->AddCircle(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
                                                                  mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
-                                                          currentlyDrawnObjects[i].P1P4,
-                                                          getBackgroundColor(i),
-                                                          32, currentlyDrawnObjects[i].thickness);
+                                                                 currentlyDrawnObjects[i].P1P4,
+                                                                 getBackgroundColor(i),
+                                                                 32, currentlyDrawnObjects[i].thickness);
+                break;
+
+                case FILLED_RECTANGLE:
+                    p_drawList->AddRectFilled(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
+                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),
+                                              ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
+                                                     mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[1].y),
+                                              getBackgroundColor(i));
                 break;
 
                 case FILLED_CIRCLE:
@@ -758,22 +775,19 @@ int md::Canvas::draw()
 
                     if (currentlyDrawnObjects[i].P1P4 > 1.5f * currentlyDrawnObjects[i].arrowLength)
                     {
-
-                     /* FIXME : OPTIMIZE
+/* FIXME : OPTIMIZE
                         p_drawList->PathClear();
                         p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].arrowPolygon[1].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].arrowPolygon[1].y + mp_TextCanvas->image_pos.y));
                         p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].objectPoints[1].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].objectPoints[1].y + mp_TextCanvas->image_pos.y));
                         p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].arrowPolygon[2].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].arrowPolygon[2].y + mp_TextCanvas->image_pos.y));
                         p_drawList->PathStroke(currentlyDrawnObjects[i].objBackgroundColor, false, currentlyDrawnObjects[i].thickness);
-                      */
-
+*/
                         ImVec2 pointC(  currentlyDrawnObjects[i].objectPoints[1].x - (currentlyDrawnObjects[i].arrowLength * (currentlyDrawnObjects[i].objectPoints[1].x - currentlyDrawnObjects[i].objectPoints[0].x))/currentlyDrawnObjects[i].P1P4,
                                         currentlyDrawnObjects[i].objectPoints[1].y - (currentlyDrawnObjects[i].arrowLength * (currentlyDrawnObjects[i].objectPoints[1].y - currentlyDrawnObjects[i].objectPoints[0].y))/currentlyDrawnObjects[i].P1P4);
                         ImVec2 pointD(  pointC.x + (currentlyDrawnObjects[i].arrowWidth*(currentlyDrawnObjects[i].objectPoints[1].y - currentlyDrawnObjects[i].objectPoints[0].y))/currentlyDrawnObjects[i].P1P4,
                                         pointC.y - (currentlyDrawnObjects[i].arrowWidth*(currentlyDrawnObjects[i].objectPoints[1].x - currentlyDrawnObjects[i].objectPoints[0].x))/currentlyDrawnObjects[i].P1P4);
                         ImVec2 pointE(  pointC.x - (currentlyDrawnObjects[i].arrowWidth*(currentlyDrawnObjects[i].objectPoints[1].y - currentlyDrawnObjects[i].objectPoints[0].y))/currentlyDrawnObjects[i].P1P4,
                                         pointC.y + (currentlyDrawnObjects[i].arrowWidth*(currentlyDrawnObjects[i].objectPoints[1].x - currentlyDrawnObjects[i].objectPoints[0].x))/currentlyDrawnObjects[i].P1P4);
-
                         p_drawList->PathClear();
                         p_drawList->PathLineTo(ImVec2(pointD.x + mp_TextCanvas->image_pos.x, pointD.y + mp_TextCanvas->image_pos.y));
                         p_drawList->PathLineTo(ImVec2(currentlyDrawnObjects[i].objectPoints[1].x + mp_TextCanvas->image_pos.x, currentlyDrawnObjects[i].objectPoints[1].y + mp_TextCanvas->image_pos.y));
@@ -785,6 +799,7 @@ int md::Canvas::draw()
                 case RANDOM_ARROW:
                     for (int j = 2 ; j < currentlyDrawnObjects[i].objectPoints.size() ; j++)
                     {
+                        //draw a bezier curve
                         p_drawList->AddBezierCurve(   ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[0].x,
                                                              mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[0].y),  //P1 == start
                                                       ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[1].x,
@@ -795,7 +810,7 @@ int md::Canvas::draw()
                                                              mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[3].y), // P4 == end
                                                       getBackgroundColor(i),
                                                       currentlyDrawnObjects[i].thickness,
-                                                      64);
+                                                      64); // drawing parameters
                     }
 
                     if ((currentlyDrawnObjects[i].P1P4 > 0.0f) && (currentlyDrawnObjects[i].P1P4 > 1.5f * currentlyDrawnObjects[i].arrowLength))
@@ -825,7 +840,7 @@ int md::Canvas::draw()
                                 p_drawList->AddCircleFilled(ImVec2(mp_TextCanvas->image_pos.x + currentlyDrawnObjects[i].objectPoints[j].x,
                                                                    mp_TextCanvas->image_pos.y + currentlyDrawnObjects[i].objectPoints[j].y),
                                                             currentlyDrawnObjects[i].thickness,
-                                                            getBackgroundColor(i),
+                                                            getBackgroundColor(i),//currentlyDrawnObjects[i].objBackgroundColor,
                                                             8);
                         }
 
@@ -967,7 +982,6 @@ bool md::Canvas::mousePosIsPoint (ImVec2 mousePos, ImVec2 point)
 bool md::Canvas::insideSimpleArrow(ImVec2 mousePos, ImVector<ImVec2> polygon, ImVector<ImVec2> arrowPolygon)
 {
     bool toReturn = false;
-    //if (intersectSegment(mousePos, polygon[0], polygon[1]) ||   insidePolygon(mousePos, arrowPolygon))
 
     if (   intersectSegment(mousePos, polygon[0], polygon[1])
         || intersectSegment(mousePos, polygon[1], arrowPolygon[1])
@@ -1039,12 +1053,10 @@ bool md::Canvas::insideFilledRectangle(ImVec2 mousePos, ImVector <ImVec2> Points
     return toReturn;
 }
 
+
 bool md::Canvas::intersectEmptyRectangle(ImVec2 mousePos, ImVector <ImVec2> Rect_ext, ImVector <ImVec2> Rect_int)
 {
     bool toReturn = false;
-
-//    if (fabs((Rect_ext[0].x - Rect_ext[1].x)*(Rect_ext[0].y - Rect_ext[1].y)) < EPSILON )
-//        return intersectSegment(mousePos, Rect_ext[0], Rect_ext[1]);
 
     if (insidePolygon(mousePos, Rect_ext) && !(insidePolygon(mousePos, Rect_int)))
 
@@ -1054,6 +1066,7 @@ bool md::Canvas::intersectEmptyRectangle(ImVec2 mousePos, ImVector <ImVec2> Rect
 
     return toReturn;
 }
+
 
 bool md::Canvas::insideEllipse(ImVec2 mousePos, float long_axis, ImVec2 F1, ImVec2 F2)
 {
@@ -1084,6 +1097,7 @@ bool md::Canvas::intersectEmptyEllipse(ImVec2 mousePos, float long_axis, ImVec2 
 }
 
 
+
 void md::Canvas::setSelected(unsigned int position, bool isSelected)
 {
     currentlyDrawnObjects[position].selected = isSelected;
@@ -1093,6 +1107,7 @@ void md::Canvas::setSelected(unsigned int position, bool isSelected)
     else
         currentActiveDrawnObjectIndex = -1;
 }
+
 
 // END CANVAS
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
