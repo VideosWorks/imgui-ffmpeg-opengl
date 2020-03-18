@@ -16,10 +16,10 @@ Remarque : il se peut, dans votre cas, que les pilotes nécessaires soient des a
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-### miniDart (version actuelle au téléchargement : 0.9.6.1 (Windows7+ avec annotations de commentaires enregistrables dans la vidéo inclus) 0.9.3 (binaire pour LinuxMint)** )
+### miniDart (version actuelle au téléchargement : 0.9.6.3 (Windows7+ avec annotations de commentaires enregistrables dans la vidéo inclus) 0.9.3 (binaire pour LinuxMint)** )
 Logiciel d'analyse vidéo pour coachs de sports collectifs (handball, mais autre sport collectif possible)
 
-**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.6.1_test.exe**
+**Pour le téléchargement, cliquer ici : https://framagit.org/ericb/miniDart/blob/master/testing_version/miniDart_0.9.6.3_test.exe**
 
 Pour télécharger une autre version : https://framagit.org/ericb/miniDart/tree/master/testing_version
 
@@ -60,9 +60,14 @@ Pour une bonne définition, notez bien qu'il faudra probablement installer une v
 Important : si l'application crashe sans explication, c'est que vous avez simplement oublié d'installer les pilotes pour votre carte graphique.
 J'ai corrigé un grand nombre de fois ce problème sous Windows pour tous ceux qui n'arrivaient à rien du tout ;-)
 
-**Derniers ajouts (version 0.9.6.1)**
+**Derniers ajouts (version 0.9.6.3)**
+
+- [x] Possibilité d'ouvrir des flux TV (exemple : freeboxtv => chaînes publiques, en fonction de la bande passante). Développement non terminé.
+- [x] Correction de bugs variés
 
 **Atelier analyse**:
+- [ ] Ajout d'une nouvelle fonctionnalité : mesure d'angle 
+- [x] correction du problème de threads (l'application ne répondait plus en fermant une vidéo)
 - [ ] (en cours) afficher correctement les fenêtres avec les écrans Haute Définition (HI_DPI ready)
 - [ ] On peut selectionner et supprimer un objet qui a été dessiné (flèche, trait, rectangle etc), ou changer sa couleur, le déplacer etc.
 - [ ] On peut mettre un objet au premier plan, au dernier plan, ou le monter / descendre d'un niveau par rapport aux autres objets dessinés.
@@ -94,7 +99,7 @@ En cours de test ou à venir :
 - [ ] Possibilité de créer **plusieurs incrustations texte simultanées**
 - [ ] Possibilité de déplacer l'objet dessiné inséré
 
-**Ce qui est actuellement fonctionnel** (dans la **version 0.9.6**) :
+**Ce qui est actuellement fonctionnel** (dans la **version 0.9.6.3**) :
 
 - [x] ajout d'annotations dans la vidéo
 - [x] **affichage retardé** (réglable jusqu'à 40s, mais pourra être augmenté en cas de besoin spécifique (à la demande). Testé OK jusqu'à 100s de retard, mais il faut beaucoup de RAM dans ce cas)
@@ -267,7 +272,7 @@ Important : just in case the application crashes at launch, without any informat
 to install the right graphic card drivers. Seen a lot of times with people stuck at launch with the issue ;-)
 
 
-**Recent changes in the 0.9.6 version (Windows only). For the Linux version, please read the compilation insctructions **
+**Recent changes in the 0.9.6.3 version (Windows only). For the Linux version, please read the compilation insctructions **
 
 **Analysis workshop** :
 - [ ] (work in progress) Be HighDPI ready
