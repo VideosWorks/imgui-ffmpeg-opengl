@@ -3,6 +3,8 @@ Copyright Eric Bachard 2016-2020  Software created the 1st AUGUST 2016
 
 2020 March 18th
 
+Released 0.9.3.6 (Windows version only)
+
 Removed avformat_network_init()/avformat_network_init(), soon obsolete in ffmpeg
 
 FIXED : -D__Linux was duplicated after make -j4 command
