@@ -174,7 +174,7 @@
 
 #define LINK_PRESENTATION_STRING3          "Téléchargement : https://framagit.org/ericb/miniDart"
 
-#define AUTHOR_PRESENTATION_STRING4        "Auteur du logiciel : Eric Bachard © 2016-2019"
+#define AUTHOR_PRESENTATION_STRING4        "Auteur du logiciel : Eric Bachard © 2016-2020"
 
 #define LICENSE_PRESENTATION_STRING5       "Licence GPL v2+"
 
@@ -539,7 +539,7 @@
 
 #define CREDITS_TAB_ITEM                       " Crédits"
 
-#define AUTHOR_ID_COPYRIGHT_YEARS              "Auteur du logiciel miniDart : Eric Bachard © 2016-2019"
+#define AUTHOR_ID_COPYRIGHT_YEARS              "Auteur du logiciel miniDart : Eric Bachard © 2016-2020"
 
 #define DISPLAY_NUMBER_ID_CLUB_RESULT_IMPACT_CONDITIONS  "Afficher : Numéro / Idendité / Club / Résultat / Impact / Conditions "
 
@@ -680,5 +680,4 @@
 #define MINIDART_VERSION_NUMBER             "0.9.6"
 
 #define MAGNIFIER_WINDOW_SIZE               "Taille fenêtre"
-
 #endif /* miniDart_LOCALIZATION  */
