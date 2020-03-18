@@ -1,0 +1,255 @@
+diff --git a/examples/example_sdl_vulkan/main.cpp b/examples/example_sdl_vulkan/main.cpp
+index 7d84f34a..9f7ac8ef 100644
+--- a/examples/example_sdl_vulkan/main.cpp
++++ b/examples/example_sdl_vulkan/main.cpp
+@@ -401,7 +401,7 @@ int main(int, char**)
+     //io.Fonts->AddFontDefault();
+     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
++    io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 19.0f);
+     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+     //IM_ASSERT(font != NULL);
+@@ -527,6 +527,8 @@ int main(int, char**)
+         }
+ 
+         FramePresent(wd);
++
++        SDL_Delay(4);
+     }
+ 
+     // Cleanup
+diff --git a/imgui.cpp b/imgui.cpp
+index 0d497cce..46ab56fe 100644
+--- a/imgui.cpp
++++ b/imgui.cpp
+@@ -1044,6 +1044,7 @@ ImGuiStyle::ImGuiStyle()
+     ScrollbarRounding       = 9.0f;             // Radius of grab corners rounding for scrollbar
+     GrabMinSize             = 10.0f;            // Minimum width/height of a grab box for slider/scrollbar
+     GrabRounding            = 0.0f;             // Radius of grabs corners rounding. Set to 0.0f to have rectangular slider grabs.
++    SliderThicknessScale    = 0.60f;             // % of maximal tab rectangle thickness. Set to 0.0f to have rectangular slider, 1.0f to eliminate it.
+     TabRounding             = 4.0f;             // Radius of upper corners of a tab. Set to 0.0f to have rectangular tabs.
+     TabBorderSize           = 0.0f;             // Thickness of border around tabs.
+     ColorButtonPosition     = ImGuiDir_Right;   // Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
+@@ -2463,6 +2464,7 @@ static const ImGuiStyleVarInfo GStyleVarInfo[] =
+     { ImGuiDataType_Float, 1, (ImU32)IM_OFFSETOF(ImGuiStyle, ScrollbarRounding) },   // ImGuiStyleVar_ScrollbarRounding
+     { ImGuiDataType_Float, 1, (ImU32)IM_OFFSETOF(ImGuiStyle, GrabMinSize) },         // ImGuiStyleVar_GrabMinSize
+     { ImGuiDataType_Float, 1, (ImU32)IM_OFFSETOF(ImGuiStyle, GrabRounding) },        // ImGuiStyleVar_GrabRounding
++    { ImGuiDataType_Float, 1, (ImU32)IM_OFFSETOF(ImGuiStyle, SliderThicknessScale) },// ImGuiStyleVar_SliderThicknessScale
+     { ImGuiDataType_Float, 1, (ImU32)IM_OFFSETOF(ImGuiStyle, TabRounding) },         // ImGuiStyleVar_TabRounding
+     { ImGuiDataType_Float, 2, (ImU32)IM_OFFSETOF(ImGuiStyle, ButtonTextAlign) },     // ImGuiStyleVar_ButtonTextAlign
+     { ImGuiDataType_Float, 2, (ImU32)IM_OFFSETOF(ImGuiStyle, SelectableTextAlign) }, // ImGuiStyleVar_SelectableTextAlign
+diff --git a/imgui.h b/imgui.h
+index 881c91f7..4b723a2b 100644
+--- a/imgui.h
++++ b/imgui.h
+@@ -36,6 +36,20 @@ Index of this file:
+ 
+ */
+ 
++/*
++  miniDart changes : using docking branch, (2020 march 17th)
++
++  + slidershrink PR :                   https://github.com/ocornut/imgui/pull/2305
++
++  + draw empty and filled ellipses PR : https://github.com/ocornut/imgui/pull/2743
++
++  See :  https://github.com/ocornut/imgui/pull/2743/commits/15b698044abf68eefbc90c9f59882f92dd6d50e1
++
++  ericb
++  2020 march 17th
++
++ */
++
+ #pragma once
+ 
+ // Configuration file with compile-time options (edit imconfig.h or #define IMGUI_USER_CONFIG to your own filename)
+@@ -1219,6 +1233,7 @@ enum ImGuiStyleVar_
+     ImGuiStyleVar_ScrollbarRounding,   // float     ScrollbarRounding
+     ImGuiStyleVar_GrabMinSize,         // float     GrabMinSize
+     ImGuiStyleVar_GrabRounding,        // float     GrabRounding
++    ImGuiStyleVar_SliderThicknessScale,// float     SliderTicknessScale
+     ImGuiStyleVar_TabRounding,         // float     TabRounding
+     ImGuiStyleVar_ButtonTextAlign,     // ImVec2    ButtonTextAlign
+     ImGuiStyleVar_SelectableTextAlign, // ImVec2    SelectableTextAlign
+@@ -1436,6 +1451,7 @@ struct ImGuiStyle
+     float       ScrollbarRounding;          // Radius of grab corners for scrollbar.
+     float       GrabMinSize;                // Minimum width/height of a grab box for slider/scrollbar.
+     float       GrabRounding;               // Radius of grabs corners rounding. Set to 0.0f to have rectangular slider grabs.
++    float       SliderThicknessScale;       // Tab thickness in sliders. Ratio of the rectangle witdh. Can be set between 0.0f (rectangle witdh is null)
+     float       TabRounding;                // Radius of upper corners of a tab. Set to 0.0f to have rectangular tabs.
+     float       TabBorderSize;              // Thickness of border around tabs.
+     ImGuiDir    ColorButtonPosition;        // Side of the color button in the ColorEdit4 widget (left/right). Defaults to ImGuiDir_Right.
+@@ -2073,6 +2089,8 @@ struct ImDrawList
+     IMGUI_API void  AddTriangleFilled(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, ImU32 col);
+     IMGUI_API void  AddCircle(const ImVec2& center, float radius, ImU32 col, int num_segments = 12, float thickness = 1.0f);
+     IMGUI_API void  AddCircleFilled(const ImVec2& center, float radius, ImU32 col, int num_segments = 12);
++    IMGUI_API void  AddEllipse(const ImVec2& center, float radius_x, float radius_y, ImU32 col, float rot = 0.0f, int num_segments = 12, float thickness = 1.0f);
++    IMGUI_API void  AddEllipseFilled(const ImVec2& center, float radius_x, float radius_y, ImU32 col, float rot = 0.0f, int num_segments = 12);
+     IMGUI_API void  AddNgon(const ImVec2& center, float radius, ImU32 col, int num_segments, float thickness = 1.0f);
+     IMGUI_API void  AddNgonFilled(const ImVec2& center, float radius, ImU32 col, int num_segments);
+     IMGUI_API void  AddText(const ImVec2& pos, ImU32 col, const char* text_begin, const char* text_end = NULL);
+@@ -2096,6 +2114,7 @@ struct ImDrawList
+     inline    void  PathFillConvex(ImU32 col)                                   { AddConvexPolyFilled(_Path.Data, _Path.Size, col); _Path.Size = 0; }  // Note: Anti-aliased filling requires points to be in clockwise order.
+     inline    void  PathStroke(ImU32 col, bool closed, float thickness = 1.0f)  { AddPolyline(_Path.Data, _Path.Size, col, closed, thickness); _Path.Size = 0; }
+     IMGUI_API void  PathArcTo(const ImVec2& center, float radius, float a_min, float a_max, int num_segments = 10);
++    IMGUI_API void  PathEllipticalArcTo(const ImVec2& center, float radius_x, float radius_y, float rotation, float a_min, float a_max, int num_segments);
+     IMGUI_API void  PathArcToFast(const ImVec2& center, float radius, int a_min_of_12, int a_max_of_12);                                            // Use precomputed angles for a 12 steps circle
+     IMGUI_API void  PathBezierCurveTo(const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, int num_segments = 0);
+     IMGUI_API void  PathRect(const ImVec2& rect_min, const ImVec2& rect_max, float rounding = 0.0f, ImDrawCornerFlags rounding_corners = ImDrawCornerFlags_All);
+diff --git a/imgui_demo.cpp b/imgui_demo.cpp
+index 4b5dde35..77e65c2d 100644
+--- a/imgui_demo.cpp
++++ b/imgui_demo.cpp
+@@ -1529,6 +1529,10 @@ static void ShowDemoWindowWidgets()
+         const float spacing = 4;
+         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(spacing, spacing));
+ 
++        static float sliderThicknessScale = 1.0f;
++        ImGui::SliderFloat("Slider Thickness", &sliderThicknessScale, 0.0f, 1.0f, "%.2f");
++        ImGui::PushStyleVar(ImGuiStyleVar_SliderThicknessScale, sliderThicknessScale);
++
+         static int int_value = 0;
+         ImGui::VSliderInt("##int", ImVec2(18,160), &int_value, 0, 5);
+         ImGui::SameLine();
+@@ -3373,6 +3377,9 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
+     // Simplified Settings
+     if (ImGui::SliderFloat("FrameRounding", &style.FrameRounding, 0.0f, 12.0f, "%.0f"))
+         style.GrabRounding = style.FrameRounding; // Make GrabRounding always the same value as FrameRounding
++
++    ImGui::SliderFloat("Slider Thickness", &style.SliderThicknessScale, 0.0f, 1.0f, "%.2f"); // Minimal displayed value is no frame
++
+     { bool window_border = (style.WindowBorderSize > 0.0f); if (ImGui::Checkbox("WindowBorder", &window_border)) style.WindowBorderSize = window_border ? 1.0f : 0.0f; }
+     ImGui::SameLine();
+     { bool frame_border = (style.FrameBorderSize > 0.0f); if (ImGui::Checkbox("FrameBorder", &frame_border)) style.FrameBorderSize = frame_border ? 1.0f : 0.0f; }
+diff --git a/imgui_draw.cpp b/imgui_draw.cpp
+index 02384016..a571ce27 100644
+--- a/imgui_draw.cpp
++++ b/imgui_draw.cpp
+@@ -938,6 +938,28 @@ void ImDrawList::PathArcTo(const ImVec2& center, float radius, float a_min, floa
+     }
+ }
+ 
++void ImDrawList::PathEllipticalArcTo(const ImVec2& center, float radius_x, float radius_y, float rot, float a_min, float a_max, int num_segments)
++{
++    _Path.reserve(_Path.Size + (num_segments + 1));
++
++    const float cos_rot = ImCos(rot);
++    const float sin_rot = ImSin(rot);
++    for (int i = 0; i <= num_segments; i++)
++    for(int i = 0; i <= num_segments; i++)
++    {
++        //const float a = a_min + ((float)i / (float)num_segments) * (a_max - a_min);
++        float a = a_min + ((float)i / (float)num_segments) * (a_max - a_min);
++        ImVec2 point(center.x + ImCos(a) * radius_x, center.y + ImSin(a) * radius_y);
++        point.x -= center.x;
++        point.y -= center.y;
++        const float rel_x = (point.x * cos_rot) - (point.y * sin_rot);
++        const float rel_y = (point.x * sin_rot) + (point.y * cos_rot);
++        point.x = rel_x + center.x;
++        point.y = rel_y + center.y;
++        _Path.push_back(point);
++    }
++}
++
+ ImVec2 ImBezierCalc(const ImVec2& p1, const ImVec2& p2, const ImVec2& p3, const ImVec2& p4, float t)
+ {
+     float u = 1.0f - t;
+@@ -1174,6 +1196,29 @@ void ImDrawList::AddCircleFilled(const ImVec2& center, float radius, ImU32 col,
+     PathFillConvex(col);
+ }
+ 
++void ImDrawList::AddEllipse(const ImVec2& center, float radius_x, float radius_y, ImU32 col, float rot, int num_segments, float thickness)
++{
++    if ((col & IM_COL32_A_MASK) == 0 || num_segments <= 2)
++        return;
++
++    // Because we are filling a closed shape we remove 1 from the count of segments/points
++    const float a_max = IM_PI * 2.0f * ((float)num_segments - 1.0f) / (float)num_segments;
++    PathEllipticalArcTo(center, radius_x, radius_y, rot, 0.0f, a_max, num_segments - 1);
++    PathStroke(col, true, thickness);
++}
++
++void ImDrawList::AddEllipseFilled(const ImVec2& center, float radius_x, float radius_y, ImU32 col, float rot, int num_segments)
++{
++    if((col & IM_COL32_A_MASK) == 0 || num_segments <= 2)
++        return;
++
++    // Because we are filling a closed shape we remove 1 from the count of segments/points
++    const float a_max = IM_PI * 2.0f * ((float)num_segments - 1.0f) / (float)num_segments;
++    PathEllipticalArcTo(center, radius_x, radius_y, rot, 0.0f, a_max, num_segments - 1);
++    PathFillConvex(col);
++}
++
++
+ // Guaranteed to honor 'num_segments'
+ void ImDrawList::AddNgon(const ImVec2& center, float radius, ImU32 col, int num_segments, float thickness)
+ {
+diff --git a/imgui_widgets.cpp b/imgui_widgets.cpp
+index a62acb36..d1dd6856 100644
+--- a/imgui_widgets.cpp
++++ b/imgui_widgets.cpp
+@@ -2596,7 +2596,14 @@ bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* p_dat
+     // Draw frame
+     const ImU32 frame_col = GetColorU32(g.ActiveId == id ? ImGuiCol_FrameBgActive : g.HoveredId == id ? ImGuiCol_FrameBgHovered : ImGuiCol_FrameBg);
+     RenderNavHighlight(frame_bb, id);
+-    RenderFrame(frame_bb.Min, frame_bb.Max, frame_col, true, g.Style.FrameRounding);
++
++    ImRect draw_bb = frame_bb;
++    if (g.Style.SliderThicknessScale != 0.0f)
++    {
++        float shrink_amount = (float)(int)((frame_bb.Max.y - frame_bb.Min.y) * 0.5f * g.Style.SliderThicknessScale);
++        draw_bb.Min.y += shrink_amount;
++        draw_bb.Max.y -= shrink_amount;
++    }
+ 
+     // Slider behavior
+     ImRect grab_bb;
+@@ -2604,6 +2611,15 @@ bool ImGui::SliderScalar(const char* label, ImGuiDataType data_type, void* p_dat
+     if (value_changed)
+         MarkItemEdited(id);
+ 
++    ImVec2 middle(((grab_bb.Max.x + grab_bb.Min.x)/2.0f),((grab_bb.Max.y + grab_bb.Min.y)/2.0f));
++
++    // render left part
++    window->DrawList->AddRectFilled(draw_bb.Min, ImVec2(middle.x, draw_bb.Max.y), frame_col, g.Style.FrameRounding, ImDrawCornerFlags_Left);
++
++    // render right part
++    ImU32 frame_col_after = GetColorU32(g.ActiveId == id ? ImGuiCol_FrameBgActive : g.HoveredId == id ? ImGuiCol_FrameBgHovered : ImGuiCol_FrameBg, 0.3f);
++    window->DrawList->AddRectFilled(ImVec2(middle.x, draw_bb.Min.y), draw_bb.Max, frame_col_after, g.Style.FrameRounding, ImDrawCornerFlags_Right);
++
+     // Render grab
+     if (grab_bb.Max.x > grab_bb.Min.x)
+         window->DrawList->AddRectFilled(grab_bb.Min, grab_bb.Max, GetColorU32(g.ActiveId == id ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab), style.GrabRounding);
+@@ -2742,7 +2758,14 @@ bool ImGui::VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType d
+     // Draw frame
+     const ImU32 frame_col = GetColorU32(g.ActiveId == id ? ImGuiCol_FrameBgActive : g.HoveredId == id ? ImGuiCol_FrameBgHovered : ImGuiCol_FrameBg);
+     RenderNavHighlight(frame_bb, id);
+-    RenderFrame(frame_bb.Min, frame_bb.Max, frame_col, true, g.Style.FrameRounding);
++
++    ImRect draw_bb = frame_bb;
++    if (g.Style.SliderThicknessScale != 0.0f)
++    {
++        float shrink_amount = (float)(int)((frame_bb.Max.x - frame_bb.Min.x) * 0.5f * g.Style.SliderThicknessScale);
++        draw_bb.Min.x += shrink_amount;
++        draw_bb.Max.x -= shrink_amount;
++    }
+ 
+     // Slider behavior
+     ImRect grab_bb;
+@@ -2750,6 +2773,14 @@ bool ImGui::VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType d
+     if (value_changed)
+         MarkItemEdited(id);
+ 
++    ImVec2 middle(((grab_bb.Max.x + grab_bb.Min.x)/2.0f),((grab_bb.Max.y + grab_bb.Min.y)/2.0f));
++    // render bottom part
++    window->DrawList->AddRectFilled(ImVec2(draw_bb.Min.x, middle.y), draw_bb.Max, frame_col, g.Style.FrameRounding, ImDrawCornerFlags_Bot);
++
++    // render top part
++    ImU32 frame_col_after = GetColorU32(g.ActiveId == id ? ImGuiCol_FrameBgActive : g.HoveredId == id ? ImGuiCol_FrameBgHovered : ImGuiCol_FrameBg, 0.3f);
++    window->DrawList->AddRectFilled(draw_bb.Min, ImVec2(draw_bb.Max.x, middle.y), frame_col_after, g.Style.FrameRounding, ImDrawCornerFlags_Top);
++
+     // Render grab
+     if (grab_bb.Max.y > grab_bb.Min.y)
+         window->DrawList->AddRectFilled(grab_bb.Min, grab_bb.Max, GetColorU32(g.ActiveId == id ? ImGuiCol_SliderGrabActive : ImGuiCol_SliderGrab), style.GrabRounding);

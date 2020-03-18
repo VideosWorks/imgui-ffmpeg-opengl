@@ -1,0 +1,9 @@
+This file contains information about the modifications I did in Dear ImGui code (the latest on top offile)
+
+Dear ImGui changes are under MIT License, to keep the backward compatibility, and just in case you are interested with my code.
+
+2020/03/18 
+
+Current version of miniDart is based on Dear ImGui master + docking branch (based on 1.75 ?)
+sha256sum : 1f5e5741bb1d1e9c06f0b57f59d49edbd9aafadb67dcd4b20fab8a9f4e0ed3a3  imgui_changes_in_miniDart_2020_03_17.diff
+
