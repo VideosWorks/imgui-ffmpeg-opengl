@@ -22,6 +22,7 @@ VERSION = ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_MICRO}
 
 #APPLICATION = miniDart_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_MICRO}
 APPLICATION = miniDart
+#ImGui_Version = 1.72
 
 UNAME_S = $(shell uname -s)
 
@@ -122,8 +123,17 @@ INCLUDE_BASE = -I./inc -I./localization
 INCLUDE_3RD_PARTY_BASE = -I$(3RD_PARTY_BASE)
 INCLUDE_ICON_FONTS_BASE = -I./fonts
 
-IMGUI_INC = $(INCLUDE_3RD_PARTY_BASE)/imgui
-GL3W_INC = $(INCLUDE_3RD_PARTY_BASE)/imgui/gl3w
+ifeq (${ImGui_Version}, 1.72)
+IMGUI_INC = $(INCLUDE_3RD_PARTY_BASE)/imgui_old
+GL3W_INC = $(INCLUDE_3RD_PARTY_BASE)/imgui_old/gl3w
+else
+IMGUI_INC = $(INCLUDE_3RD_PARTY_BASE)/imgui \
+            $(INCLUDE_3RD_PARTY_BASE)/imgui_custom \
+            $(INCLUDE_3RD_PARTY_BASE)/imgui/misc/cpp \
+            $(INCLUDE_3RD_PARTY_BASE)/imgui/examples
+
+GL3W_INC = $(INCLUDE_3RD_PARTY_BASE)/imgui/examples/libs/gl3w
+endif
 
 TINYXML2_INC = $(INCLUDE_3RD_PARTY_BASE)/tinyxml2/src
 
@@ -146,7 +156,6 @@ VIDEO_SEEKER_INC = $(INCLUDE_3RD_PARTY_BASE)/video_seeker
 DELAY_INC = $(INCLUDE_3RD_PARTY_BASE)/delay/inc
 
 #GFX_UI_INC = $(INCLUDE_3RD_PARTY_BASE)/gfx_ui
-
 #SDL2_FFMPEG_INC = $(INCLUDE_3RD_PARTY_BASE)/sdl2_ffmpeg/include
 
 INCLUDE_DIR +=  $(INCLUDE_BASE) \
@@ -165,8 +174,25 @@ INCLUDE_DIR +=  $(INCLUDE_BASE) \
 
 FILES = *.cpp
 
-IMGUI_FILES = $(shell ls $(3RD_PARTY_BASE)/imgui/*.cpp)
-GL3W_FILES = $(shell ls $(3RD_PARTY_BASE)/imgui/gl3w/*.c)
+ifeq (${ImGui_Version}, 1.72)
+IMGUI_FILES = $(shell ls $(3RD_PARTY_BASE)/imgui_old/*.cpp)
+GL3W_FILES = $(shell ls $(3RD_PARTY_BASE)/imgui_old/gl3w/*.c)
+
+else
+IMGUI_FILES =   \
+            $(3RD_PARTY_BASE)/imgui/imgui.cpp         \
+            $(3RD_PARTY_BASE)/imgui/imgui_widgets.cpp         \
+            $(3RD_PARTY_BASE)/imgui/imgui_demo.cpp         \
+            $(3RD_PARTY_BASE)/imgui/imgui_draw.cpp         \
+            $(3RD_PARTY_BASE)/imgui/examples/imgui_impl_sdl.cpp         \
+            $(3RD_PARTY_BASE)/imgui/misc/cpp/imgui_stdlib.cpp         \
+            $(3RD_PARTY_BASE)/imgui/examples/imgui_impl_opengl3.cpp         \
+            $(3RD_PARTY_BASE)/imgui_custom/imgui_spin_input.cpp         \
+            $(3RD_PARTY_BASE)/imgui_custom/imgui_themes.cpp
+
+GL3W_FILES = $(3RD_PARTY_BASE)/imgui/examples/libs/gl3w/GL/gl3w.c
+endif
+
 TINYXML2_FILES = $(shell ls $(3RD_PARTY_BASE)/tinyxml2/src/*.cpp)
 
 FILES += $(IMGUI_FILES) $(GL3W_FILES) $(TINYXML2_FILES)
@@ -279,7 +305,10 @@ $(OUTBIN) : C_FILES C++_FILES
 	$(RM) -f *.o
 	@echo "cleanup ..."
 	@echo "$(OUTBIN) build completed"
+ifndef DEBUG
+	@echo "removing debug symbols ..."
 	strip $(OUTBIN)
+endif
 	@echo "done"
 
 
