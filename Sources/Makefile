@@ -22,7 +22,10 @@ VERSION = ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_MICRO}
 
 #APPLICATION = miniDart_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_MICRO}
 APPLICATION = miniDart
-#ImGui_Version = 1.72
+
+# comment me if you want to test Dear ImGui docking branch basedon 1.75 version
+# else (means by default), docking version based on 1.72 will be used.
+ImGui_Version = 1.72
 
 UNAME_S = $(shell uname -s)
 
