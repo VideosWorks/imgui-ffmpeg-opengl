@@ -1,6 +1,6 @@
 
 - English (US) VERSION : current version is 0.9.6 (see en-US folder)
-- VERSION FRANÇAISE : l'archive à télécharger actuellement en test est la **0.9.6.1**. Elle se trouve dans le répertoire courant
+- VERSION FRANÇAISE : l'archive à télécharger actuellement en test est la **0.9.6.3**. Elle se trouve dans le répertoire courant
 
 
 Pour les derniers changements, voir le contenu de releases notes (en anglais)
@@ -66,6 +66,10 @@ Eric Bachard
 ************************************************************************************************************
 
                    Somme de contrôle (sha256sum )                                   Version
+
+************************************************************************************************************
+
+     9770a2723575d62f3c099a20491a9fe16cbe2661a0e348dc36b83ea54d7ce117  miniDart_0.9.6.3_test.exe
 
 ************************************************************************************************************
 
