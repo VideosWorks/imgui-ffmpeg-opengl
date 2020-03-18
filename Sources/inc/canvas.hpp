@@ -15,6 +15,10 @@
 #include "imgui_helpers.h"
 #include <list>
 
+#ifndef M_PI
+# define M_PI 3.14159265358979323846	/* pi */
+#endif
+
 #define DEFAULT_OBJECT_THICKNESS  2.5f
 #define DEFAULT_ICON_WIDTH          32
 #define DEFAULT_ICON_HEIGHT         32
