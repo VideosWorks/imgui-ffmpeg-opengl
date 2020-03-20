@@ -2,6 +2,15 @@ This file contains information about the modifications I did in Dear ImGui code 
 
 Dear ImGui changes are under MIT License, to keep the backward compatibility, and just in case you are interested with my code.
 
+2020/03/20
+
+Added imgui_custom folder, containing the files I created :
+
+- imgui_themes.cpp
+- imgui_themes.h
+
+Both are located in imgui_custom, and imgui_themes.cpp will be compiled if ImGui_version is > 1.72 (see Makefile located in Sources)
+
 2020/03/18 
 
 Current version of miniDart is based on Dear ImGui master + docking branch (based on 1.75 ?)
