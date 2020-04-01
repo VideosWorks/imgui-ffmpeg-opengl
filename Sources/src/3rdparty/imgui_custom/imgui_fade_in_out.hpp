@@ -10,10 +10,6 @@
 
 #include <imgui.h>
 
-
-//template<typename T> static inline T ImMin(T lhs, T rhs)   { return lhs < rhs ? lhs : rhs; }
-//template<typename T> static inline T ImMax(T lhs, T rhs)   { return lhs >= rhs ? lhs : rhs; }
-
 namespace md
 {
     class FadeInOut
@@ -23,8 +19,6 @@ namespace md
             ~FadeInOut();
 
             void init();
-            //void set_opacity( float value ) { opacity = value };
-            //float get_opacity() { return opacity ; }
             void set_range (float min, float max);
             float get_range(void) { return range ;}
 

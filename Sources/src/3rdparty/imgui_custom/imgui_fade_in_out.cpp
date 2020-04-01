@@ -44,8 +44,8 @@ float md::FadeInOut::fadeInOut(float up_duration, float down_duration, float min
     up_action = true;
     set_range(min, max);
 
-    up_step   = calculate_step(get_range(), up_duration); // v(get_range() * io.DeltaTime) / up_duration;
-    down_step = calculate_step(get_range(), down_duration); // (get_range() * io.DeltaTime) / down_duration ;
+    up_step   = calculate_step(get_range(), up_duration);
+    down_step = calculate_step(get_range(), down_duration);
 
     if (ImGui::IsWindowHovered (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup) ||
                                 ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)))
