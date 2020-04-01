@@ -1,6 +1,20 @@
 Changelog of miniDart
 Copyright Eric Bachard 2016-2020  Software created the 1st AUGUST 2016
 
+2020 April 1st
+
+Implemented imgui_fade_in_out feature: mouse cursor hovering a window makes it appear.
+
+fade in and fade out times are customizable, including the fade in and the fade out duration.
+
+Created a FadeInOut class + associated files
+
+
+2020 March 31st
+
+Contributed to the nice mahi-gui project (see https://github.com/mahilab/mahi-gui/pull/3)
+
+
 2020 March 18th
 
 Released 0.9.3.6 (Windows version only)
