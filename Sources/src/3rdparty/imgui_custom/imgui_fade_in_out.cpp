@@ -32,9 +32,6 @@
 
 #include "imgui_fade_in_out.hpp"
 
-template<typename T> static inline T ImMin(T lhs, T rhs)   { return lhs < rhs ? lhs : rhs; }
-template<typename T> static inline T ImMax(T lhs, T rhs)   { return lhs >= rhs ? lhs : rhs; }
-
 
 md::FadeInOut::FadeInOut()
 {
