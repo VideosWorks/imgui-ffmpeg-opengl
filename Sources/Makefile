@@ -191,7 +191,9 @@ IMGUI_FILES =   \
             $(3RD_PARTY_BASE)/imgui_test/misc/cpp/imgui_stdlib.cpp         \
             $(3RD_PARTY_BASE)/imgui_test/examples/imgui_impl_opengl3.cpp         \
             $(3RD_PARTY_BASE)/imgui_custom/imgui_spin_input.cpp         \
-            $(3RD_PARTY_BASE)/imgui_custom/imgui_themes.cpp
+            $(3RD_PARTY_BASE)/imgui_custom/imgui_themes.cpp \
+            $(3RD_PARTY_BASE)/imgui_custom/imgui_fade_in_out.cpp
+
 
 GL3W_FILES = $(3RD_PARTY_BASE)/imgui_test/examples/libs/gl3w/GL/gl3w.c
 endif
