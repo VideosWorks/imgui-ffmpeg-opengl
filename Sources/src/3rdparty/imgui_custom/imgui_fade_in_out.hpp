@@ -54,19 +54,24 @@ namespace md
             float calculate_step(float f_range, float f_duration) { return ((f_range * io.DeltaTime) / f_duration); }
 
             float fadeInOut(float up_duration, float down_duration, float min, float max);
-            float heartBeat(float up_duration, float down_duration, float min, float max);
+            float heartBeat(float up_hb_duration, float down_hb_duration, float min_hb, float max_hb);
 
             bool  up_action;
             bool  up_hb_action;
             float up_step;
             float down_step;
-            float opacity;
+
+            float up_hb_step;
+            float down_hb_step;
+
             float min;
             float max;
 
+            float min_hb;
+            float max_hb;
+
         private:
             float range;
-
     };
 } /* namespace md */
 

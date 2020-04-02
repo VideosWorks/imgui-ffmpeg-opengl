@@ -43,36 +43,37 @@ md::FadeInOut::~FadeInOut()
 void md::FadeInOut::init()
 {
     up_action = true;
-    opacity   = 0.0f;
     ImGuiIO& io = ImGui::GetIO();
     (void)io; // makes the compiler happy
 }
 
+// TODO : buttons 
 
-float md::FadeInOut::heartBeat(float up_duration, float down_duration, float min, float max)
+float md::FadeInOut::heartBeat(float up_duration, float down_duration, float min_hb, float max_hb)
 {
-    set_range(min, max);
+    static float opacity = 1.0f;
+    set_range(min_hb, max_hb);
 
-    up_step   = calculate_step(get_range(), up_duration);
-    down_step = calculate_step(get_range(), down_duration);
+    up_hb_step   = calculate_step(get_range(), up_duration);
+    down_hb_step = calculate_step(get_range(), down_duration);
 
     if (up_hb_action == true)
     {
-        opacity += up_step;
+        opacity += up_hb_step;
 
-        if (opacity >= max)
+        if (opacity >= max_hb)
         {
-            opacity = max;
+            opacity = max_hb;
             up_hb_action = false;
         }
     }
     else if ((up_hb_action == false))
     {
-        opacity -= down_step;
+        opacity -= down_hb_step;
 
-        if (opacity <= min)
+        if (opacity <= min_hb)
         {
-            opacity = min;
+            opacity = min_hb;
             up_hb_action = true;
         }
     }
@@ -82,6 +83,7 @@ float md::FadeInOut::heartBeat(float up_duration, float down_duration, float min
 
 float md::FadeInOut::fadeInOut(float up_duration, float down_duration, float min, float max)
 {
+    static float opacity_hb = 1.0f;
     set_range(min, max);
 
     up_step   = calculate_step(get_range(), up_duration);
@@ -90,29 +92,25 @@ float md::FadeInOut::fadeInOut(float up_duration, float down_duration, float min
     if (ImGui::IsWindowHovered (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByPopup) ||
                                 ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)))
     {
-        if (up_action == true)
+        opacity_hb += up_step;
+
+        if (opacity_hb > max)
         {
-            if (opacity <= max)
-                opacity += up_step;
-            else
-            {
-                opacity = max;
-                up_action = false;
-            }
+            opacity_hb = max;
+            up_action = false;
         }
     }
     else
     {
-        if (opacity >= min)
-            opacity -= down_step;
-        else
+        opacity_hb -= down_step;
+
+        if (opacity_hb < min)
         {
-            opacity = min;
-            up_action = false;
+            opacity_hb = min;
+            up_action = true;
         }
     }
-    return opacity;
+    return opacity_hb;
 }
-
 
 
