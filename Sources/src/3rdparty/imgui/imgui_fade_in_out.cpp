@@ -33,6 +33,8 @@
 #include "imgui_fade_in_out.hpp"
 
 
+//static bool up_hb_action = true;
+
 md::FadeInOut::FadeInOut()
 {
 }
@@ -50,20 +52,38 @@ void md::FadeInOut::init()
     (void)io; // makes the compiler happy
 }
 
-void md::FadeInOut::set_range(float min, float max)
-{
-    range = max - min;
-}
 
-
-float md::FadeInOut::calculate_step (float f_range, float f_duration )
+float md::FadeInOut::heartBeat(float up_duration, float down_duration, float min, float max)
 {
-    return ((f_range * io.DeltaTime) / f_duration);
+    up_step   = calculate_hb_step(up_duration);
+    down_step = calculate_hb_step(down_duration);
+
+    if (up_hb_action == true)
+    {
+        opacity += up_step;
+
+        if (opacity >= max)
+        {
+            opacity = max;
+            up_hb_action = false;
+        }
+    }
+    else if ((up_hb_action == false))
+    {
+        opacity -= down_step;
+
+        if (opacity <= min)
+        {
+            opacity = min;
+            up_hb_action = true;
+        }
+    }
+
+    return sin(opacity);
 }
 
 float md::FadeInOut::fadeInOut(float up_duration, float down_duration, float min, float max)
 {
-    up_action = true;
     set_range(min, max);
 
     up_step   = calculate_step(get_range(), up_duration);
@@ -95,4 +115,6 @@ float md::FadeInOut::fadeInOut(float up_duration, float down_duration, float min
     }
     return opacity;
 }
+
+
 

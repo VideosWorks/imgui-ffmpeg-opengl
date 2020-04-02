@@ -31,6 +31,12 @@
 #define __CUSTOM_FADE_IN_OUT_HPP
 
 #include <imgui.h>
+//#include <math.h>
+#include <iostream>
+#define _USE_MATH_DEFINES
+#include <cmath>
+
+
 
 namespace md
 {
@@ -42,15 +48,21 @@ namespace md
 
             ImGuiIO io;
             void init();
-            void set_range (float min, float max);
-            float get_range(void) { return range ;}
 
-            float calculate_step(float, float);
-            float fadeInOut(float, float, float, float);
+            void set_range (float min, float max) { range = max - min; }
+            float get_range(void) { return range; }
 
+            float calculate_step(float f_range, float f_duration) { return ((f_range * io.DeltaTime) / f_duration); }
+            float calculate_hb_step(float f_duration) { return ((io.DeltaTime) / f_duration); }
+
+            float fadeInOut(float up_duration, float down_duration, float min, float max);
+
+            float heartBeat(float up_duration, float down_duration, float min, float max);
+
+            bool  up_action;
+            bool  up_hb_action;
             float up_step;
             float down_step;
-            bool  up_action;
             float opacity;
             float min;
             float max;
