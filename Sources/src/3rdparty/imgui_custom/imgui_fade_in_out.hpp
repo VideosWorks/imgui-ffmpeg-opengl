@@ -31,7 +31,6 @@
 #define __CUSTOM_FADE_IN_OUT_HPP
 
 #include <imgui.h>
-//#include <math.h>
 #include <iostream>
 #define _USE_MATH_DEFINES
 #include <cmath>

@@ -29,11 +29,7 @@
  * **************************************************************************************/
 
 
-
 #include "imgui_fade_in_out.hpp"
-
-
-//static bool up_hb_action = true;
 
 md::FadeInOut::FadeInOut()
 {
