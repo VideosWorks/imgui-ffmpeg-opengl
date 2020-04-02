@@ -53,10 +53,8 @@ namespace md
             float get_range(void) { return range; }
 
             float calculate_step(float f_range, float f_duration) { return ((f_range * io.DeltaTime) / f_duration); }
-            float calculate_hb_step(float f_duration) { return ((io.DeltaTime) / f_duration); }
 
             float fadeInOut(float up_duration, float down_duration, float min, float max);
-
             float heartBeat(float up_duration, float down_duration, float min, float max);
 
             bool  up_action;
