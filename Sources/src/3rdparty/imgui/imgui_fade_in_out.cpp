@@ -32,6 +32,9 @@
 
 #include "imgui_fade_in_out.hpp"
 
+
+//static bool up_hb_action = true;
+
 md::FadeInOut::FadeInOut()
 {
 }
@@ -52,8 +55,10 @@ void md::FadeInOut::init()
 
 float md::FadeInOut::heartBeat(float up_duration, float down_duration, float min, float max)
 {
-    up_step   = calculate_hb_step(up_duration);
-    down_step = calculate_hb_step(down_duration);
+    set_range(min, max);
+
+    up_step   = calculate_step(get_range(), up_duration);
+    down_step = calculate_step(get_range(), down_duration);
 
     if (up_hb_action == true)
     {
