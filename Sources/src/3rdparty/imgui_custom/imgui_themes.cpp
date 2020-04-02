@@ -51,12 +51,10 @@ void ImGui::StyleColorsLightGreen(ImGuiStyle* dst)
     style->FramePadding.y    = 4.0f;
     style->Alpha             = 1.0f;
     style->FrameRounding     = 3.0f;
-    //style->TabBorderSize     = 3.0f;
 
     colors[ImGuiCol_Text]                   = ImVec4(0.00f, 0.00f, 0.00f, 1.00f);
     colors[ImGuiCol_TextDisabled]          = ImVec4(0.60f, 0.60f, 0.60f, 1.00f);
     colors[ImGuiCol_WindowBg]              = ImVec4(0.86f, 0.86f, 0.86f, 1.00f);
-// unused ??
     // ImGui 1.75+
     //ImGuiCol_ChildWindowBg -> use ImGuiCol_ChildBg
 #if (IMGUI_VERSION_NUM > 17202)
@@ -64,7 +62,6 @@ void ImGui::StyleColorsLightGreen(ImGuiStyle* dst)
 #else
     colors[ImGuiCol_ChildWindowBg]         = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 #endif
-// ??
     colors[ImGuiCol_ChildBg]                = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
     colors[ImGuiCol_PopupBg]                = ImVec4(0.93f, 0.93f, 0.93f, 0.98f);
     colors[ImGuiCol_Border]                = ImVec4(0.71f, 0.71f, 0.71f, 0.08f);
