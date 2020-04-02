@@ -46,6 +46,8 @@ void md::FadeInOut::init()
 {
     up_action = true;
     opacity   = 0.0f;
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io; // makes the compiler happy
 }
 
 void md::FadeInOut::set_range(float min, float max)
@@ -56,8 +58,6 @@ void md::FadeInOut::set_range(float min, float max)
 
 float md::FadeInOut::calculate_step (float f_range, float f_duration )
 {
-    ImGuiIO& io = ImGui::GetIO();
-
     return ((f_range * io.DeltaTime) / f_duration);
 }
 

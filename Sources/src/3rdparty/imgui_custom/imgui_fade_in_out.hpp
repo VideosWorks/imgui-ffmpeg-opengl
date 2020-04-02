@@ -40,6 +40,7 @@ namespace md
             FadeInOut();
             ~FadeInOut();
 
+            ImGuiIO io;
             void init();
             void set_range (float min, float max);
             float get_range(void) { return range ;}
